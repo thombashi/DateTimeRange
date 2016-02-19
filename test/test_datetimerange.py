@@ -330,7 +330,7 @@ class Test_DateTimeRange_get_end_time_str:
     def test_exception(self, datetimerange_normal, time_format, expected):
         datetimerange_normal.end_time_format = time_format
         with pytest.raises(expected):
-            print datetimerange_normal.get_end_time_str()
+            datetimerange_normal.get_end_time_str()
 
 
 class Test_DateTimeRange_get_timedelta_second:
