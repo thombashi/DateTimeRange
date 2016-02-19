@@ -281,6 +281,104 @@ class Test_DateTimeRange_is_within:
             datetimerange_null_start.is_within(value)
 
 
+class Test_DateTimeRange_is_intersection:
+
+    @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
+        [
+            DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+            DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-01-22T09:50:00 JST",
+                "2015-01-22T10:00:00 JST"),
+            DateTimeRange(
+                "2015-01-22T10:10:00 JST",
+                "2015-03-22T10:20:00 JST"),
+            False,
+        ],
+        [
+            DateTimeRange(
+                "2015-01-22T09:50:00 JST",
+                "2015-01-22T10:00:00 JST"),
+            DateTimeRange(
+                "2015-01-22T10:00:00 JST",
+                "2015-03-22T10:20:00 JST"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-01-22T09:50:00 JST",
+                "2015-01-22T10:05:00 JST"),
+            DateTimeRange(
+                "2015-01-22T10:00:00 JST",
+                "2015-03-22T10:20:00 JST"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-01-22T10:00:00 JST",
+                "2015-03-22T10:20:00 JST"),
+            DateTimeRange(
+                "2015-01-22T09:50:00 JST",
+                "2015-01-22T10:05:00 JST"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2014-01-22T10:00:00 JST",
+                "2016-03-22T10:20:00 JST"),
+            DateTimeRange(
+                "2015-01-22T09:50:00 JST",
+                "2015-01-22T10:05:00 JST"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-01-12T10:00:00 JST",
+                "2015-02-22T10:10:00 JST"),
+            DateTimeRange(
+                "2015-01-22T10:00:00 JST",
+                "2015-03-22T10:10:00 JST"),
+            True,
+        ],
+    ])
+    def test_normal(self, lhs, rhs, expected):
+        assert lhs.is_intersection(rhs) == expected
+
+    @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
+        [
+            DateTimeRange(None, None),
+            DateTimeRange(None, None),
+            TypeError,
+        ],
+        [
+            DateTimeRange(None, TEST_END_DATETIME),
+            DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+            TypeError,
+        ],
+        [
+            DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME),
+            DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+            ValueError,
+        ],
+        [
+            DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+            DateTimeRange(None, TEST_END_DATETIME),
+            TypeError,
+        ],
+        [
+            DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+            DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME),
+            ValueError,
+        ],
+    ])
+    def test_exception(self, lhs, rhs, expected):
+        with pytest.raises(expected):
+            lhs.is_intersection(rhs)
+
+
 class Test_DateTimeRange_get_start_time_str:
 
     @pytest.mark.parametrize(["time_format", "expected"], [
