@@ -342,6 +342,8 @@ Truncate time range
 Documentation
 =============
 
+http://datetimerange.readthedocs.org/en/latest/
+
 Dependencies
 ============
 
