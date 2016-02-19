@@ -1,5 +1,10 @@
 **DateTimeRange**
 
+.. image:: https://travis-ci.org/thombashi/DateTimeRange.svg?branch=master
+    :target: https://travis-ci.org/thombashi/DateTimeRange
+.. image:: https://coveralls.io/repos/github/thombashi/DateTimeRange/badge.svg?branch=master
+    :target: https://coveralls.io/github/thombashi/DateTimeRange?branch=master
+
 .. contents:: Table of contents
    :backlinks: top
    :local:
