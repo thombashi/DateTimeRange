@@ -217,7 +217,6 @@ class Test_DateTimeRange_validate_time_inversion:
     @pytest.mark.parametrize(["value"], [
         [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME)],
         [DateTimeRange(TEST_START_DATETIME, TEST_START_DATETIME)],
-        [DateTimeRange(None, None)],
     ])
     def test_normal(self, value):
         value.validate_time_inversion()
@@ -226,9 +225,14 @@ class Test_DateTimeRange_validate_time_inversion:
         with pytest.raises(ValueError):
             datetimerange_inversion.validate_time_inversion()
 
-    def test_exception(self, datetimerange_null_start):
+    @pytest.mark.parametrize(["value"], [
+        [DateTimeRange(None, None)],
+        [DateTimeRange(None, TEST_END_DATETIME)],
+        [DateTimeRange(TEST_START_DATETIME, None)],
+    ])
+    def test_exception(self, value):
         with pytest.raises(TypeError):
-            datetimerange_null_start.validate_time_inversion()
+            value.validate_time_inversion()
 
 
 class Test_DateTimeRange_is_valid_timerange:
@@ -497,17 +501,17 @@ class Test_DateTimeRange_intersection:
                 "2015-01-22T10:00:00 JST",
                 "2015-02-22T10:10:00 JST"),
         ],
-        [
-            DateTimeRange(None, None),
-            DateTimeRange(None, None),
-            DateTimeRange(None, None),
-        ],
     ])
     def test_normal(self, lhs, rhs, expected):
         lhs.intersection(rhs)
         assert lhs == expected
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
+        [
+            DateTimeRange(None, None),
+            DateTimeRange(None, None),
+            TypeError,
+        ],
         [
             DateTimeRange(None, TEST_END_DATETIME),
             DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
@@ -586,17 +590,17 @@ class Test_DateTimeRange_encompass:
                 "2015-01-22T09:50:00 JST",
                 "2015-03-22T10:20:00 JST"),
         ],
-        [
-            DateTimeRange(None, None),
-            DateTimeRange(None, None),
-            DateTimeRange(None, None),
-        ],
     ])
     def test_normal(self, lhs, rhs, expected):
         lhs.encompass(rhs)
         assert lhs == expected
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
+        [
+            DateTimeRange(None, None),
+            DateTimeRange(None, None),
+            TypeError,
+        ],
         [
             DateTimeRange(None, TEST_END_DATETIME),
             DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),

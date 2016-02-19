@@ -162,6 +162,10 @@ class DateTimeRange(object):
             time inversion
         """
 
+        if not self.is_set():
+            # for python2/3 compatibility
+            raise TypeError
+
         if self.start_datetime > self.end_datetime:
             message = "time inversion found: %s > %s" % (
                 str(self.start_datetime), str(self.end_datetime))
