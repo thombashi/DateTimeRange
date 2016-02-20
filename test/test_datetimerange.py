@@ -180,6 +180,39 @@ class Test_DateTimeRange_eq:
         assert datetimerange_normal != datetimerange_null
 
 
+class Test_DateTimeRange_contains:
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        [START_DATETIME_TEXT, True],
+        [END_DATETIME_TEXT, True],
+        [TEST_START_DATETIME, True],
+        [TEST_END_DATETIME, True],
+        ["2015-03-22 09:59:59" + TIMEZONE, False],
+        ["2015-03-22 10:10:01" + TIMEZONE, False],
+    ])
+    def test_normal(self, datetimerange_normal, value, expected):
+        assert (value in datetimerange_normal) == expected
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        [None, TypeError],
+        [False, TypeError],
+        [20140513221937, TypeError],
+    ])
+    def test_exception(
+            self, datetimerange_normal, value, expected):
+        with pytest.raises(expected):
+            value in datetimerange_normal
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        [TEST_START_DATETIME, TypeError],
+        ["aaa", TypeError],
+        [None, TypeError],
+    ])
+    def test_null_start(self, datetimerange_null_start, value, expected):
+        with pytest.raises(expected):
+            value in datetimerange_null_start
+
+
 class Test_DateTimeRange_timedelta:
 
     def test_normal(self, datetimerange_normal):
@@ -246,39 +279,6 @@ class Test_DateTimeRange_is_valid_timerange:
     ])
     def test_normal(self, value, expected):
         assert value.is_valid_timerange() == expected
-
-
-class Test_DateTimeRange_is_within:
-
-    @pytest.mark.parametrize(["value", "expected"], [
-        [START_DATETIME_TEXT, True],
-        [END_DATETIME_TEXT, True],
-        [TEST_START_DATETIME, True],
-        [TEST_END_DATETIME, True],
-        ["2015-03-22 09:59:59" + TIMEZONE, False],
-        ["2015-03-22 10:10:01" + TIMEZONE, False],
-    ])
-    def test_normal(self, datetimerange_normal, value, expected):
-        assert datetimerange_normal.is_within(value) == expected
-
-    @pytest.mark.parametrize(["value", "expected"], [
-        [None, TypeError],
-        [False, TypeError],
-        [20140513221937, TypeError],
-    ])
-    def test_exception(
-            self, datetimerange_normal, value, expected):
-        with pytest.raises(expected):
-            datetimerange_normal.is_within(value)
-
-    @pytest.mark.parametrize(["value", "expected"], [
-        [TEST_START_DATETIME, TypeError],
-        ["aaa", TypeError],
-        [None, TypeError],
-    ])
-    def test_null_start(self, datetimerange_null_start, value, expected):
-        with pytest.raises(expected):
-            datetimerange_null_start.is_within(value)
 
 
 class Test_DateTimeRange_is_intersection:
