@@ -57,6 +57,38 @@ class DateTimeRange(object):
             self.end_datetime == other.end_datetime,
         ])
 
+    def __contains__(self, x):
+        """
+        :param datetime.datetime/str x:
+            datetime to compare.
+            Parse and convert to datetime if the value type is string.
+        :return: ``True`` if the ``x`` is within the time range
+        :rtype: bool
+        :raises: See also
+            :py:func:`validate_time_inversion() <datetimerange.DateTimeRange.validate_time_inversion>`
+
+        .. code:: python
+
+            from datetimerange import DateTimeRange
+            time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+            print "2015-03-22T10:05:00+0900" in time_range
+            print "2015-03-22T10:15:00+0900" in time_range
+
+        .. parsed-literal::
+
+            True
+            False
+        """
+
+        self.validate_time_inversion()
+
+        try:
+            value = dateutil.parser.parse(x)
+        except AttributeError:
+            value = x
+
+        return self.start_datetime <= value <= self.end_datetime
+
     @property
     def start_datetime(self):
         """
@@ -203,38 +235,6 @@ class DateTimeRange(object):
             return False
 
         return self.is_set()
-
-    def is_within(self, x):
-        """
-        :param datetime.datetime/str x:
-            datetime to compare.
-            Parse and convert to datetime if the value type is string.
-        :return: ``True`` if the ``x`` is within the time range
-        :rtype: bool
-        :raises: See also
-            :py:func:`validate_time_inversion() <datetimerange.DateTimeRange.validate_time_inversion>`
-
-        .. code:: python
-
-            from datetimerange import DateTimeRange
-            time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-            print time_range.is_within("2015-03-22T10:05:00+0900")
-            print time_range.is_within("2015-03-22T10:15:00+0900")
-
-        .. parsed-literal::
-
-            True
-            False
-        """
-
-        self.validate_time_inversion()
-
-        try:
-            value = dateutil.parser.parse(x)
-        except AttributeError:
-            value = x
-
-        return self.start_datetime <= value <= self.end_datetime
 
     def is_intersection(self, x):
         """
@@ -454,8 +454,8 @@ class DateTimeRange(object):
         x.validate_time_inversion()
 
         if any([
-            self.is_within(x.start_datetime),
-            x.is_within(self.start_datetime),
+            x.start_datetime in self,
+            self.start_datetime in x,
         ]):
             self.set_start_datetime(max(self.start_datetime, x.start_datetime))
             self.set_end_datetime(min(self.end_datetime, x.end_datetime))
