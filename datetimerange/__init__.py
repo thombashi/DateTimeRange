@@ -5,7 +5,6 @@
 '''
 
 import datetime
-import re
 
 import dateutil.parser
 

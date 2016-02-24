@@ -11,10 +11,12 @@
    :backlinks: top
    :local:
 
-About
-=====
+Summary
+=======
 
-Python library for time range.
+DateTimeRange is a python library to handle the routine work associated
+with the time range, such as test whether a time is within the time
+range, get time intersection, truncating time etc.
 
 Installation
 ============
@@ -25,6 +27,9 @@ Installation
 
 Usage
 =====
+
+datetime.datetime instance can be used as an argument value as well as
+time-string in the below examples.
 
 Create
 ------
@@ -39,8 +44,8 @@ Create
 
     2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
 
-Change output format
---------------------
+Change string conversion format
+-------------------------------
 
 .. code:: python
 
@@ -54,8 +59,8 @@ Change output format
 
     2015/03/22 - 2015/03/22T10:10:00+0900
 
-Output elapsed time
--------------------
+Add elapsed time when conversion to string.
+-------------------------------------------
 
 .. code:: python
 
@@ -68,8 +73,8 @@ Output elapsed time
 
     2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900 (0:10:00)
 
-Change separator
-----------------
+Change separator of the converted string
+----------------------------------------
 
 .. code:: python
 
@@ -82,8 +87,8 @@ Change separator
 
     2015-03-22T10:00:00+0900 to 2015-03-22T10:10:00+0900
 
-Get start time as datetime
---------------------------
+Get start time as datetime.datetime
+-----------------------------------
 
 .. code:: python
 
@@ -95,8 +100,8 @@ Get start time as datetime
 
     datetime.datetime(2015, 3, 22, 10, 0, tzinfo=tzoffset(None, 32400))
 
-Get start time as string
-------------------------
+Get start time as string (formatted with ``start_time_format``)
+---------------------------------------------------------------
 
 .. code:: python
 
@@ -111,8 +116,8 @@ Get start time as string
     2015-03-22T10:00:00+0900
     2015/03/22 10:00:00
 
-Get end time as datetime
-------------------------
+Get end time as datetime.datetime
+---------------------------------
 
 .. code:: python
 
@@ -124,8 +129,8 @@ Get end time as datetime
 
     datetime.datetime(2015, 3, 22, 10, 10, tzinfo=tzoffset(None, 32400))
 
-Get end time as string
-----------------------
+Get end time as string (formatted with ``end_time_format``)
+-----------------------------------------------------------
 
 .. code:: python
 
@@ -140,8 +145,8 @@ Get end time as string
     2015-03-22T10:10:00+0900
     2015/03/22 10:10:00
 
-Get timedelta
--------------
+Get datetime.timedelta (from start\_datetime to the end\_datetime)
+------------------------------------------------------------------
 
 .. code:: python
 
@@ -153,8 +158,8 @@ Get timedelta
 
     datetime.timedelta(0, 600)
 
-Get timedelta as seconds
-------------------------
+Get timedelta as seconds (from start\_datetime to the end\_datetime)
+--------------------------------------------------------------------
 
 .. code:: python
 
@@ -198,8 +203,8 @@ Set end time
     NaT - NaT
     NaT - 2015-03-22T10:10:00+0900
 
-Set time range
---------------
+Set time range (set both start and end time)
+--------------------------------------------
 
 .. code:: python
 
@@ -214,8 +219,8 @@ Set time range
     NaT - NaT
     2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
 
-Check whether the time range is set or not
-------------------------------------------
+Test whether the time range is set
+----------------------------------
 
 .. code:: python
 
@@ -246,8 +251,8 @@ Validate time inversion
 
     time inversion
 
-Check whether the time range is valid or not
---------------------------------------------
+Test whether the time range is valid
+------------------------------------
 
 .. code:: python
 
@@ -265,8 +270,8 @@ Check whether the time range is valid or not
     False
     True
 
-Check whether a value within the time range
--------------------------------------------
+Test whether a value within the time range
+------------------------------------------
 
 .. code:: python
 
@@ -280,8 +285,8 @@ Check whether a value within the time range
     True
     False
 
-Check whether a value intersect the time range
-----------------------------------------------
+Test whether a value intersect the time range
+---------------------------------------------
 
 .. code:: python
 
@@ -344,7 +349,7 @@ Truncate time range
 Documentation
 =============
 
-http://datetimerange.readthedocs.org/en/latest/
+http://datetimerange.readthedocs.org/en/latest/datetimerange.html
 
 Dependencies
 ============
