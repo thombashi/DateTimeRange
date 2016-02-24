@@ -1,5 +1,4 @@
-DateTimeRange
-=============
+**DateTimeRange**
 
 .. image:: https://travis-ci.org/thombashi/DateTimeRange.svg?branch=master
     :target: https://travis-ci.org/thombashi/DateTimeRange
