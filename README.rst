@@ -1,5 +1,7 @@
 **DateTimeRange**
 
+.. image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
+   :target: https://pypi.python.org/pypi/DateTimeRange
 .. image:: https://travis-ci.org/thombashi/DateTimeRange.svg?branch=master
     :target: https://travis-ci.org/thombashi/DateTimeRange
 .. image:: https://ci.appveyor.com/api/projects/status/jhy67bw2y3c8s016/branch/master?svg=true
@@ -16,7 +18,7 @@ Summary
 
 DateTimeRange is a python library to handle the routine work associated
 with the time range, such as test whether a time is within the time
-range, get time intersection, truncating time etc.
+range, get time range intersection, truncating time range etc.
 
 Installation
 ============
@@ -31,17 +33,49 @@ Usage
 datetime.datetime instance can be used as an argument value as well as
 time-string in the below examples.
 
-Create
-------
+Create and convert to string
+----------------------------
 
 .. code:: python
 
     from datetimerange import DateTimeRange
     time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    time_range
+    str(time_range)
 
 ::
 
+    '2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900'
+
+Compare time range
+------------------
+
+.. code:: python
+
+    from datetimerange import DateTimeRange
+    lhs = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+    rhs = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+    print "lhs == rhs: ", lhs == rhs
+    print "lhs != rhs: ", lhs != rhs
+
+::
+
+    lhs == rhs:  True
+    lhs != rhs:  False
+
+Move the time range
+-------------------
+
+.. code:: python
+
+    import datetime
+    from datetimerange import DateTimeRange
+    value = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+    print value + datetime.timedelta(seconds=10 * 60)
+    print value - datetime.timedelta(seconds=10 * 60)
+
+::
+
+    2015-03-22T10:20:00+0900 - 2015-03-22T10:30:00+0900
     2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
 
 Change string conversion format
@@ -337,14 +371,14 @@ Truncate time range
     from datetimerange import DateTimeRange
     time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
     time_range.is_output_elapse = True
-    print time_range
+    print "before truncate: ", time_range
     time_range.truncate(10)
-    print time_range
+    print "after truncate:  ", time_range
 
 ::
 
-    2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900 (0:10:00)
-    2015-03-22T10:00:30+0900 - 2015-03-22T10:09:30+0900 (0:09:00)
+    before truncate:  2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900 (0:10:00)
+    after truncate:   2015-03-22T10:00:30+0900 - 2015-03-22T10:09:30+0900 (0:09:00)
 
 Documentation
 =============

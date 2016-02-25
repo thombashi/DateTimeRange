@@ -170,14 +170,186 @@ class Test_DateTimeRange_repr:
 
 class Test_DateTimeRange_eq:
 
-    def test_normal(self, datetimerange_normal):
-        assert datetimerange_normal == datetimerange_normal
+    @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
+        [
+            DateTimeRange(None, None),
+            DateTimeRange(None, None),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:20:00+0900"),
+            False,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T10:02:00+0900", "2015-03-22T10:10:00+0900"),
+            False,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T11:00:00+0900", "2015-03-22T12:10:00+0900"),
+            False,
+        ],
+    ])
+    def test_normal(self, lhs, rhs, expected):
+        assert (lhs == rhs) == expected
+
+
+class Test_DateTimeRange_neq:
+
+    @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
+        [
+            DateTimeRange(None, None),
+            DateTimeRange(None, None),
+            False,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            False,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:20:00+0900"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T10:02:00+0900", "2015-03-22T10:10:00+0900"),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            DateTimeRange(
+                "2015-03-22T11:00:00+0900", "2015-03-22T12:10:00+0900"),
+            True,
+        ],
+    ])
+    def test_normal(self, lhs, rhs, expected):
+        assert (lhs != rhs) == expected
+
+
+class Test_DateTimeRange_add:
+
+    def test_normal(self):
+        value = DateTimeRange(
+            "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        expected = DateTimeRange(
+            "2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+
+        new_datetimerange = value + datetime.timedelta(
+            seconds=10 * 60)
+        assert new_datetimerange == expected
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        ["2015-03-22T10:10:00+0900", TypeError],
+        [1, TypeError],
+        [None, TypeError],
+    ])
+    def test_exception(self, datetimerange_normal, value, expected):
+        with pytest.raises(TypeError):
+            datetimerange_normal + value
 
     def test_null(self, datetimerange_null):
-        assert datetimerange_null == datetimerange_null
+        with pytest.raises(TypeError):
+            datetimerange_null + datetime.timedelta(seconds=10 * 60)
 
-    def test_neq(self, datetimerange_normal, datetimerange_null):
-        assert datetimerange_normal != datetimerange_null
+
+class Test_DateTimeRange_iadd:
+
+    def test_normal(self):
+        value = DateTimeRange(
+            "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        expected = DateTimeRange(
+            "2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+
+        value += datetime.timedelta(seconds=10 * 60)
+        assert value == expected
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        ["2015-03-22T10:10:00+0900", TypeError],
+        [1, TypeError],
+        [None, TypeError],
+    ])
+    def test_exception(self, datetimerange_normal, value, expected):
+        with pytest.raises(TypeError):
+            datetimerange_normal += value
+
+    def test_null(self, datetimerange_null):
+        with pytest.raises(TypeError):
+            datetimerange_null += datetime.timedelta(seconds=10 * 60)
+
+
+class Test_DateTimeRange_sub:
+
+    def test_normal(self):
+        value = DateTimeRange(
+            "2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+        expected = DateTimeRange(
+            "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+
+        new_datetimerange = value - datetime.timedelta(
+            seconds=10 * 60)
+        assert new_datetimerange == expected
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        ["2015-03-22T10:10:00+0900", TypeError],
+        [1, TypeError],
+        [None, TypeError],
+    ])
+    def test_exception(self, datetimerange_normal, value, expected):
+        with pytest.raises(TypeError):
+            datetimerange_normal - value
+
+    def test_null(self, datetimerange_null):
+        with pytest.raises(TypeError):
+            datetimerange_null - datetime.timedelta(seconds=10 * 60)
+
+
+class Test_DateTimeRange_isub:
+
+    def test_normal(self):
+        value = DateTimeRange(
+            "2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+        expected = DateTimeRange(
+            "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+
+        value -= datetime.timedelta(seconds=10 * 60)
+        assert value == expected
+
+    @pytest.mark.parametrize(["value", "expected"], [
+        ["2015-03-22T10:10:00+0900", TypeError],
+        [1, TypeError],
+        [None, TypeError],
+    ])
+    def test_exception(self, datetimerange_normal, value, expected):
+        with pytest.raises(TypeError):
+            datetimerange_normal -= value
+
+    def test_null(self, datetimerange_null):
+        with pytest.raises(TypeError):
+            datetimerange_null -= datetime.timedelta(seconds=10 * 60)
 
 
 class Test_DateTimeRange_contains:

@@ -1,5 +1,4 @@
 from __future__ import with_statement
-import sys
 import setuptools
 
 
@@ -14,11 +13,16 @@ with open("test_requirements.txt") as f:
 
 setuptools.setup(
     name="DateTimeRange",
-    version="0.1.1",
+    version="0.1.2",
     author="Tsuyoshi Hombashi",
     author_email="gogogo.vm@gmail.com",
     url="https://github.com/thombashi/DateTimeRange",
-    description="Python library for time of range.",
+    description="""
+    Python library to handle the routine work associated with the time range,
+    such as test whether a time is within the time range,
+    get time intersection, truncating time etc.
+    """,
+    keywords="date time range",
     long_description=long_description,
     license="MIT License",
     include_package_data=True,
