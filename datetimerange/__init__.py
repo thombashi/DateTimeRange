@@ -56,6 +56,32 @@ class DateTimeRange(object):
             self.end_datetime == other.end_datetime,
         ])
 
+    def __ne__(self, other):
+        return any([
+            self.start_datetime != other.start_datetime,
+            self.end_datetime != other.end_datetime,
+        ])
+
+    def __add__(self, other):
+        return DateTimeRange(
+            self.start_datetime + other, self.end_datetime + other)
+
+    def __iadd__(self, other):
+        self.set_start_datetime(self.start_datetime + other)
+        self.set_end_datetime(self.end_datetime + other)
+
+        return self
+
+    def __sub__(self, other):
+        return DateTimeRange(
+            self.start_datetime - other, self.end_datetime - other)
+
+    def __isub__(self, other):
+        self.set_start_datetime(self.start_datetime - other)
+        self.set_end_datetime(self.end_datetime - other)
+
+        return self
+
     def __contains__(self, x):
         """
         :param datetime.datetime/str x:

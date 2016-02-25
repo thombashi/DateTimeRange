@@ -13,7 +13,7 @@ with open("test_requirements.txt") as f:
 
 setuptools.setup(
     name="DateTimeRange",
-    version="0.1.1",
+    version="0.1.2",
     author="Tsuyoshi Hombashi",
     author_email="gogogo.vm@gmail.com",
     url="https://github.com/thombashi/DateTimeRange",
