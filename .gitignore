@@ -62,3 +62,4 @@ README.md
 *.ipynb
 readme_converter.py
 README_HEADER.rst
+upgrade.sh
