@@ -52,7 +52,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'datetimerange'
+project = u'DateTimeRange'
 copyright = u'2016, Tsuyoshi Hombashi'
 author = u'Tsuyoshi Hombashi'
 
