@@ -606,8 +606,12 @@ class DateTimeRange(object):
         except AttributeError:
             return None
 
-        timezone_name = self.__get_timezone_name(
-            self.__get_timedelta_sec(dt.utcoffset()))
+        try:
+            timezone_name = self.__get_timezone_name(
+                self.__get_timedelta_sec(dt.utcoffset()))
+        except AttributeError:
+            return dt
+
         if timezone_name is None:
             return dt
 
