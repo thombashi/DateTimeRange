@@ -7,6 +7,7 @@
 import datetime
 
 import dateutil.parser
+import pytz
 
 
 class DateTimeRange(object):
@@ -23,6 +24,19 @@ class DateTimeRange(object):
 
             2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
     """
+
+    __COMMON_DST_TIMEZONE_TABLE = {
+        -36000: "America/Adak",  # -1000
+        -32400: "US/Alaska",  # -0900
+        -28800: "US/Pacific",  # -0800
+        -25200: "US/Mountain",  # -0700
+        -21600: "US/Central",  # -0600
+        -18000: "US/Eastern",  # -0500
+        -14400: "Canada/Atlantic",  # -0400
+        -12600: "America/St_Johns",  # -0330
+        -10800: "America/Miquelon",  # -0300
+        7200: "Africa/Tripoli",  # 0200
+    }
 
     NOT_A_TIME_STR = "NaT"
 
@@ -384,11 +398,7 @@ class DateTimeRange(object):
                 600.0
         """
 
-        dt = self.timedelta
-
-        return (
-            dt.days * 60 ** 2 * 24 +
-            float(dt.seconds) + float(dt.microseconds / (1000.0 ** 2)))
+        return self.__get_timedelta_sec(self.timedelta)
 
     def set_start_datetime(self, value):
         """
@@ -419,12 +429,7 @@ class DateTimeRange(object):
             self.__start_datetime = value
             return
 
-        try:
-            dt = dateutil.parser.parse(value)
-        except AttributeError:
-            dt = None
-
-        self.__start_datetime = dt
+        self.__start_datetime = self.__convert_datetime(value)
 
     def set_end_datetime(self, value):
         """
@@ -455,12 +460,7 @@ class DateTimeRange(object):
             self.__end_datetime = value
             return
 
-        try:
-            dt = dateutil.parser.parse(value)
-        except AttributeError:
-            dt = None
-
-        self.__end_datetime = dt
+        self.__end_datetime = self.__convert_datetime(value)
 
     def set_time_range(self, start, end):
         """
@@ -590,6 +590,36 @@ class DateTimeRange(object):
 
         self.__start_datetime += discard_time
         self.__end_datetime -= discard_time
+
+    @staticmethod
+    def __get_timedelta_sec(dt):
+        return int(
+            dt.days * 60 ** 2 * 24 + float(dt.seconds) +
+            float(dt.microseconds / (1000.0 ** 2)))
+
+    def __get_timezone_name(self, offset):
+        return self.__COMMON_DST_TIMEZONE_TABLE.get(offset)
+
+    def __convert_datetime(self, value):
+        try:
+            dt = dateutil.parser.parse(value)
+        except AttributeError:
+            return None
+
+        try:
+            timezone_name = self.__get_timezone_name(
+                self.__get_timedelta_sec(dt.utcoffset()))
+        except AttributeError:
+            return dt
+
+        if timezone_name is None:
+            return dt
+
+        pytz_timezone = pytz.timezone(timezone_name)
+        dt = dt.replace(tzinfo=None)
+        dt = pytz_timezone.localize(dt)
+
+        return dt
 
 
 def is_datetime(value):

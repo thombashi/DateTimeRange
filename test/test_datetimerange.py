@@ -88,6 +88,12 @@ class Test_DateTimeRange_repr:
                 "2015-03-22T09:00:00+0900 - 2015-03-22T10:10:00+0900"
             ],
             [
+                "2015-03-22T09:00:00", ISO_TIME_FORMAT,
+                "2015-03-22T10:10:00", ISO_TIME_FORMAT,
+                " - ", False,
+                "2015-03-22T09:00:00 - 2015-03-22T10:10:00"
+            ],
+            [
                 TEST_START_DATETIME, ISO_TIME_FORMAT,
                 TEST_END_DATETIME, ISO_TIME_FORMAT,
                 " - ", True,
@@ -130,6 +136,29 @@ class Test_DateTimeRange_repr:
         dtr = DateTimeRange(start, end, start_format, end_format)
         dtr.separator = separator
         dtr.is_output_elapse = is_output_elapse
+        assert str(dtr) == expected
+
+    @pytest.mark.parametrize(
+        [
+            "start", "start_format",
+            "end", "end_format",
+            "expected"
+        ],
+        [
+            [
+                "2015-03-08T00:00:00-0400", ISO_TIME_FORMAT,
+                "2015-03-08T12:00:00-0400", ISO_TIME_FORMAT,
+                "2015-03-08T00:00:00-0400 - 2015-03-08T12:00:00-0300"
+            ],
+            [
+                "2015-11-01T00:00:00-0400", ISO_TIME_FORMAT,
+                "2015-11-01T12:00:00-0400", ISO_TIME_FORMAT,
+                "2015-11-01T00:00:00-0300 - 2015-11-01T12:00:00-0400"
+            ],
+        ])
+    def test_daylight_saving_time(
+            self, start, start_format, end, end_format, expected):
+        dtr = DateTimeRange(start, end, start_format, end_format)
         assert str(dtr) == expected
 
     @pytest.mark.parametrize(
@@ -184,6 +213,11 @@ class Test_DateTimeRange_eq:
             True,
         ],
         [
+            DateTimeRange("2015-03-22T10:00:00", "2015-03-22T10:10:00"),
+            DateTimeRange("2015-03-22T10:00:00", "2015-03-22T10:10:00"),
+            True,
+        ],
+        [
             DateTimeRange(
                 "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
             DateTimeRange(
@@ -225,6 +259,11 @@ class Test_DateTimeRange_neq:
             False,
         ],
         [
+            DateTimeRange("2015-03-22T10:00:00", "2015-03-22T10:10:00"),
+            DateTimeRange("2015-03-22T10:00:00", "2015-03-22T10:10:00"),
+            False,
+        ],
+        [
             DateTimeRange(
                 "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
             DateTimeRange(
@@ -252,14 +291,25 @@ class Test_DateTimeRange_neq:
 
 class Test_DateTimeRange_add:
 
-    def test_normal(self):
-        value = DateTimeRange(
-            "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-        expected = DateTimeRange(
-            "2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+    @pytest.mark.parametrize(["value", "add_value", "expected"], [
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+            datetime.timedelta(seconds=10 * 60),
+            DateTimeRange(
+                "2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22T10:00:00", "2015-03-22T10:10:00"),
+            datetime.timedelta(seconds=-10 * 60),
+            DateTimeRange(
+                "2015-03-22T09:50:00", "2015-03-22T10:00:00")
+        ],
+    ])
+    def test_normal(self, value, add_value, expected):
+        new_datetimerange = value + add_value
 
-        new_datetimerange = value + datetime.timedelta(
-            seconds=10 * 60)
         assert new_datetimerange == expected
 
     @pytest.mark.parametrize(["value", "expected"], [
@@ -391,6 +441,22 @@ class Test_DateTimeRange_timedelta:
         assert datetimerange_normal.timedelta == datetime.timedelta(
             seconds=10 * 60)
 
+    @pytest.mark.parametrize(["start", "end", "expected"], [
+        [
+            "2015-03-08T00:00:00-0400",
+            "2015-03-08T12:00:00-0400",
+            datetime.timedelta(0, 39600)  # 11 hours
+        ],
+        [
+            "2015-11-01T00:00:00-0400",
+            "2015-11-01T12:00:00-0400",
+            datetime.timedelta(0, 46800)  # 13 hours
+        ],
+    ])
+    def test_daylight_saving_time(self, start, end, expected):
+        dtr = DateTimeRange(start, end)
+        assert dtr.timedelta == expected
+
     def test_inversion(self, datetimerange_inversion):
         assert datetimerange_inversion.timedelta == datetime.timedelta(
             -1, 85800)
@@ -463,38 +529,35 @@ class Test_DateTimeRange_is_intersection:
         ],
         [
             DateTimeRange(
-                "2015-01-22T09:50:00 JST",
-                "2015-01-22T10:00:00 JST"),
+                "2015-01-22T09:50:00+0900", "2015-01-22T10:00:00+0900"),
             DateTimeRange(
-                "2015-01-22T10:10:00 JST",
-                "2015-03-22T10:20:00 JST"),
+                "2015-01-22T10:10:00+0900", "2015-03-22T10:20:00+0900"),
+            False,
+        ],
+        [
+            DateTimeRange("2015-01-22T09:50:00", "2015-01-22T10:00:00"),
+            DateTimeRange("2015-01-22T10:10:00", "2015-03-22T10:20:00"),
             False,
         ],
         [
             DateTimeRange(
-                "2015-01-22T09:50:00 JST",
-                "2015-01-22T10:00:00 JST"),
+                "2015-01-22T09:50:00+0900", "2015-01-22T10:00:00+0900"),
             DateTimeRange(
-                "2015-01-22T10:00:00 JST",
-                "2015-03-22T10:20:00 JST"),
+                "2015-01-22T10:00:00+0900", "2015-03-22T10:20:00+0900"),
             True,
         ],
         [
             DateTimeRange(
-                "2015-01-22T09:50:00 JST",
-                "2015-01-22T10:05:00 JST"),
+                "2015-01-22T09:50:00+0900", "2015-01-22T10:05:00+0900"),
             DateTimeRange(
-                "2015-01-22T10:00:00 JST",
-                "2015-03-22T10:20:00 JST"),
+                "2015-01-22T10:00:00+0900", "2015-03-22T10:20:00+0900"),
             True,
         ],
         [
             DateTimeRange(
-                "2015-01-22T10:00:00 JST",
-                "2015-03-22T10:20:00 JST"),
+                "2015-01-22T10:00:00+0900", "2015-03-22T10:20:00+0900"),
             DateTimeRange(
-                "2015-01-22T09:50:00 JST",
-                "2015-01-22T10:05:00 JST"),
+                "2015-01-22T09:50:00+0900", "2015-01-22T10:05:00+0900"),
             True,
         ],
         [
