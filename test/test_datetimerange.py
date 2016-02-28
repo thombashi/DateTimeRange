@@ -136,6 +136,29 @@ class Test_DateTimeRange_repr:
         [
             "start", "start_format",
             "end", "end_format",
+            "expected"
+        ],
+        [
+            [
+                "2015-03-08T00:00:00-0400", ISO_TIME_FORMAT,
+                "2015-03-08T12:00:00-0400", ISO_TIME_FORMAT,
+                "2015-03-08T00:00:00-0400 - 2015-03-08T12:00:00-0300"
+            ],
+            [
+                "2015-11-01T00:00:00-0400", ISO_TIME_FORMAT,
+                "2015-11-01T12:00:00-0400", ISO_TIME_FORMAT,
+                "2015-11-01T00:00:00-0300 - 2015-11-01T12:00:00-0400"
+            ],
+        ])
+    def test_daylight_saving_time(
+            self, start, start_format, end, end_format, expected):
+        dtr = DateTimeRange(start, end, start_format, end_format)
+        assert str(dtr) == expected
+
+    @pytest.mark.parametrize(
+        [
+            "start", "start_format",
+            "end", "end_format",
             "separator", "is_output_elapse", "expected"
         ],
         [
@@ -390,6 +413,22 @@ class Test_DateTimeRange_timedelta:
     def test_normal(self, datetimerange_normal):
         assert datetimerange_normal.timedelta == datetime.timedelta(
             seconds=10 * 60)
+
+    @pytest.mark.parametrize(["start", "end", "expected"], [
+        [
+            "2015-03-08T00:00:00-0400",
+            "2015-03-08T12:00:00-0400",
+            datetime.timedelta(0, 39600)  # 11 hours
+        ],
+        [
+            "2015-11-01T00:00:00-0400",
+            "2015-11-01T12:00:00-0400",
+            datetime.timedelta(0, 46800)  # 13 hours
+        ],
+    ])
+    def test_daylight_saving_time(self, start, end, expected):
+        dtr = DateTimeRange(start, end)
+        assert dtr.timedelta == expected
 
     def test_inversion(self, datetimerange_inversion):
         assert datetimerange_inversion.timedelta == datetime.timedelta(
