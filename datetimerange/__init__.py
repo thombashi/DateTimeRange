@@ -597,7 +597,7 @@ class DateTimeRange(object):
             dt.days * 60 ** 2 * 24 + float(dt.seconds) +
             float(dt.microseconds / (1000.0 ** 2)))
 
-    def __get_timezone_name(self, offset):
+    def __get_dst_timezone_name(self, offset):
         return self.__COMMON_DST_TIMEZONE_TABLE.get(offset)
 
     def __convert_datetime(self, value):
@@ -607,15 +607,15 @@ class DateTimeRange(object):
             return None
 
         try:
-            timezone_name = self.__get_timezone_name(
+            dst_timezone_name = self.__get_dst_timezone_name(
                 self.__get_timedelta_sec(dt.utcoffset()))
         except AttributeError:
             return dt
 
-        if timezone_name is None:
+        if dst_timezone_name is None:
             return dt
 
-        pytz_timezone = pytz.timezone(timezone_name)
+        pytz_timezone = pytz.timezone(dst_timezone_name)
         dt = dt.replace(tzinfo=None)
         dt = pytz_timezone.localize(dt)
 
