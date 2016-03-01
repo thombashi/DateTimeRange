@@ -384,12 +384,35 @@ Documentation
 
 http://datetimerange.readthedocs.org/en/latest/datetimerange.html
 
+Note
+----
+
+Use not the daylight saving time (DST) offset, but the standard time
+offset when you use datetime string as an argument. DateTimeRange class
+will automatically calculate daylight saving time. Some examples are
+below
+
+.. code:: console
+
+    >>>from datetimerange import DateTimeRange
+    >>>time_range = DateTimeRange("2015-03-08T00:00:00-0400", "2015-03-08T12:00:00-0400")
+    >>>time_range.timedelta
+    datetime.timedelta(0, 39600)  # 11 hours
+
+.. code:: console
+
+    >>>from datetimerange import DateTimeRange
+    >>>time_range = DateTimeRange("2015-11-01T00:00:00-0400", "2015-11-01T12:00:00-0400")
+    >>>time_range.timedelta
+    datetime.timedelta(0, 46800)  # 13 hours
+
 Dependencies
 ============
 
 Python 2.5+ or 3.3+
 
 -  `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
+-  `pytz <https://pypi.python.org/pypi/pytz>`__
 
 Test dependencies
 -----------------
