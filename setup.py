@@ -20,17 +20,17 @@ with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
 
 setuptools.setup(
     name="DateTimeRange",
-    version="0.1.3",
+    version="0.2.0",
     author="Tsuyoshi Hombashi",
     author_email="gogogo.vm@gmail.com",
     url="https://github.com/thombashi/DateTimeRange",
-    description=summary,
-    keywords=["date", "time", "range"],
-    long_description=long_description,
+    keywords=["datetimerange", "date", "time", "range"],
     license="MIT License",
+    description=summary,
+    long_description=long_description,
     include_package_data=True,
-    packages=setuptools.find_packages(exclude=['test*']),
     install_requires=install_requires,
+    packages=setuptools.find_packages(exclude=['test*']),
     setup_requires=["pytest-runner"],
     tests_require=tests_require,
     classifiers=[

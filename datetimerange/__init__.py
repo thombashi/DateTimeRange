@@ -7,6 +7,7 @@
 import datetime
 
 import dateutil.parser
+import dateutil.relativedelta as rdelta
 import pytz
 
 
@@ -490,6 +491,109 @@ class DateTimeRange(object):
 
         self.set_start_datetime(start)
         self.set_end_datetime(end)
+
+    @staticmethod
+    def __compare_relativedelta(lhs, rhs):
+        if lhs.years < rhs.years:
+            return -1
+        if lhs.years > rhs.years:
+            return 1
+
+        if lhs.months < rhs.months:
+            return -1
+        if lhs.months > rhs.months:
+            return 1
+
+        if lhs.days < rhs.days:
+            return -1
+        if lhs.days > rhs.days:
+            return 1
+
+        if lhs.hours < rhs.hours:
+            return -1
+        if lhs.hours > rhs.hours:
+            return 1
+
+        if lhs.minutes < rhs.minutes:
+            return -1
+        if lhs.minutes > rhs.minutes:
+            return 1
+
+        if lhs.seconds < rhs.seconds:
+            return -1
+        if lhs.seconds > rhs.seconds:
+            return 1
+
+        if lhs.microseconds < rhs.microseconds:
+            return -1
+        if lhs.microseconds > rhs.microseconds:
+            return 1
+
+        return 0
+
+    def __compare_timedelta(self, lhs, seconds):
+        try:
+            rhs = datetime.timedelta(seconds=seconds)
+
+            if lhs < rhs:
+                return -1
+            if lhs > rhs:
+                return 1
+
+            return 0
+        except TypeError:
+            return self.__compare_relativedelta(
+                lhs.normalized(), rdelta.relativedelta(seconds=seconds))
+
+    def range(self, step):
+        """
+        Return an iterator object.
+
+        :param datetime.timedelta/dateutil.relativedelta.relativedelta step:
+            Step of iteration.
+
+        :Examples:
+
+            .. code:: python
+
+                import datetime
+                from datetimerange import DateTimeRange
+
+                time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
+                for value in time_range.range(datetime.timedelta(days=1)):
+                    print value
+
+
+            .. parsed-literal::
+
+                2015-01-01 00:00:00+09:00
+                2015-01-02 00:00:00+09:00
+                2015-01-03 00:00:00+09:00
+                2015-01-04 00:00:00+09:00
+        """
+
+        if self.__compare_timedelta(step, 0) == 0:
+            raise ValueError("step must be not zero")
+
+        is_inversion = False
+        try:
+            self.validate_time_inversion()
+        except ValueError:
+            is_inversion = True
+
+        if not is_inversion:
+            if self.__compare_timedelta(step, seconds=0) < 0:
+                raise ValueError(
+                    "invalid step: expect greater than 0, actual=%s" % (step))
+        else:
+            if self.__compare_timedelta(step, seconds=0) > 0:
+                raise ValueError(
+                    "invalid step: expect less than 0, actual=%s" % (step))
+
+        current_datetime = self.start_datetime
+        while current_datetime <= self.end_datetime:
+            yield current_datetime
+            current_datetime = current_datetime + step
 
     def intersection(self, x):
         """
