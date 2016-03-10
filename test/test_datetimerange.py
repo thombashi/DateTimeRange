@@ -7,6 +7,7 @@
 import datetime
 
 import dateutil
+from dateutil.relativedelta import *
 from dateutil.parser import *
 import pytest
 
@@ -517,6 +518,133 @@ class Test_DateTimeRange_is_valid_timerange:
     ])
     def test_normal(self, value, expected):
         assert value.is_valid_timerange() == expected
+
+
+class Test_DateTimeRange_range:
+
+    @pytest.mark.parametrize(["value", "step", "expected"], [
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 1, 0)),
+            datetime.timedelta(seconds=20),
+            [
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 0, 20),
+                datetime.datetime(2015, 3, 22, 0, 0, 40),
+                datetime.datetime(2015, 3, 22, 0, 1, 00),
+            ],
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 23, 0, 0, 0)),
+            relativedelta(hours=+6),
+            [
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 6, 0, 0),
+                datetime.datetime(2015, 3, 22, 12, 0, 0),
+                datetime.datetime(2015, 3, 22, 18, 0, 0),
+                datetime.datetime(2015, 3, 23, 0, 0, 0),
+            ],
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 23, 0, 0, 0)),
+            relativedelta(months=+6),
+            [
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+            ],
+        ],
+        [
+            DateTimeRange(
+                "2015-01-01T00:00:00+0900",
+                "2016-01-01T00:00:00+0900"),
+            relativedelta(months=+4),
+            [
+                parse("2015-01-01T00:00:00+0900"),
+                parse("2015-05-01T00:00:00+0900"),
+                parse("2015-09-01T00:00:00+0900"),
+                parse("2016-01-01T00:00:00+0900"),
+            ],
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 23, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 0, 0)),
+            relativedelta(hours=-6),
+            [
+                datetime.datetime(2015, 3, 23, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 18, 0, 0),
+                datetime.datetime(2015, 3, 22, 12, 0, 0),
+                datetime.datetime(2015, 3, 22, 6, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+            ],
+        ],
+    ])
+    def test_normal(self, value, step, expected):
+        for value_item, expected_item in zip(value.range(step), expected):
+            assert value_item == expected_item
+
+    @pytest.mark.parametrize(["value", "step", "expected"], [
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 1, 0)),
+            relativedelta(seconds=-60),
+            ValueError,
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 1, 0),
+                datetime.datetime(2015, 3, 22, 0, 0, 0)),
+            relativedelta(seconds=+60),
+            ValueError,
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 1, 0)),
+            None,
+            AttributeError,
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 1, 0)),
+            1,
+            AttributeError,
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 1, 0)),
+            datetime.timedelta(seconds=0),
+            ValueError,
+        ],
+        [
+            DateTimeRange(
+                datetime.datetime(2015, 3, 22, 0, 0, 0),
+                datetime.datetime(2015, 3, 22, 0, 1, 0)),
+            relativedelta(months=+0),
+            ValueError,
+        ],
+        [
+            None,
+            relativedelta(months=+4),
+            AttributeError,
+        ],
+        [
+            10,
+            relativedelta(months=+4),
+            AttributeError,
+        ],
+    ])
+    def test_exception(self, value, step, expected):
+        with pytest.raises(expected):
+            for i in value.range(step):
+                pass
 
 
 class Test_DateTimeRange_is_intersection:
