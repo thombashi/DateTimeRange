@@ -551,6 +551,8 @@ class DateTimeRange(object):
 
         :param datetime.timedelta/dateutil.relativedelta.relativedelta step:
             Step of iteration.
+        :return: iterator
+        :rtype: iterator
 
         :Examples:
 
@@ -562,7 +564,6 @@ class DateTimeRange(object):
                 time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
                 for value in time_range.range(datetime.timedelta(days=1)):
                     print value
-
 
             .. parsed-literal::
 
@@ -728,7 +729,7 @@ class DateTimeRange(object):
 
 def is_datetime(value):
     """
-    :return: ``True``` if type of `value` is datetime.datetime.
+    :return: ``True`` if type of `value` is datetime.datetime.
     :rtype: bool
     """
 
