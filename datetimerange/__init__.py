@@ -102,7 +102,7 @@ class DateTimeRange(object):
     def __contains__(self, x):
         """
         :param datetime.datetime/str x:
-            datetime to compare.
+            datetime or datetimerange to compare.
             Parse and convert to datetime if the value type is string.
         :return: ``True`` if the ``x`` is within the time range
         :rtype: bool
@@ -115,6 +115,8 @@ class DateTimeRange(object):
                 time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print "2015-03-22T10:05:00+0900" in time_range
                 print "2015-03-22T10:15:00+0900" in time_range
+                time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
+                print time_range_smaller in time_range
 
             .. parsed-literal::
 
@@ -127,6 +129,9 @@ class DateTimeRange(object):
         """
 
         self.validate_time_inversion()
+
+        if isinstance(x, DateTimeRange):
+            return x.start_datetime >= self.start_datetime and x.end_datetime <= self.end_datetime
 
         try:
             value = dateutil.parser.parse(x)
@@ -647,7 +652,7 @@ class DateTimeRange(object):
 
             .. parsed-literal::
 
-                2015-03-22T10:00:00+0900 - 2015-03-22T10:15:00+0900        
+                2015-03-22T10:00:00+0900 - 2015-03-22T10:15:00+0900
         """
 
         self.validate_time_inversion()
