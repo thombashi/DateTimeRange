@@ -56,10 +56,9 @@ docs/_build/
 # PyBuilder
 target/
 /.idea
-convert_readme.sh
 desktop.ini
 README.md
-*.ipynb
 readme_converter.py
 README_HEADER.rst
 upgrade.sh
+ipynb/.ipynb_checkpoints/DateTimeRange-checkpoint.ipynb
