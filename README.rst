@@ -92,8 +92,8 @@ Change string conversion format
 
     2015/03/22 - 2015/03/22T10:10:00+0900
 
-Add elapsed time when conversion to string.
--------------------------------------------
+Add elapsed time when conversion to string
+------------------------------------------
 
 .. code:: python
 
@@ -204,6 +204,41 @@ Get timedelta as seconds (from start\_datetime to the end\_datetime)
 
     600.0
 
+Get iterator
+------------
+
+.. code:: python
+
+    import datetime
+    from datetimerange import DateTimeRange
+
+    time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
+    for value in time_range.range(datetime.timedelta(days=1)):
+        print value
+
+::
+
+    2015-01-01 00:00:00+09:00
+    2015-01-02 00:00:00+09:00
+    2015-01-03 00:00:00+09:00
+    2015-01-04 00:00:00+09:00
+
+.. code:: python
+
+    from datetimerange import DateTimeRange
+    from dateutil.relativedelta import relativedelta
+
+    time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2016-01-01T00:00:00+0900")
+    for value in time_range.range(relativedelta(months=+4)):
+        print value
+
+::
+
+    2015-01-01 00:00:00+09:00
+    2015-05-01 00:00:00+09:00
+    2015-09-01 00:00:00+09:00
+    2016-01-01 00:00:00+09:00
+
 Set start time
 --------------
 
@@ -313,10 +348,14 @@ Test whether a value within the time range
     print "2015-03-22T10:05:00+0900" in time_range
     print "2015-03-22T10:15:00+0900" in time_range
 
+    time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
+    print time_range_smaller in time_range
+
 ::
 
     True
     False
+    True
 
 Test whether a value intersect the time range
 ---------------------------------------------
