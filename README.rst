@@ -156,7 +156,7 @@ Truncate time range
 For more information
 --------------------
 More examples are available at 
-http://simplesqlite.readthedocs.org/en/latest/pages/examples/index.html
+http://datetimerange.readthedocs.org/en/latest/pages/examples/index.html
 
 Examples with IPython Notebook is also available at 
 http://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
