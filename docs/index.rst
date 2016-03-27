@@ -3,21 +3,29 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to datetimerange's documentation!
+Welcome to DateTimeRange's documentation!
 =========================================
 
-Contents:
+
+GitHub repository
+=================
+
+https://github.com/thombashi/DateTimeRange
+
 
 .. toctree::
+   :caption: Table of Contents
    :maxdepth: 4
+   :numbered:
 
-   datetimerange
+   pages/introduction
+   pages/installation
+   pages/examples/index
+   pages/reference/index
+   pages/genindex
 
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
