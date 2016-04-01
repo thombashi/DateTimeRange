@@ -13,17 +13,35 @@ import pytz
 
 class DateTimeRange(object):
     """
-   :Examples:
+    The class that represents the time range.
+
+    :param datetime.datetime/str start: |param_start_datetime|
+    :param datetime.datetime/str end: |param_end_datetime|
+
+    :Examples:
 
         .. code:: python
 
             from datetimerange import DateTimeRange
-            time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+            time_range = DateTimeRange(
+                "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
             time_range
 
         .. parsed-literal::
 
             2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
+
+    .. py:attribute:: start_time_format
+
+        Conversion format string for :py:attr:`.start_datetime`.
+
+        .. seealso:: :py:meth:`.get_start_time_str`
+
+    .. py:attribute:: end_time_format
+
+        Conversion format string for :py:attr:`.end_datetime`.
+
+        .. seealso:: :py:meth:`.get_end_time_str`
     """
 
     __COMMON_DST_TIMEZONE_TABLE = {
@@ -103,8 +121,8 @@ class DateTimeRange(object):
         """
         :param datetime.datetime/str x:
             datetime or datetimerange to compare.
-            Parse and convert to datetime if the value type is string.
-        :return: ``True`` if the ``x`` is within the time range
+            Parse and convert to datetime if the value type is ``str``.
+        :return: |True| if the ``x`` is within the time range
         :rtype: bool
 
         :Examples:
@@ -112,10 +130,12 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print "2015-03-22T10:05:00+0900" in time_range
                 print "2015-03-22T10:15:00+0900" in time_range
-                time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
+                time_range_smaller = DateTimeRange(
+                    "2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
                 print time_range_smaller in time_range
 
             .. parsed-literal::
@@ -124,8 +144,8 @@ class DateTimeRange(object):
                 False
 
         .. seealso::
-            :py:meth:`validate_time_inversion`
 
+            :py:meth:`.validate_time_inversion`
         """
 
         self.validate_time_inversion()
@@ -143,7 +163,7 @@ class DateTimeRange(object):
     @property
     def start_datetime(self):
         """
-        :return: Start time of the time range
+        :return: Start time of the time range.
         :rtype: datetime.datetime
 
         :Examples:
@@ -151,7 +171,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.start_datetime
 
             .. parsed-literal::
@@ -164,7 +185,7 @@ class DateTimeRange(object):
     @property
     def end_datetime(self):
         """
-        :return: End time of the time range
+        :return: End time of the time range.
         :rtype: datetime.datetime
 
         :Examples:
@@ -172,7 +193,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.end_datetime
 
             .. parsed-literal::
@@ -185,7 +207,8 @@ class DateTimeRange(object):
     @property
     def timedelta(self):
         """
-        :return: (end_time - start_time) as datetime.timedelta
+        :return:
+            (|attr_end_datetime| - |attr_start_datetime|) as |timedelta|
         :rtype: datetime.timedelta
 
         :Examples:
@@ -193,7 +216,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.timedelta
 
             .. parsed-literal::
@@ -205,7 +229,9 @@ class DateTimeRange(object):
 
     def is_set(self):
         """
-        :return: True if start_datetime and end_datetime is not None
+        :return:
+            |True| if both |attr_start_datetime| and
+            |attr_end_datetime| were not |None|.
         :rtype: bool
 
         :Examples:
@@ -215,7 +241,8 @@ class DateTimeRange(object):
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
                 print time_range.is_set()
-                time_range.set_time_range("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range.set_time_range(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print time_range.is_set()
 
             .. parsed-literal::
@@ -233,17 +260,20 @@ class DateTimeRange(object):
         """
         Check time inversion of the time range.
 
-        :raises ValueError: If ``start_time`` is bigger than ``end_time``
+        :raises ValueError:
+            If |attr_start_datetime| is
+            bigger than |attr_end_datetime|.
         :raises TypeError:
-            Any one of ``start_time`` and ``end_time``,
-            or both, is not a appropriate datetime value.
+            Any one of |attr_start_datetime| and |attr_end_datetime|,
+            or both is inappropriate datetime value.
 
         :Examples:
 
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:00:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:10:00+0900", "2015-03-22T10:00:00+0900")
                 try:
                     time_range.validate_time_inversion()
                 except ValueError:
@@ -265,7 +295,9 @@ class DateTimeRange(object):
 
     def is_valid_timerange(self):
         """
-        :return: ``True`` if the timerange is not null and not time inversion.
+        :return:
+            |True| if the time range is
+            not null and not time inversion.
         :rtype: bool
 
         :Examples:
@@ -275,9 +307,11 @@ class DateTimeRange(object):
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
                 print time_range.is_valid_timerange()
-                time_range.set_time_range("2015-03-22T10:20:00+0900", "2015-03-22T10:10:00+0900")
+                time_range.set_time_range(
+                    "2015-03-22T10:20:00+0900", "2015-03-22T10:10:00+0900")
                 print time_range.is_valid_timerange()
-                time_range.set_time_range("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range.set_time_range(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print time_range.is_valid_timerange()
 
             .. parsed-literal::
@@ -288,8 +322,8 @@ class DateTimeRange(object):
 
         .. seealso::
 
-            :py:meth:`is_set`
-            :py:meth:`validate_time_inversion`
+            :py:meth:`.is_set`
+            :py:meth:`.validate_time_inversion`
         """
 
         try:
@@ -301,8 +335,8 @@ class DateTimeRange(object):
 
     def is_intersection(self, x):
         """
-        :param datetime.datetime x: datetime to compare
-        :return: ``True`` if intersect with ``x``
+        :param DateTimeRange x: Value to compare
+        :return: |True| if intersect with ``x``
         :rtype: bool
 
         :Examples:
@@ -310,17 +344,15 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                x = DateTimeRange(
+                    "2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
                 time_range.is_intersection(x)
 
             .. parsed-literal::
 
                 True
-
-        .. seealso::
-
-            :py:meth:`intersection`
         """
 
         import copy
@@ -333,8 +365,9 @@ class DateTimeRange(object):
     def get_start_time_str(self):
         """
         :return:
-            ``start_datetime`` as string formatted with ``start_time_format``.
-            Return `'NaT'` if invalid datetime or format.
+            |attr_start_datetime| as |str| formatted with
+            |attr_start_time_format|.
+            Return |NaT| if invalid datetime or format.
         :rtype: str
 
         :Examples:
@@ -342,7 +375,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print time_range.get_start_time_str()
                 time_range.start_time_format = "%Y/%m/%d %H:%M:%S"
                 print time_range.get_start_time_str()
@@ -361,8 +395,9 @@ class DateTimeRange(object):
     def get_end_time_str(self):
         """
         :return:
-            ``end_datetime`` as string formatted with ``end_time_format``.
-            Return `'NaT'` if invalid datetime or format.
+            |attr_end_datetime| as a |str| formatted with
+            |attr_end_time_format|.
+            Return |NaT| if invalid datetime or format.
         :rtype: str
 
         :Examples:
@@ -370,7 +405,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print time_range.get_end_time_str()
                 time_range.end_time_format = "%Y/%m/%d %H:%M:%S"
                 print time_range.get_end_time_str()
@@ -388,7 +424,7 @@ class DateTimeRange(object):
 
     def get_timedelta_second(self):
         """
-        :return: (end_time - start_time) as seconds
+        :return: (|attr_end_datetime| - |attr_start_datetime|) as seconds
         :rtype: float
 
         :Examples:
@@ -396,7 +432,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.get_timedelta_second()
 
             .. parsed-literal::
@@ -410,10 +447,7 @@ class DateTimeRange(object):
         """
         Set the start time of the time range.
 
-        :param datetime.datetime/str value:
-            Value to set.
-            Parse and convert to datetime if the value type is string.
-            Parser engine of datetime string is the dateutil.parser.
+        :param datetime.datetime/str value: |param_start_datetime|
 
         :Examples:
 
@@ -441,10 +475,7 @@ class DateTimeRange(object):
         """
         Set the end time of the time range.
 
-        :param datetime.datetime/str value:
-            Value to set.
-            Parse and convert to datetime if the value type is string.
-            Parser engine of datetime string is the dateutil.parser.
+        :param datetime.datetime/str value: |param_end_datetime|
 
         :Examples:
 
@@ -470,8 +501,8 @@ class DateTimeRange(object):
 
     def set_time_range(self, start, end):
         """
-        :param datetime.datetime/str start:
-        :param datetime.datetime/str end:
+        :param datetime.datetime/str start: |param_start_datetime|
+        :param datetime.datetime/str end: |param_end_datetime|
 
         :Examples:
 
@@ -480,18 +511,14 @@ class DateTimeRange(object):
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
                 print time_range
-                time_range.set_time_range("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range.set_time_range(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 print time_range
 
             .. parsed-literal::
 
                 NaT - NaT
                 2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
-
-        .. seealso::
-
-            :py:meth:`set_start_datetime`
-            :py:meth:`set_end_datetime`
         """
 
         self.set_start_datetime(start)
@@ -566,7 +593,8 @@ class DateTimeRange(object):
                 import datetime
                 from datetimerange import DateTimeRange
 
-                time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
+                time_range = DateTimeRange(
+                    "2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
                 for value in time_range.range(datetime.timedelta(days=1)):
                     print value
 
@@ -603,17 +631,21 @@ class DateTimeRange(object):
 
     def intersection(self, x):
         """
-        Newly set a time range that overlaps the input and the current time range.
+        Newly set a time range that overlaps
+        the input and the current time range.
 
         :param DateTimeRange x:
+            Value to compute intersection with the current time range.
 
         :Examples:
 
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                x = DateTimeRange(
+                    "2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
                 time_range.intersection(x)
                 time_range
 
@@ -637,17 +669,21 @@ class DateTimeRange(object):
 
     def encompass(self, x):
         """
-        Newly set a time range that encompasses the input and the current time range.
+        Newly set a time range that encompasses
+        the input and the current time range.
 
         :param DateTimeRange x:
+            Value to compute encompass with the current time range.
 
         :Examples:
 
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                x = DateTimeRange(
+                    "2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
                 time_range.encompass(x)
                 time_range
 
@@ -666,14 +702,15 @@ class DateTimeRange(object):
         """
         Truncate ``percentage`` / 2 [%] of whole time from first and last time.
 
-        :param float percentage: Percentage of truncate
+        :param float percentage: Percentage of truncate.
 
         :Examples:
 
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange(
+                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.is_output_elapse = True
                 print time_range
                 time_range.truncate(10)
@@ -734,7 +771,7 @@ class DateTimeRange(object):
 
 def is_datetime(value):
     """
-    :return: ``True`` if type of `value` is datetime.datetime.
+    :return: |True| if the type of `value` is |datetime|.
     :rtype: bool
     """
 
