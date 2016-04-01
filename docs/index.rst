@@ -6,13 +6,6 @@
 Welcome to DateTimeRange's documentation!
 =========================================
 
-
-GitHub repository
-=================
-
-https://github.com/thombashi/DateTimeRange
-
-
 .. toctree::
    :caption: Table of Contents
    :maxdepth: 4
@@ -23,6 +16,7 @@ https://github.com/thombashi/DateTimeRange
    pages/examples/index
    pages/reference/index
    pages/genindex
+   pages/links
 
 
 Indices and tables

@@ -6,9 +6,8 @@
 
 import datetime
 
-import dateutil
-from dateutil.relativedelta import *
-from dateutil.parser import *
+from dateutil.relativedelta import relativedelta
+from dateutil.parser import parse
 import pytest
 
 from datetimerange import DateTimeRange
@@ -410,8 +409,18 @@ class Test_DateTimeRange_contains:
         [END_DATETIME_TEXT, True],
         [TEST_START_DATETIME, True],
         [TEST_END_DATETIME, True],
-        [DateTimeRange("2015-03-22 10:05:00" + TIMEZONE, "2015-03-22 10:06:00" + TIMEZONE), True],
-        [DateTimeRange("2015-03-22 10:10:01" + TIMEZONE, "2015-03-22 10:11:01" + TIMEZONE), False],
+        [
+            DateTimeRange(
+                "2015-03-22 10:05:00" + TIMEZONE,
+                "2015-03-22 10:06:00" + TIMEZONE),
+            True,
+        ],
+        [
+            DateTimeRange(
+                "2015-03-22 10:10:01" + TIMEZONE,
+                "2015-03-22 10:11:01" + TIMEZONE),
+            False
+        ],
         ["2015-03-22 09:59:59" + TIMEZONE, False],
         ["2015-03-22 10:10:01" + TIMEZONE, False],
     ])

@@ -2,7 +2,7 @@ Examples
 ========
 
 :py:class:`datetime.datetime` instance can be used as an argument value as well as
-time-string in the below examples.
+time-string in the following examples.
 
 .. note::
 
