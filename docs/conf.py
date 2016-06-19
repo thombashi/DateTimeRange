@@ -373,10 +373,13 @@ builtin = u"""
 .. |True| replace:: :py:obj:`True`
 .. |None| replace:: :py:obj:`None`
 
-.. |int| replace:: :py:class:`str`
-.. |float| replace:: :py:class:`str`
-.. |str| replace:: :py:class:`str`
 .. |bool| replace:: :py:class:`bool`
+.. |dict| replace:: :py:class:`dict`
+.. |int| replace:: :py:class:`int`
+.. |list| replace:: :py:class:`list`
+.. |float| replace:: :py:class:`float`
+.. |str| replace:: :py:class:`str`
+.. |tuple| replace:: :py:obj:`tuple`
 """
 
 module = u"""

@@ -9,7 +9,7 @@ Installation
 Dependencies
 ============
 
-Python 2.5+ or 3.3+
+Python 2.6+ or 3.3+
 
 -  `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
 -  `pytz <https://pypi.python.org/pypi/pytz>`__
