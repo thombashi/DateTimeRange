@@ -2,8 +2,6 @@ language: python
 
 matrix:
   include:
-    - python: 2.5
-      env: TOXENV=python2.5
     - python: 2.6
       env: TOXENV=python2.6
     - python: 2.7
