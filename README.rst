@@ -10,7 +10,6 @@ DateTimeRange
 .. image:: https://coveralls.io/repos/github/thombashi/DateTimeRange/badge.svg?branch=master
     :target: https://coveralls.io/github/thombashi/DateTimeRange?branch=master
 
-
 Summary
 -------
 
@@ -18,12 +17,8 @@ DateTimeRange is a python library to handle routine work associated with a time 
 such as test whether a time is within the time range,
 get time range intersection, truncating the time range, etc.
 
-
-
-
-Usage
-=====
-
+Examples
+========
 
 Create and convert to string
 ----------------------------
@@ -155,6 +150,7 @@ Truncate time range
 
 For more information
 --------------------
+
 More examples are available at 
 http://datetimerange.readthedocs.org/en/latest/pages/examples/index.html
 
@@ -172,7 +168,7 @@ Installation
 Dependencies
 ============
 
-Python 2.5+ or 3.3+
+Python 2.6+ or 3.3+
 
 -  `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
 -  `pytz <https://pypi.python.org/pypi/pytz>`__
@@ -188,5 +184,4 @@ Documentation
 =============
 
 http://datetimerange.readthedocs.org/en/latest/
-
 
