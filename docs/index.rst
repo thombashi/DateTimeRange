@@ -11,7 +11,7 @@ Welcome to DateTimeRange's documentation!
    :maxdepth: 4
    :numbered:
 
-   pages/introduction
+   pages/introduction/index
    pages/installation
    pages/examples/index
    pages/reference/index
