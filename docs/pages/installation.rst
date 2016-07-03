@@ -11,8 +11,8 @@ Dependencies
 
 Python 2.6+ or 3.3+
 
--  `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
--  `pytz <https://pypi.python.org/pypi/pytz>`__
+- `DataPropery <https://github.com/thombashi/DataProperty>`__
+- `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
 
 Test dependencies
 -----------------
