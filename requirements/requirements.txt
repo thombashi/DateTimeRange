@@ -1,2 +1,2 @@
+DataProperty>=0.5.3
 python-dateutil>=2.5.0
-pytz
