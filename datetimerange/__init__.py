@@ -6,9 +6,9 @@
 
 import datetime
 
+import dataproperty as dp
 import dateutil.parser
 import dateutil.relativedelta as rdelta
-import pytz
 
 
 class DateTimeRange(object):
@@ -465,11 +465,9 @@ class DateTimeRange(object):
                 2015-03-22T10:00:00+0900 - NaT
         """
 
-        if is_datetime(value):
-            self.__start_datetime = value
-            return
-
-        self.__start_datetime = self.__convert_datetime(value)
+        data_prop = dp.DataProperty(value)
+        self.__validate_value(data_prop)
+        self.__start_datetime = data_prop.data
 
     def set_end_datetime(self, value):
         """
@@ -493,11 +491,9 @@ class DateTimeRange(object):
                 NaT - 2015-03-22T10:10:00+0900
         """
 
-        if is_datetime(value):
-            self.__end_datetime = value
-            return
-
-        self.__end_datetime = self.__convert_datetime(value)
+        data_prop = dp.DataProperty(value)
+        self.__validate_value(data_prop)
+        self.__end_datetime = data_prop.data
 
     def set_time_range(self, start, end):
         """
@@ -738,41 +734,12 @@ class DateTimeRange(object):
         self.__start_datetime += discard_time
         self.__end_datetime -= discard_time
 
+    def __validate_value(self, data_prop):
+        if data_prop.typecode not in [dp.Typecode.DATETIME, dp.Typecode.NONE]:
+            raise ValueError("invalid datetime value")
+
     @staticmethod
     def __get_timedelta_sec(dt):
         return int(
             dt.days * 60 ** 2 * 24 + float(dt.seconds) +
             float(dt.microseconds / (1000.0 ** 2)))
-
-    def __get_dst_timezone_name(self, offset):
-        return self.__COMMON_DST_TIMEZONE_TABLE.get(offset)
-
-    def __convert_datetime(self, value):
-        try:
-            dt = dateutil.parser.parse(value)
-        except AttributeError:
-            return None
-
-        try:
-            dst_timezone_name = self.__get_dst_timezone_name(
-                self.__get_timedelta_sec(dt.utcoffset()))
-        except AttributeError:
-            return dt
-
-        if dst_timezone_name is None:
-            return dt
-
-        pytz_timezone = pytz.timezone(dst_timezone_name)
-        dt = dt.replace(tzinfo=None)
-        dt = pytz_timezone.localize(dt)
-
-        return dt
-
-
-def is_datetime(value):
-    """
-    :return: |True| if the type of `value` is |datetime|.
-    :rtype: bool
-    """
-
-    return value is not None and isinstance(value, datetime.datetime)

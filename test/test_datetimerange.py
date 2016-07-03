@@ -832,7 +832,6 @@ class Test_DateTimeRange_set_start_datetime:
         [START_DATETIME_TEXT, TEST_START_DATETIME],
         [TEST_START_DATETIME, TEST_START_DATETIME],
         [None, None],
-        [11111, None],
     ])
     def test_normal(self, value, expected):
         dtr = DateTimeRange(TEST_END_DATETIME, TEST_END_DATETIME)
@@ -841,6 +840,7 @@ class Test_DateTimeRange_set_start_datetime:
 
     @pytest.mark.parametrize(["value", "expected"], [
         ["invalid time string", ValueError],
+        [11111, ValueError],
     ])
     def test_null_start(self, datetimerange_null_start, value, expected):
         with pytest.raises(expected):
