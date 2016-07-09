@@ -841,6 +841,7 @@ class Test_DateTimeRange_set_start_datetime:
     @pytest.mark.parametrize(["value", "expected"], [
         ["invalid time string", ValueError],
         [11111, ValueError],
+        ["3.3.5", ValueError],
     ])
     def test_null_start(self, datetimerange_null_start, value, expected):
         with pytest.raises(expected):
@@ -861,6 +862,8 @@ class Test_DateTimeRange_set_end_datetime:
 
     @pytest.mark.parametrize(["value", "expected"], [
         ["invalid time string", ValueError],
+        [11111, ValueError],
+        ["3.3.5", ValueError],
     ])
     def test_null_start(self, datetimerange_null_start, value, expected):
         with pytest.raises(expected):
