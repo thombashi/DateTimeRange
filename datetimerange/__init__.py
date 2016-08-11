@@ -4,6 +4,7 @@
 .. codeauthor:: Tsuyoshi Hombashi <gogogo.vm@gmail.com>
 """
 
+from __future__ import division
 import datetime
 
 import dataproperty as dp
@@ -715,8 +716,7 @@ class DateTimeRange(object):
         if percentage == 0:
             return
 
-        discard_time = self.timedelta // int(100) * \
-            int(percentage / 2.0)
+        discard_time = self.timedelta // int(100) * int(percentage / 2)
 
         self.__start_datetime += discard_time
         self.__end_datetime -= discard_time
@@ -729,4 +729,4 @@ class DateTimeRange(object):
     def __get_timedelta_sec(dt):
         return int(
             dt.days * 60 ** 2 * 24 + float(dt.seconds) +
-            float(dt.microseconds / (1000.0 ** 2)))
+            dt.microseconds / (1000.0 ** 2))
