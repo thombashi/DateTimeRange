@@ -4,6 +4,7 @@
 .. codeauthor:: Tsuyoshi Hombashi <gogogo.vm@gmail.com>
 """
 
+from __future__ import division
 import datetime
 
 import dataproperty as dp
@@ -44,19 +45,6 @@ class DateTimeRange(object):
         .. seealso:: :py:meth:`.get_end_time_str`
     """
 
-    __COMMON_DST_TIMEZONE_TABLE = {
-        -36000: "America/Adak",  # -1000
-        -32400: "US/Alaska",  # -0900
-        -28800: "US/Pacific",  # -0800
-        -25200: "US/Mountain",  # -0700
-        -21600: "US/Central",  # -0600
-        -18000: "US/Eastern",  # -0500
-        -14400: "Canada/Atlantic",  # -0400
-        -12600: "America/St_Johns",  # -0330
-        -10800: "America/Miquelon",  # -0300
-        7200: "Africa/Tripoli",  # 0200
-    }
-
     NOT_A_TIME_STR = "NaT"
 
     def __init__(
@@ -79,7 +67,7 @@ class DateTimeRange(object):
         ]
 
         if self.is_output_elapse:
-            suffix = " (%s)" % (self.end_datetime - self.start_datetime)
+            suffix = " ({})".format(self.end_datetime - self.start_datetime)
         else:
             suffix = ""
 
@@ -289,7 +277,7 @@ class DateTimeRange(object):
             raise TypeError
 
         if self.start_datetime > self.end_datetime:
-            message = "time inversion found: %s > %s" % (
+            message = "time inversion found: {:s} > {:s}".format(
                 str(self.start_datetime), str(self.end_datetime))
             raise ValueError(message)
 
@@ -614,11 +602,13 @@ class DateTimeRange(object):
         if not is_inversion:
             if self.__compare_timedelta(step, seconds=0) < 0:
                 raise ValueError(
-                    "invalid step: expect greater than 0, actual=%s" % (step))
+                    "invalid step: expect greater than 0, actual={}".format(
+                        step))
         else:
             if self.__compare_timedelta(step, seconds=0) > 0:
                 raise ValueError(
-                    "invalid step: expect less than 0, actual=%s" % (step))
+                    "invalid step: expect less than 0, actual={}".format(
+                        step))
 
         current_datetime = self.start_datetime
         while current_datetime <= self.end_datetime:
@@ -728,8 +718,7 @@ class DateTimeRange(object):
         if percentage == 0:
             return
 
-        discard_time = self.timedelta // int(100) * \
-            int(percentage / 2.0)
+        discard_time = self.timedelta // int(100) * int(percentage / 2)
 
         self.__start_datetime += discard_time
         self.__end_datetime -= discard_time
@@ -742,4 +731,4 @@ class DateTimeRange(object):
     def __get_timedelta_sec(dt):
         return int(
             dt.days * 60 ** 2 * 24 + float(dt.seconds) +
-            float(dt.microseconds / (1000.0 ** 2)))
+            dt.microseconds / (1000.0 ** 2))
