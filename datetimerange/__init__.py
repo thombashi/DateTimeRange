@@ -67,7 +67,7 @@ class DateTimeRange(object):
         ]
 
         if self.is_output_elapse:
-            suffix = " ({:s})".format(self.end_datetime - self.start_datetime)
+            suffix = " ({})".format(self.end_datetime - self.start_datetime)
         else:
             suffix = ""
 
@@ -602,12 +602,12 @@ class DateTimeRange(object):
         if not is_inversion:
             if self.__compare_timedelta(step, seconds=0) < 0:
                 raise ValueError(
-                    "invalid step: expect greater than 0, actual={:s}".format(
+                    "invalid step: expect greater than 0, actual={}".format(
                         step))
         else:
             if self.__compare_timedelta(step, seconds=0) > 0:
                 raise ValueError(
-                    "invalid step: expect less than 0, actual={:s}".format(
+                    "invalid step: expect less than 0, actual={}".format(
                         step))
 
         current_datetime = self.start_datetime
