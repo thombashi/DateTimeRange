@@ -143,7 +143,7 @@ class DateTimeRange(object):
 
         try:
             value = dateutil.parser.parse(x)
-        except AttributeError:
+        except (TypeError, AttributeError):
             value = x
 
         return self.start_datetime <= value <= self.end_datetime
