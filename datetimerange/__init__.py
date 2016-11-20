@@ -728,7 +728,7 @@ class DateTimeRange(object):
 
     def __validate_value(self, data_prop):
         if data_prop.typecode not in [dp.Typecode.DATETIME, dp.Typecode.NONE]:
-            raise ValueError("invalid datetime value")
+            raise ValueError("invalid datetime value: {}".format(data_prop))
 
     @staticmethod
     def __get_timedelta_sec(dt):
