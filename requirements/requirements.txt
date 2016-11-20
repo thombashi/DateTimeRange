@@ -1,2 +1,2 @@
-DataProperty>=0.12.0
+DataProperty>=0.13.0
 python-dateutil>=2.6.0

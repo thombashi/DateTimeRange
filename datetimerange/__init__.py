@@ -453,7 +453,8 @@ class DateTimeRange(object):
                 2015-03-22T10:00:00+0900 - NaT
         """
 
-        data_prop = dp.DataProperty(value)
+        data_prop = dp.DataProperty(
+            value, is_strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
         self.__validate_value(data_prop)
         self.__start_datetime = data_prop.data
 
@@ -479,7 +480,9 @@ class DateTimeRange(object):
                 NaT - 2015-03-22T10:10:00+0900
         """
 
-        data_prop = dp.DataProperty(value)
+        data_prop = dp.DataProperty(
+            value, is_strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
+        print value, data_prop
         self.__validate_value(data_prop)
         self.__end_datetime = data_prop.data
 
