@@ -26,7 +26,7 @@ ISO_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
 def setup_module(module):
     import locale
 
-    locale.setlocale(locale.LC_ALL, 'C')
+    locale.setlocale(locale.LC_ALL, ('C', "ascii"))
 
 
 @pytest.fixture
