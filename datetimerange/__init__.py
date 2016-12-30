@@ -5,6 +5,7 @@
 """
 
 from __future__ import division
+from __future__ import unicode_literals
 import datetime
 
 import dataproperty as dp
