@@ -455,7 +455,7 @@ class DateTimeRange(object):
         """
 
         data_prop = dp.DataProperty(
-            value, is_strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
+            value, strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
         self.__validate_value(data_prop)
         self.__start_datetime = data_prop.data
 
@@ -482,7 +482,7 @@ class DateTimeRange(object):
         """
 
         data_prop = dp.DataProperty(
-            value, is_strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
+            value, strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
         self.__validate_value(data_prop)
         self.__end_datetime = data_prop.data
 
