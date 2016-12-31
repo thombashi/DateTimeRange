@@ -158,7 +158,7 @@ For more information
 --------------------
 
 More examples are available at 
-http://datetimerange.readthedocs.org/en/latest/pages/examples/index.html
+http://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
 Examples with IPython Notebook is also available at 
 http://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
@@ -189,5 +189,5 @@ Test dependencies
 Documentation
 =============
 
-http://datetimerange.readthedocs.org/en/latest/
+http://datetimerange.rtfd.io/
 
