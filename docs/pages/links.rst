@@ -1,11 +1,7 @@
 Links
 =====
 
-- pip: tool for installing python packages
-    - https://pip.pypa.io/en/stable/
-- GitHub repository
-    - https://github.com/thombashi/DateTimeRange
-- Issue tracker
-    - https://github.com/thombashi/DateTimeRange/issues
-- PyPI
-    - https://pypi.python.org/pypi/DateTimeRange
+- `pip: A tool for installing python packages <https://pip.pypa.io/en/stable/>`__
+- `GitHub repository <https://github.com/thombashi/DateTimeRange>`__
+- `Issue tracker <https://github.com/thombashi/DateTimeRange/issues>`__
+- `PyPI <https://pypi.python.org/pypi/DateTimeRange>`__
