@@ -434,7 +434,7 @@ class DateTimeRange(object):
 
         return self.__get_timedelta_sec(self.timedelta)
 
-    def set_start_datetime(self, value):
+    def set_start_datetime(self, value, timezone=None):
         """
         Set the start time of the time range.
 
@@ -463,11 +463,14 @@ class DateTimeRange(object):
 
         try:
             self.__start_datetime = typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN).convert()
+                value,
+                strict_level=typepy.StrictLevel.MIN,
+                timezone=timezone
+            ).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 
-    def set_end_datetime(self, value):
+    def set_end_datetime(self, value, timezone=None):
         """
         Set the end time of the time range.
 
@@ -496,7 +499,10 @@ class DateTimeRange(object):
 
         try:
             self.__end_datetime = typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN).convert()
+                value,
+                strict_level=typepy.StrictLevel.MIN,
+                timezone=timezone
+            ).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 

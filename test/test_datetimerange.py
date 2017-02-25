@@ -12,6 +12,7 @@ from datetimerange import DateTimeRange
 from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta
 import pytest
+import pytz
 
 
 TIMEZONE = "+0900"
@@ -829,16 +830,29 @@ class Test_DateTimeRange_get_timedelta_second:
 
 class Test_DateTimeRange_set_start_datetime:
 
-    @pytest.mark.parametrize(["value", "expected"], [
-        [START_DATETIME_TEXT, TEST_START_DATETIME],
-        [TEST_START_DATETIME, TEST_START_DATETIME],
-        [1485685623, datetime.datetime(2017, 1, 29, 19, 27, 3)],
-        ["1485685623", datetime.datetime(2017, 1, 29, 19, 27, 3)],
-        [None, None],
+    @pytest.mark.parametrize(["value", "timezone", "expected"], [
+        [START_DATETIME_TEXT, None, TEST_START_DATETIME],
+        [TEST_START_DATETIME, None, TEST_START_DATETIME],
+        [
+            1485685623, pytz.utc,
+            pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))
+        ],
+        [
+            "1485685623", pytz.utc,
+            pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))
+        ],
+        [
+            1485685623,
+            pytz.timezone("Asia/Tokyo"),
+            pytz.timezone("Asia/Tokyo").localize(
+                datetime.datetime(2017, 1, 29, 19, 27, 3))
+        ],
+        [None, None, None],
     ])
-    def test_normal(self, value, expected):
+    def test_normal(self, value, timezone, expected):
         dtr = DateTimeRange(TEST_END_DATETIME, TEST_END_DATETIME)
-        dtr.set_start_datetime(value)
+        dtr.set_start_datetime(value, timezone=timezone)
+
         assert dtr.start_datetime == expected
 
     @pytest.mark.parametrize(["value", "expected"], [
@@ -852,16 +866,29 @@ class Test_DateTimeRange_set_start_datetime:
 
 class Test_DateTimeRange_set_end_datetime:
 
-    @pytest.mark.parametrize(["value", "expected"], [
-        [START_DATETIME_TEXT, TEST_START_DATETIME],
-        [TEST_START_DATETIME, TEST_START_DATETIME],
-        [1485685623, datetime.datetime(2017, 1, 29, 19, 27, 3)],
-        ["1485685623", datetime.datetime(2017, 1, 29, 19, 27, 3)],
-        [None, None],
+    @pytest.mark.parametrize(["value", "timezone", "expected"], [
+        [START_DATETIME_TEXT, None, TEST_START_DATETIME],
+        [TEST_START_DATETIME, None, TEST_START_DATETIME],
+        [
+            1485685623, pytz.utc,
+            pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))
+        ],
+        [
+            "1485685623", pytz.utc,
+            pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))
+        ],
+        [
+            1485685623,
+            pytz.timezone("Asia/Tokyo"),
+            pytz.timezone("Asia/Tokyo").localize(
+                datetime.datetime(2017, 1, 29, 19, 27, 3))
+        ],
+        [None, None, None],
     ])
-    def test_normal(self, value, expected):
+    def test_normal(self, value, timezone, expected):
         dtr = DateTimeRange(TEST_END_DATETIME, TEST_END_DATETIME)
-        dtr.set_end_datetime(value)
+        dtr.set_end_datetime(value, timezone=timezone)
+
         assert dtr.end_datetime == expected
 
     @pytest.mark.parametrize(["value", "expected"], [
