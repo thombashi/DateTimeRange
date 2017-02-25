@@ -176,8 +176,8 @@ Dependencies
 
 Python 2.7 or 3.3+
 
-- `DataPropery <https://github.com/thombashi/DataProperty>`__
 - `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
+- `typepy <https://github.com/thombashi/typepy>`__
 
 Test dependencies
 -----------------

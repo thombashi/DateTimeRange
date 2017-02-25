@@ -5,8 +5,11 @@
 .. codeauthor:: Tsuyoshi Hombashi <gogogo.vm@gmail.com>
 """
 
+from __future__ import unicode_literals
+import os.path
 import sys
 
+from path import Path
 import readmemaker
 
 
@@ -18,6 +21,7 @@ def write_examples(maker):
     maker.set_indent_level(0)
     maker.write_chapter("Examples")
 
+    example_root = Path(os.path.join("pages", "examples"))
     example_file_list = [
         "Create_and_convert_to_string.rst",
         "Get_iterator.rst",
@@ -29,7 +33,7 @@ def write_examples(maker):
     ]
 
     for example_file in example_file_list:
-        maker.write_example_file(example_file)
+        maker.write_file(example_root.joinpath(example_file))
 
     maker.inc_indent_level()
     maker.write_chapter("For more information")
