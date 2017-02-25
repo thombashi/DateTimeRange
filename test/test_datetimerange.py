@@ -5,13 +5,13 @@
 """
 
 from __future__ import unicode_literals
+
 import datetime
 
-from dateutil.relativedelta import relativedelta
-from dateutil.parser import parse
-import pytest
-
 from datetimerange import DateTimeRange
+from dateutil.parser import parse
+from dateutil.relativedelta import relativedelta
+import pytest
 
 
 TIMEZONE = "+0900"
@@ -832,6 +832,8 @@ class Test_DateTimeRange_set_start_datetime:
     @pytest.mark.parametrize(["value", "expected"], [
         [START_DATETIME_TEXT, TEST_START_DATETIME],
         [TEST_START_DATETIME, TEST_START_DATETIME],
+        [1485685623, parse("2017-01-29 19:27:03")],
+        ["1485685623", parse("2017-01-29 19:27:03")],
         [None, None],
     ])
     def test_normal(self, value, expected):
@@ -841,7 +843,6 @@ class Test_DateTimeRange_set_start_datetime:
 
     @pytest.mark.parametrize(["value", "expected"], [
         ["invalid time string", ValueError],
-        [11111, ValueError],
         ["3.3.5", ValueError],
     ])
     def test_null_start(self, datetimerange_null_start, value, expected):
@@ -854,6 +855,8 @@ class Test_DateTimeRange_set_end_datetime:
     @pytest.mark.parametrize(["value", "expected"], [
         [START_DATETIME_TEXT, TEST_START_DATETIME],
         [TEST_START_DATETIME, TEST_START_DATETIME],
+        [1485685623, parse("2017-01-29 19:27:03")],
+        ["1485685623", parse("2017-01-29 19:27:03")],
         [None, None],
     ])
     def test_normal(self, value, expected):
@@ -863,7 +866,6 @@ class Test_DateTimeRange_set_end_datetime:
 
     @pytest.mark.parametrize(["value", "expected"], [
         ["invalid time string", ValueError],
-        [11111, ValueError],
         ["3.3.5", ValueError],
     ])
     def test_null_start(self, datetimerange_null_start, value, expected):

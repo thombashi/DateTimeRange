@@ -6,10 +6,12 @@
 
 from __future__ import division
 from __future__ import unicode_literals
+
 import datetime
 
-import dataproperty as dp
 import dateutil.parser
+import typepy
+
 import dateutil.relativedelta as rdelta
 
 
@@ -437,6 +439,7 @@ class DateTimeRange(object):
         Set the start time of the time range.
 
         :param datetime.datetime/str value: |param_start_datetime|
+        :raises ValueError: If the value is invalid as a datetime value.
 
         :Examples:
 
@@ -454,16 +457,22 @@ class DateTimeRange(object):
                 2015-03-22T10:00:00+0900 - NaT
         """
 
-        data_prop = dp.DataProperty(
-            value, strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
-        self.__validate_value(data_prop)
-        self.__start_datetime = data_prop.data
+        if value is None:
+            self.__start_datetime = None
+            return
+
+        try:
+            self.__start_datetime = typepy.type.DateTime(
+                value, strict_level=typepy.StrictLevel.MIN).convert()
+        except typepy.TypeConversionError as e:
+            raise ValueError(e)
 
     def set_end_datetime(self, value):
         """
         Set the end time of the time range.
 
         :param datetime.datetime/str value: |param_end_datetime|
+        :raises ValueError: If the value is invalid as a datetime value.
 
         :Examples:
 
@@ -481,10 +490,15 @@ class DateTimeRange(object):
                 NaT - 2015-03-22T10:10:00+0900
         """
 
-        data_prop = dp.DataProperty(
-            value, strict_type_mapping=dp.NOT_STRICT_TYPE_MAPPING)
-        self.__validate_value(data_prop)
-        self.__end_datetime = data_prop.data
+        if value is None:
+            self.__end_datetime = None
+            return
+
+        try:
+            self.__end_datetime = typepy.type.DateTime(
+                value, strict_level=typepy.StrictLevel.MIN).convert()
+        except typepy.TypeConversionError as e:
+            raise ValueError(e)
 
     def set_time_range(self, start, end):
         """
