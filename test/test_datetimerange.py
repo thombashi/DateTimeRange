@@ -832,8 +832,8 @@ class Test_DateTimeRange_set_start_datetime:
     @pytest.mark.parametrize(["value", "expected"], [
         [START_DATETIME_TEXT, TEST_START_DATETIME],
         [TEST_START_DATETIME, TEST_START_DATETIME],
-        [1485685623, parse("2017-01-29 19:27:03")],
-        ["1485685623", parse("2017-01-29 19:27:03")],
+        [1485685623, datetime.datetime(2017, 1, 29, 19, 27, 3)],
+        ["1485685623", datetime.datetime(2017, 1, 29, 19, 27, 3)],
         [None, None],
     ])
     def test_normal(self, value, expected):
@@ -855,8 +855,8 @@ class Test_DateTimeRange_set_end_datetime:
     @pytest.mark.parametrize(["value", "expected"], [
         [START_DATETIME_TEXT, TEST_START_DATETIME],
         [TEST_START_DATETIME, TEST_START_DATETIME],
-        [1485685623, parse("2017-01-29 19:27:03")],
-        ["1485685623", parse("2017-01-29 19:27:03")],
+        [1485685623, datetime.datetime(2017, 1, 29, 19, 27, 3)],
+        ["1485685623", datetime.datetime(2017, 1, 29, 19, 27, 3)],
         [None, None],
     ])
     def test_normal(self, value, expected):
