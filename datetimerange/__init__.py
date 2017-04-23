@@ -747,7 +747,8 @@ class DateTimeRange(object):
         self.__end_datetime -= discard_time
 
     def __validate_value(self, data_prop):
-        if data_prop.typecode not in [dp.Typecode.DATETIME, dp.Typecode.NONE]:
+        if data_prop.typecode not in [
+                typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
             raise ValueError("invalid datetime value: {}".format(data_prop))
 
     @staticmethod
