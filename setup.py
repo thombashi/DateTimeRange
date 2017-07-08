@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 """
-.. codeauthor:: Tsuyoshi Hombashi <gogogo.vm@gmail.com>
+.. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
 from __future__ import unicode_literals
@@ -35,7 +35,7 @@ setuptools.setup(
     name="DateTimeRange",
     version="0.3.2",
     author="Tsuyoshi Hombashi",
-    author_email="gogogo.vm@gmail.com",
+    author_email="tsuyoshi.hombashi@gmail.com",
     url="https://github.com/thombashi/DateTimeRange",
     keywords=["datetimerange", "date", "time", "range"],
     license="MIT License",
