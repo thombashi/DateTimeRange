@@ -68,7 +68,7 @@ def datetimerange_null_start():
     return value
 
 
-class Test_DateTimeRange_repr:
+class Test_DateTimeRange_repr(object):
 
     @pytest.mark.parametrize(
         [
@@ -199,7 +199,7 @@ class Test_DateTimeRange_repr:
             str(dtr)
 
 
-class Test_DateTimeRange_eq:
+class Test_DateTimeRange_eq(object):
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
         [
@@ -245,7 +245,7 @@ class Test_DateTimeRange_eq:
         assert (lhs == rhs) == expected
 
 
-class Test_DateTimeRange_neq:
+class Test_DateTimeRange_neq(object):
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
         [
@@ -291,7 +291,7 @@ class Test_DateTimeRange_neq:
         assert (lhs != rhs) == expected
 
 
-class Test_DateTimeRange_add:
+class Test_DateTimeRange_add(object):
 
     @pytest.mark.parametrize(["value", "add_value", "expected"], [
         [
@@ -328,7 +328,7 @@ class Test_DateTimeRange_add:
             datetimerange_null + datetime.timedelta(seconds=10 * 60)
 
 
-class Test_DateTimeRange_iadd:
+class Test_DateTimeRange_iadd(object):
 
     def test_normal(self):
         value = DateTimeRange(
@@ -353,7 +353,7 @@ class Test_DateTimeRange_iadd:
             datetimerange_null += datetime.timedelta(seconds=10 * 60)
 
 
-class Test_DateTimeRange_sub:
+class Test_DateTimeRange_sub(object):
 
     def test_normal(self):
         value = DateTimeRange(
@@ -379,7 +379,7 @@ class Test_DateTimeRange_sub:
             datetimerange_null - datetime.timedelta(seconds=10 * 60)
 
 
-class Test_DateTimeRange_isub:
+class Test_DateTimeRange_isub(object):
 
     def test_normal(self):
         value = DateTimeRange(
@@ -404,7 +404,7 @@ class Test_DateTimeRange_isub:
             datetimerange_null -= datetime.timedelta(seconds=10 * 60)
 
 
-class Test_DateTimeRange_contains:
+class Test_DateTimeRange_contains(object):
 
     @pytest.mark.parametrize(["value", "expected"], [
         [START_DATETIME_TEXT, True],
@@ -449,7 +449,7 @@ class Test_DateTimeRange_contains:
             value in datetimerange_null_start
 
 
-class Test_DateTimeRange_timedelta:
+class Test_DateTimeRange_timedelta(object):
 
     def test_normal(self, datetimerange_normal):
         assert datetimerange_normal.timedelta == datetime.timedelta(
@@ -484,7 +484,7 @@ class Test_DateTimeRange_timedelta:
             datetimerange_null_start.timedelta
 
 
-class Test_DateTimeRange_is_set:
+class Test_DateTimeRange_is_set(object):
 
     @pytest.mark.parametrize(["value", "expected"], [
         [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), True],
@@ -497,7 +497,7 @@ class Test_DateTimeRange_is_set:
         assert value.is_set() == expected
 
 
-class Test_DateTimeRange_validate_time_inversion:
+class Test_DateTimeRange_validate_time_inversion(object):
 
     @pytest.mark.parametrize(["value"], [
         [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME)],
@@ -520,7 +520,7 @@ class Test_DateTimeRange_validate_time_inversion:
             value.validate_time_inversion()
 
 
-class Test_DateTimeRange_is_valid_timerange:
+class Test_DateTimeRange_is_valid_timerange(object):
 
     @pytest.mark.parametrize(["value", "expected"], [
         [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), True],
@@ -533,7 +533,7 @@ class Test_DateTimeRange_is_valid_timerange:
         assert value.is_valid_timerange() == expected
 
 
-class Test_DateTimeRange_range:
+class Test_DateTimeRange_range(object):
 
     @pytest.mark.parametrize(["value", "step", "expected"], [
         [
@@ -660,7 +660,7 @@ class Test_DateTimeRange_range:
                 pass
 
 
-class Test_DateTimeRange_is_intersection:
+class Test_DateTimeRange_is_intersection(object):
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
         [
@@ -755,7 +755,7 @@ class Test_DateTimeRange_is_intersection:
             lhs.is_intersection(rhs)
 
 
-class Test_DateTimeRange_get_start_time_str:
+class Test_DateTimeRange_get_start_time_str(object):
 
     @pytest.mark.parametrize(["time_format", "expected"], [
         [ISO_TIME_FORMAT, START_DATETIME_TEXT],
@@ -783,7 +783,7 @@ class Test_DateTimeRange_get_start_time_str:
             datetimerange_normal.get_start_time_str()
 
 
-class Test_DateTimeRange_get_end_time_str:
+class Test_DateTimeRange_get_end_time_str(object):
 
     @pytest.mark.parametrize(["time_format", "expected"], [
         [ISO_TIME_FORMAT, END_DATETIME_TEXT],
@@ -811,7 +811,7 @@ class Test_DateTimeRange_get_end_time_str:
             datetimerange_normal.get_end_time_str()
 
 
-class Test_DateTimeRange_get_timedelta_second:
+class Test_DateTimeRange_get_timedelta_second(object):
 
     def test_normal(self, datetimerange_normal):
         assert datetimerange_normal.get_timedelta_second() == 600
@@ -828,7 +828,7 @@ class Test_DateTimeRange_get_timedelta_second:
             datetimerange_null_start.get_timedelta_second()
 
 
-class Test_DateTimeRange_set_start_datetime:
+class Test_DateTimeRange_set_start_datetime(object):
 
     @pytest.mark.parametrize(["value", "timezone", "expected"], [
         [START_DATETIME_TEXT, None, TEST_START_DATETIME],
@@ -864,7 +864,7 @@ class Test_DateTimeRange_set_start_datetime:
             datetimerange_null_start.set_start_datetime(value)
 
 
-class Test_DateTimeRange_set_end_datetime:
+class Test_DateTimeRange_set_end_datetime(object):
 
     @pytest.mark.parametrize(["value", "timezone", "expected"], [
         [START_DATETIME_TEXT, None, TEST_START_DATETIME],
@@ -900,7 +900,7 @@ class Test_DateTimeRange_set_end_datetime:
             datetimerange_null_start.set_end_datetime(value)
 
 
-class Test_DateTimeRange_set_time_range:
+class Test_DateTimeRange_set_time_range(object):
 
     @pytest.mark.parametrize(["start", "end", "expected"], [
         [
@@ -934,7 +934,7 @@ class Test_DateTimeRange_set_time_range:
             dtr.set_time_range(start, end)
 
 
-class Test_DateTimeRange_intersection:
+class Test_DateTimeRange_intersection(object):
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
         [
@@ -1043,7 +1043,7 @@ class Test_DateTimeRange_intersection:
             lhs.intersection(rhs)
 
 
-class Test_DateTimeRange_encompass:
+class Test_DateTimeRange_encompass(object):
 
     @pytest.mark.parametrize(["lhs", "rhs", "expected"], [
         [
@@ -1132,7 +1132,7 @@ class Test_DateTimeRange_encompass:
             lhs.encompass(rhs)
 
 
-class Test_DateTimeRange_truncate:
+class Test_DateTimeRange_truncate(object):
 
     @pytest.mark.parametrize(["value", "expected"], [
         [
