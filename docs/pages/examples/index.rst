@@ -1,6 +1,5 @@
 Examples
 ========
-
 :py:class:`datetime.datetime` instance can be used as an argument value as well as
 time-string in the following examples.
 
@@ -8,7 +7,7 @@ time-string in the following examples.
 
     Use not the :abbr:`DST(Daylight Saving Time)` offset, but the standard time
     offset when you use datetime string as an argument. :py:class:`~datetimerange.DateTimeRange` class
-    will automatically calculate daylight saving time. Some examples are below
+    automatically calculate daylight saving time. Some examples are below
 
         .. code:: console
 

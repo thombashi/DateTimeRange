@@ -3,5 +3,5 @@ DateTimeRange class
 
 .. autoclass:: datetimerange.DateTimeRange
     :members:
-    :undoc-members:
+    :special-members:
     :show-inheritance:
