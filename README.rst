@@ -22,140 +22,149 @@ DateTimeRange
 Summary
 -------
 
-DateTimeRange is a python library to handle routine work associated with a time range,
+DateTimeRange is a Python library to handle routine work associated with a time range,
 such as test whether a time is within the time range,
-get time range intersection, truncating the time range, etc.
+get time range intersection, truncating the time range, and so forth.
 
 Examples
 ========
 
 Create and convert to string
 ----------------------------
+:Sample Code:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        str(time_range)
 
-    from datetimerange import DateTimeRange
-    time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    str(time_range)
+:Output:
+    ::
 
-::
-
-    '2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900'
+        '2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900'
 
 Get iterator
 ------------
+:Sample Code 1:
+    .. code:: python
 
-.. code:: python
+        import datetime
+        from datetimerange import DateTimeRange
 
-    import datetime
-    from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
+        for value in time_range.range(datetime.timedelta(days=1)):
+            print value
 
-    time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
-    for value in time_range.range(datetime.timedelta(days=1)):
-        print value
+:Output 1:
+    ::
 
-::
+        2015-01-01 00:00:00+09:00
+        2015-01-02 00:00:00+09:00
+        2015-01-03 00:00:00+09:00
+        2015-01-04 00:00:00+09:00
 
-    2015-01-01 00:00:00+09:00
-    2015-01-02 00:00:00+09:00
-    2015-01-03 00:00:00+09:00
-    2015-01-04 00:00:00+09:00
+:Sample Code 2:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        from dateutil.relativedelta import relativedelta
 
-    from datetimerange import DateTimeRange
-    from dateutil.relativedelta import relativedelta
+        time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2016-01-01T00:00:00+0900")
+        for value in time_range.range(relativedelta(months=+4)):
+            print value
 
-    time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2016-01-01T00:00:00+0900")
-    for value in time_range.range(relativedelta(months=+4)):
-        print value
+:Output 2:
+    ::
 
-::
-
-    2015-01-01 00:00:00+09:00
-    2015-05-01 00:00:00+09:00
-    2015-09-01 00:00:00+09:00
-    2016-01-01 00:00:00+09:00
+        2015-01-01 00:00:00+09:00
+        2015-05-01 00:00:00+09:00
+        2015-09-01 00:00:00+09:00
+        2016-01-01 00:00:00+09:00
 
 Test whether a value within the time range
 ------------------------------------------
+:Sample Code:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        print "2015-03-22T10:05:00+0900" in time_range
+        print "2015-03-22T10:15:00+0900" in time_range
 
-    from datetimerange import DateTimeRange
-    time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    print "2015-03-22T10:05:00+0900" in time_range
-    print "2015-03-22T10:15:00+0900" in time_range
+        time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
+        print time_range_smaller in time_range
 
-    time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
-    print time_range_smaller in time_range
+:Output:
+    ::
 
-::
-
-    True
-    False
-    True
+        True
+        False
+        True
 
 Test whether a value intersect the time range
 ---------------------------------------------
+:Sample Code:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+        time_range.is_intersection(x)
 
-    from datetimerange import DateTimeRange
-    time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
-    time_range.is_intersection(x)
+:Output:
+    ::
 
-::
-
-    True
+        True
 
 Make an intersected time range
 ------------------------------
+:Sample Code:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+        time_range.intersection(x)
+        time_range
 
-    from datetimerange import DateTimeRange
-    time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
-    time_range.intersection(x)
-    time_range
+:Output:
+    ::
 
-::
-
-    2015-03-22T10:05:00+0900 - 2015-03-22T10:10:00+0900
+        2015-03-22T10:05:00+0900 - 2015-03-22T10:10:00+0900
 
 Make an encompassed time range
 ------------------------------
+:Sample Code:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+        time_range.encompass(x)
+        time_range
 
-    from datetimerange import DateTimeRange
-    time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
-    time_range.encompass(x)
-    time_range
+:Output:
+    ::
 
-::
-
-    2015-03-22T10:00:00+0900 - 2015-03-22T10:15:00+0900
+        2015-03-22T10:00:00+0900 - 2015-03-22T10:15:00+0900
 
 Truncate time range
 -------------------
+:Sample Code:
+    .. code:: python
 
-.. code:: python
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        time_range.is_output_elapse = True
+        print "before truncate: ", time_range
+        time_range.truncate(10)
+        print "after truncate:  ", time_range
 
-    from datetimerange import DateTimeRange
-    time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-    time_range.is_output_elapse = True
-    print "before truncate: ", time_range
-    time_range.truncate(10)
-    print "after truncate:  ", time_range
+:Output:
+    ::
 
-::
-
-    before truncate:  2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900 (0:10:00)
-    after truncate:   2015-03-22T10:00:30+0900 - 2015-03-22T10:09:30+0900 (0:09:00)
+        before truncate:  2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900 (0:10:00)
+        after truncate:   2015-03-22T10:00:30+0900 - 2015-03-22T10:09:30+0900 (0:09:00)
 
 For more information
 --------------------
