@@ -22,7 +22,7 @@ DateTimeRange
 Summary
 -------
 
-DateTimeRange is a Python library to handle routine work associated with a time range,
+DateTimeRange is a Python library to handle routine work related to a time range,
 such as test whether a time is within the time range,
 get time range intersection, truncating the time range, and so forth.
 
@@ -185,7 +185,6 @@ Installation
 
 Dependencies
 ============
-
 Python 2.7 or 3.3+
 
 - `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
@@ -193,10 +192,9 @@ Python 2.7 or 3.3+
 
 Test dependencies
 -----------------
-
--  `pytest <http://pytest.org/latest/>`__
--  `pytest-runner <https://pypi.python.org/pypi/pytest-runner>`__
--  `tox <https://testrun.org/tox/latest/>`__
+- `pytest <http://pytest.org/latest/>`__
+- `pytest-runner <https://pypi.python.org/pypi/pytest-runner>`__
+- `tox <https://testrun.org/tox/latest/>`__
 
 Documentation
 =============
