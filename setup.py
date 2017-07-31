@@ -40,7 +40,7 @@ MODULE_NAME = "DateTimeRange"
 
 setuptools.setup(
     name=MODULE_NAME,
-    version="0.3.2",
+    version="0.3.3",
     url="https://github.com/thombashi/{}".format(MODULE_NAME),
 
     author="Tsuyoshi Hombashi",
