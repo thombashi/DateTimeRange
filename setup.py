@@ -6,46 +6,60 @@
 
 from __future__ import unicode_literals
 
+import io
 import os.path
 import sys
 
 import setuptools
 
 
-MISC_DIR = "misc"
 REQUIREMENT_DIR = "requirements"
-
-needs_pytest = set(["pytest", "test", "ptr"]).intersection(sys.argv)
-pytest_runner = ["pytest-runner"] if needs_pytest else []
-
+ENCODING = "utf8"
 
 with open("README.rst") as fp:
     long_description = fp.read()
 
-with open(os.path.join(MISC_DIR, "summary.txt")) as f:
+with io.open(
+        os.path.join("docs", "pages", "introduction", "summary.txt"),
+        encoding=ENCODING) as f:
     summary = f.read()
 
 with open(os.path.join(REQUIREMENT_DIR, "requirements.txt")) as f:
     install_requires = [line.strip() for line in f if line.strip()]
 
 with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
-    tests_require = [line.strip() for line in f if line.strip()]
+    tests_requires = [line.strip() for line in f if line.strip()]
+
+with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
+    docs_requires = [line.strip() for line in f if line.strip()]
+
+needs_pytest = set(["pytest", "test", "ptr"]).intersection(sys.argv)
+pytest_runner = ["pytest-runner"] if needs_pytest else []
+
+MODULE_NAME = "DateTimeRange"
 
 setuptools.setup(
-    name="DateTimeRange",
+    name=MODULE_NAME,
     version="0.3.2",
+    url="https://github.com/thombashi/{}".format(MODULE_NAME),
+
     author="Tsuyoshi Hombashi",
     author_email="tsuyoshi.hombashi@gmail.com",
-    url="https://github.com/thombashi/DateTimeRange",
+    description=summary,
+    include_package_data=True,
     keywords=["datetimerange", "date", "time", "range"],
     license="MIT License",
-    description=summary,
     long_description=long_description,
-    include_package_data=True,
-    install_requires=install_requires,
     packages=setuptools.find_packages(exclude=["test*"]),
+
+    install_requires=install_requires,
     setup_requires=pytest_runner,
-    tests_require=tests_require,
+    tests_require=tests_requires,
+    extras_require={
+        "test": tests_requires,
+        "docs": docs_requires,
+    },
+
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -61,5 +75,4 @@ setuptools.setup(
         "Programming Language :: Python :: 3.6",
         "Topic :: Software Development :: Libraries",
         "Topic :: Software Development :: Libraries :: Python Modules",
-    ],
-)
+    ])
