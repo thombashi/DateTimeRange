@@ -43,6 +43,7 @@ with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
 with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
     docs_requires = [line.strip() for line in f if line.strip()]
 
+SETUPTOOLS_REQUIRES = ["setuptools>=38.3.0"]
 PYTEST_RUNNER_REQUIRES = ["pytest-runner"] if need_pytest() else []
 
 setuptools.setup(
@@ -58,9 +59,13 @@ setuptools.setup(
     license=pkg_info["__license__"],
     long_description=long_description,
     packages=setuptools.find_packages(exclude=["test*"]),
+    project_urls={
+        "Documentation": "http://{:s}.rtfd.io/".format(MODULE_NAME.lower()),
+        "Tracker": "{:s}/issues".format(REPOSITORY_URL),
+    },
 
-    install_requires=install_requires,
-    setup_requires=PYTEST_RUNNER_REQUIRES,
+    install_requires=SETUPTOOLS_REQUIRES + install_requires,
+    setup_requires=SETUPTOOLS_REQUIRES + PYTEST_RUNNER_REQUIRES,
     tests_require=tests_requires,
     extras_require={
         "test": tests_requires,
