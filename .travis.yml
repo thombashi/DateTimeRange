@@ -16,9 +16,9 @@ os:
 
 install:
   - pip install setuptools --upgrade
-  - pip install tox install coveralls
+  - pip install tox coveralls
 
-script: 
+script:
   - tox
   - python setup.py test --addopts "-v --cov datetimerange --cov-report term-missing"
 
