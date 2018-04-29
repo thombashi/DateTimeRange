@@ -1,2 +1,2 @@
-python-dateutil>=2.6.1
-typepy>=0.0.17
+python-dateutil>=2.7.2
+typepy>=0.0.27
