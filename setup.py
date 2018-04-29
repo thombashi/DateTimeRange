@@ -43,7 +43,7 @@ with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
 with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
     docs_requires = [line.strip() for line in f if line.strip()]
 
-pytest_runner = ["pytest-runner"] if need_pytest() else []
+PYTEST_RUNNER_REQUIRES = ["pytest-runner"] if need_pytest() else []
 
 setuptools.setup(
     name=MODULE_NAME,
@@ -60,7 +60,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=["test*"]),
 
     install_requires=install_requires,
-    setup_requires=pytest_runner,
+    setup_requires=PYTEST_RUNNER_REQUIRES,
     tests_require=tests_requires,
     extras_require={
         "test": tests_requires,
