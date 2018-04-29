@@ -4,15 +4,13 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import division
-from __future__ import unicode_literals
+from __future__ import division, unicode_literals
 
 import datetime
 
 import dateutil.parser
-import typepy
-
 import dateutil.relativedelta as rdelta
+import typepy
 
 
 class DateTimeRange(object):

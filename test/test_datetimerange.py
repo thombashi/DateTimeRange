@@ -8,11 +8,11 @@ from __future__ import unicode_literals
 
 import datetime
 
+import pytest
+import pytz
 from datetimerange import DateTimeRange
 from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta
-import pytest
-import pytz
 
 
 TIMEZONE = "+0900"
