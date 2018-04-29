@@ -1,5 +1,13 @@
-DateTimeRange
-=============
+**DateTimeRange**
+
+.. contents:: Table of Contents
+   :depth: 2
+
+Summary
+=========
+DateTimeRange is a Python library to handle routine work related to a time range,
+such as test whether a time is within the time range,
+get time range intersection, truncating the time range, and so forth.
 
 .. image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
@@ -16,16 +24,8 @@ DateTimeRange
 .. image:: https://img.shields.io/github/stars/thombashi/DateTimeRange.svg?style=social&label=Star
    :target: https://github.com/thombashi/DateTimeRange
 
-Summary
--------
-
-DateTimeRange is a Python library to handle routine work related to a time range,
-such as test whether a time is within the time range,
-get time range intersection, truncating the time range, and so forth.
-
 Examples
-========
-
+==========
 Create and convert to string
 ----------------------------
 :Sample Code:
@@ -164,8 +164,7 @@ Truncate time range
         after truncate:   2015-03-22T10:00:30+0900 - 2015-03-22T10:09:30+0900 (0:09:00)
 
 For more information
---------------------
-
+----------------------
 More examples are available at 
 http://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
@@ -182,7 +181,7 @@ Installation
 
 Dependencies
 ============
-Python 2.7 or 3.3+
+Python 2.7 or 3.4+
 
 - `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
 - `typepy <https://github.com/thombashi/typepy>`__
@@ -194,7 +193,6 @@ Test dependencies
 - `tox <https://testrun.org/tox/latest/>`__
 
 Documentation
-=============
-
+===============
 http://datetimerange.rtfd.io/
 
