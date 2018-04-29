@@ -51,8 +51,7 @@ class DateTimeRange(object):
 
     def __init__(
             self, start_datetime=None, end_datetime=None,
-            start_time_format="%Y-%m-%dT%H:%M:%S%z",
-            end_time_format="%Y-%m-%dT%H:%M:%S%z"):
+            start_time_format="%Y-%m-%dT%H:%M:%S%z", end_time_format="%Y-%m-%dT%H:%M:%S%z"):
 
         self.set_time_range(start_datetime, end_datetime)
 
@@ -88,8 +87,7 @@ class DateTimeRange(object):
         ])
 
     def __add__(self, other):
-        return DateTimeRange(
-            self.start_datetime + other, self.end_datetime + other)
+        return DateTimeRange(self.start_datetime + other, self.end_datetime + other)
 
     def __iadd__(self, other):
         self.set_start_datetime(self.start_datetime + other)
@@ -98,8 +96,7 @@ class DateTimeRange(object):
         return self
 
     def __sub__(self, other):
-        return DateTimeRange(
-            self.start_datetime - other, self.end_datetime - other)
+        return DateTimeRange(self.start_datetime - other, self.end_datetime - other)
 
     def __isub__(self, other):
         self.set_start_datetime(self.start_datetime - other)
@@ -450,10 +447,7 @@ class DateTimeRange(object):
 
         try:
             self.__start_datetime = typepy.type.DateTime(
-                value,
-                strict_level=typepy.StrictLevel.MIN,
-                timezone=timezone
-            ).convert()
+                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 
@@ -485,10 +479,7 @@ class DateTimeRange(object):
 
         try:
             self.__end_datetime = typepy.type.DateTime(
-                value,
-                strict_level=typepy.StrictLevel.MIN,
-                timezone=timezone
-            ).convert()
+                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 
@@ -608,14 +599,10 @@ class DateTimeRange(object):
 
         if not is_inversion:
             if self.__compare_timedelta(step, seconds=0) < 0:
-                raise ValueError(
-                    "invalid step: expect greater than 0, actual={}".format(
-                        step))
+                raise ValueError("invalid step: expect greater than 0, actual={}".format(step))
         else:
             if self.__compare_timedelta(step, seconds=0) > 0:
-                raise ValueError(
-                    "invalid step: expect less than 0, actual={}".format(
-                        step))
+                raise ValueError("invalid step: expect less than 0, actual={}".format(step))
 
         current_datetime = self.start_datetime
         while current_datetime <= self.end_datetime:
@@ -716,8 +703,7 @@ class DateTimeRange(object):
 
         if percentage < 0:
             raise ValueError(
-                "discard_percent must be greater or equal to zero: " +
-                str(percentage))
+                "discard_percent must be greater or equal to zero: " + str(percentage))
 
         if percentage == 0:
             return
@@ -728,12 +714,9 @@ class DateTimeRange(object):
         self.__end_datetime -= discard_time
 
     def __validate_value(self, data_prop):
-        if data_prop.typecode not in [
-                typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
+        if data_prop.typecode not in [typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
             raise ValueError("invalid datetime value: {}".format(data_prop))
 
     @staticmethod
     def __get_timedelta_sec(dt):
-        return int(
-            dt.days * 60 ** 2 * 24 + float(dt.seconds) +
-            dt.microseconds / (1000.0 ** 2))
+        return int(dt.days * 60 ** 2 * 24 + float(dt.seconds) + dt.microseconds / (1000.0 ** 2))
