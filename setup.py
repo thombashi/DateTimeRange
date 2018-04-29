@@ -14,7 +14,7 @@ import setuptools
 
 
 MODULE_NAME = "DateTimeRange"
-REPOSITORY_URL = "https://github.com/thombashi/{:s}".format(MODULE_NAME.lower())
+REPOSITORY_URL = "https://github.com/thombashi/{:s}".format(MODULE_NAME)
 REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
 
