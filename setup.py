@@ -16,7 +16,7 @@ import setuptools
 REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
 
-with open("README.rst") as fp:
+with io.open("README.rst", encoding=ENCODING) as fp:
     long_description = fp.read()
 
 with io.open(os.path.join("docs", "pages", "introduction", "summary.txt"), encoding=ENCODING) as f:
