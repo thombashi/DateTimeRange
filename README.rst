@@ -5,9 +5,7 @@
 
 Summary
 =========
-DateTimeRange is a Python library to handle routine work related to a time range,
-such as test whether a time is within the time range,
-get time range intersection, truncating the time range, and so forth.
+DateTimeRange is a Python library to handle routine work related to a time range, such as test whether a time is within the time range, get time range intersection, truncating the time range, and so forth.
 
 .. image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
