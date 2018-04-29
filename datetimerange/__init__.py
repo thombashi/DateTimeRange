@@ -271,9 +271,8 @@ class DateTimeRange(object):
             raise TypeError
 
         if self.start_datetime > self.end_datetime:
-            message = "time inversion found: {:s} > {:s}".format(
-                str(self.start_datetime), str(self.end_datetime))
-            raise ValueError(message)
+            raise ValueError("time inversion found: {:s} > {:s}".format(
+                str(self.start_datetime), str(self.end_datetime)))
 
     def is_valid_timerange(self):
         """
