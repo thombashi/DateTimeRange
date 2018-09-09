@@ -1,1 +1,1 @@
-http://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
+https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb

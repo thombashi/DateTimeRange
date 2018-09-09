@@ -164,10 +164,10 @@ Truncate time range
 For more information
 ----------------------
 More examples are available at 
-http://datetimerange.rtfd.io/en/latest/pages/examples/index.html
+https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
 Examples with IPython Notebook is also available at 
-http://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
+https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
 
 Installation
 ============
@@ -186,11 +186,11 @@ Python 2.7 or 3.4+
 
 Test dependencies
 -----------------
-- `pytest <http://pytest.org/latest/>`__
+- `pytest <https://docs.pytest.org/en/latest/>`__
 - `pytest-runner <https://pypi.python.org/pypi/pytest-runner>`__
 - `tox <https://testrun.org/tox/latest/>`__
 
 Documentation
 ===============
-http://datetimerange.rtfd.io/
+https://datetimerange.rtfd.io/
 
