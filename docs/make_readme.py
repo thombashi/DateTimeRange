@@ -40,10 +40,10 @@ def write_examples(maker):
     maker.write_chapter("For more information")
     maker.write_line_list([
         "More examples are available at ",
-        "http://datetimerange.rtfd.io/en/latest/pages/examples/index.html",
+        "https://datetimerange.rtfd.io/en/latest/pages/examples/index.html",
         "",
         "Examples with IPython Notebook is also available at ",
-        "http://nbviewer.jupyter.org/github/thombashi/%s/tree/master/ipynb/DateTimeRange.ipynb" % (
+        "https://nbviewer.jupyter.org/github/thombashi/%s/tree/master/ipynb/DateTimeRange.ipynb" % (
             PROJECT_NAME),
     ])
 
@@ -62,7 +62,7 @@ def main():
     maker.set_indent_level(0)
     maker.write_chapter("Documentation")
     maker.write_line_list([
-        "http://datetimerange.rtfd.io/",
+        "https://datetimerange.rtfd.io/",
     ])
 
     return 0
