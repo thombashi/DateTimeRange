@@ -51,8 +51,12 @@ class DateTimeRange(object):
     NOT_A_TIME_STR = "NaT"
 
     def __init__(
-            self, start_datetime=None, end_datetime=None,
-            start_time_format="%Y-%m-%dT%H:%M:%S%z", end_time_format="%Y-%m-%dT%H:%M:%S%z"):
+        self,
+        start_datetime=None,
+        end_datetime=None,
+        start_time_format="%Y-%m-%dT%H:%M:%S%z",
+        end_time_format="%Y-%m-%dT%H:%M:%S%z",
+    ):
 
         self.set_time_range(start_datetime, end_datetime)
 
@@ -63,10 +67,7 @@ class DateTimeRange(object):
         self.separator = " - "
 
     def __repr__(self):
-        text_list = [
-            self.get_start_time_str(),
-            self.get_end_time_str(),
-        ]
+        text_list = [self.get_start_time_str(), self.get_end_time_str()]
 
         if self.is_output_elapse:
             suffix = " ({})".format(self.end_datetime - self.start_datetime)
@@ -76,16 +77,14 @@ class DateTimeRange(object):
         return self.separator.join(text_list) + suffix
 
     def __eq__(self, other):
-        return all([
-            self.start_datetime == other.start_datetime,
-            self.end_datetime == other.end_datetime,
-        ])
+        return all(
+            [self.start_datetime == other.start_datetime, self.end_datetime == other.end_datetime]
+        )
 
     def __ne__(self, other):
-        return any([
-            self.start_datetime != other.start_datetime,
-            self.end_datetime != other.end_datetime,
-        ])
+        return any(
+            [self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime]
+        )
 
     def __add__(self, other):
         return DateTimeRange(self.start_datetime + other, self.end_datetime + other)
@@ -234,10 +233,7 @@ class DateTimeRange(object):
                 True
         """
 
-        return all([
-            self.start_datetime is not None,
-            self.end_datetime is not None,
-        ])
+        return all([self.start_datetime is not None, self.end_datetime is not None])
 
     def validate_time_inversion(self):
         """
@@ -271,8 +267,11 @@ class DateTimeRange(object):
             raise TypeError
 
         if self.start_datetime > self.end_datetime:
-            raise ValueError("time inversion found: {:s} > {:s}".format(
-                str(self.start_datetime), str(self.end_datetime)))
+            raise ValueError(
+                "time inversion found: {:s} > {:s}".format(
+                    str(self.start_datetime), str(self.end_datetime)
+                )
+            )
 
     def is_valid_timerange(self):
         """
@@ -447,7 +446,8 @@ class DateTimeRange(object):
 
         try:
             self.__start_datetime = typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
+                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone
+            ).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 
@@ -479,7 +479,8 @@ class DateTimeRange(object):
 
         try:
             self.__end_datetime = typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
+                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone
+            ).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 
@@ -558,7 +559,8 @@ class DateTimeRange(object):
             return 0
         except TypeError:
             return self.__compare_relativedelta(
-                lhs.normalized(), rdelta.relativedelta(seconds=seconds))
+                lhs.normalized(), rdelta.relativedelta(seconds=seconds)
+            )
 
     def range(self, step):
         """
@@ -636,10 +638,7 @@ class DateTimeRange(object):
         self.validate_time_inversion()
         x.validate_time_inversion()
 
-        if any([
-            x.start_datetime in self,
-            self.start_datetime in x,
-        ]):
+        if any([x.start_datetime in self, self.start_datetime in x]):
             self.set_start_datetime(max(self.start_datetime, x.start_datetime))
             self.set_end_datetime(min(self.end_datetime, x.end_datetime))
         else:
@@ -702,8 +701,7 @@ class DateTimeRange(object):
         self.validate_time_inversion()
 
         if percentage < 0:
-            raise ValueError(
-                "discard_percent must be greater or equal to zero: " + str(percentage))
+            raise ValueError("discard_percent must be greater or equal to zero: " + str(percentage))
 
         if percentage == 0:
             return
