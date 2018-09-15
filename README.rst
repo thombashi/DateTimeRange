@@ -10,7 +10,7 @@ DateTimeRange is a Python library to handle routine work related to a time range
 .. image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
 
-.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux
+.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS
     :target: https://travis-ci.org/thombashi/DateTimeRange
 
 .. image:: https://img.shields.io/appveyor/ci/thombashi/datetimerange/master.svg?label=Windows
