@@ -11,7 +11,7 @@ DateTimeRange is a Python library to handle routine work related to a time range
     :target: https://badge.fury.io/py/DateTimeRange
 
 .. image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
-   :target: https://pypi.python.org/pypi/DateTimeRange
+   :target: https://pypi.org/project/DateTimeRange
 
 .. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS
     :target: https://travis-ci.org/thombashi/DateTimeRange
@@ -166,10 +166,10 @@ Truncate time range
 
 For more information
 ----------------------
-More examples are available at 
+More examples are available at
 https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
-Examples with IPython Notebook is also available at 
+Examples with IPython Notebook is also available at
 https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
 
 Installation
@@ -184,13 +184,13 @@ Dependencies
 ============
 Python 2.7 or 3.4+
 
-- `python-dateutil <https://pypi.python.org/pypi/python-dateutil/>`__
+- `python-dateutil <https://pypi.org/project/python-dateutil/>`__
 - `typepy <https://github.com/thombashi/typepy>`__
 
 Test dependencies
 -----------------
 - `pytest <https://docs.pytest.org/en/latest/>`__
-- `pytest-runner <https://pypi.python.org/pypi/pytest-runner>`__
+- `pytest-runner <https://github.com/pytest-dev/pytest-runner>`__
 - `tox <https://testrun.org/tox/latest/>`__
 
 Documentation
