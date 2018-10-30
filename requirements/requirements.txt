@@ -1,2 +1,2 @@
-python-dateutil>=2.7.3
-typepy[datetime]>=0.2.4
+python-dateutil>=2.7.5
+typepy[datetime]>=0.3.0

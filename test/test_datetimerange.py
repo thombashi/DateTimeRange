@@ -6,7 +6,7 @@
 
 from __future__ import unicode_literals
 
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 import pytest
 import pytz
@@ -142,6 +142,25 @@ class Test_DateTimeRange_repr(object):
                 False,
                 "2015-03-22T10:00:00+0900 - NaT",
             ],
+            [
+                "2015-03-22",
+                "%Y-%m-%d",
+                "2015-04-22",
+                "%Y-%m-%d",
+                " - ",
+                False,
+                "2015-03-22 - 2015-04-22",
+            ],
+            [
+                date(2015, 3, 22),
+                "%Y-%m-%d",
+                date(2015, 4, 22),
+                "%Y-%m-%d",
+                " - ",
+                False,
+                "2015-03-22 - 2015-04-22",
+            ],
+            ["01:23:45", "%H:%M:%S", "11:23:45", "%H:%M:%S", " - ", False, "01:23:45 - 11:23:45"],
             [None, ISO_TIME_FORMAT, None, ISO_TIME_FORMAT, " - ", False, "NaT - NaT"],
         ],
     )
@@ -568,6 +587,16 @@ class Test_DateTimeRange_range(object):
                     datetime(2015, 3, 22, 12, 0, 0),
                     datetime(2015, 3, 22, 6, 0, 0),
                     datetime(2015, 3, 22, 0, 0, 0),
+                ],
+            ],
+            [
+                DateTimeRange(date(2015, 3, 23), date(2015, 3, 26)),
+                relativedelta(days=+1),
+                [
+                    datetime(2015, 3, 23, 0, 0, 0),
+                    datetime(2015, 3, 24, 0, 0, 0),
+                    datetime(2015, 3, 25, 0, 0, 0),
+                    datetime(2015, 3, 26, 0, 0, 0),
                 ],
             ],
         ],
