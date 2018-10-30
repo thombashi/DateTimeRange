@@ -6,7 +6,7 @@
 
 from __future__ import unicode_literals
 
-import datetime
+from datetime import datetime, timedelta
 
 import pytest
 import pytz
@@ -296,12 +296,12 @@ class Test_DateTimeRange_add(object):
         [
             [
                 DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
-                datetime.timedelta(seconds=10 * 60),
+                timedelta(seconds=10 * 60),
                 DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900"),
             ],
             [
                 DateTimeRange("2015-03-22T10:00:00", "2015-03-22T10:10:00"),
-                datetime.timedelta(seconds=-10 * 60),
+                timedelta(seconds=-10 * 60),
                 DateTimeRange("2015-03-22T09:50:00", "2015-03-22T10:00:00"),
             ],
         ],
@@ -321,7 +321,7 @@ class Test_DateTimeRange_add(object):
 
     def test_null(self, datetimerange_null):
         with pytest.raises(TypeError):
-            datetimerange_null + datetime.timedelta(seconds=10 * 60)
+            datetimerange_null + timedelta(seconds=10 * 60)
 
 
 class Test_DateTimeRange_iadd(object):
@@ -329,7 +329,7 @@ class Test_DateTimeRange_iadd(object):
         value = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
         expected = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
 
-        value += datetime.timedelta(seconds=10 * 60)
+        value += timedelta(seconds=10 * 60)
         assert value == expected
 
     @pytest.mark.parametrize(
@@ -342,7 +342,7 @@ class Test_DateTimeRange_iadd(object):
 
     def test_null(self, datetimerange_null):
         with pytest.raises(TypeError):
-            datetimerange_null += datetime.timedelta(seconds=10 * 60)
+            datetimerange_null += timedelta(seconds=10 * 60)
 
 
 class Test_DateTimeRange_sub(object):
@@ -350,7 +350,7 @@ class Test_DateTimeRange_sub(object):
         value = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
         expected = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
 
-        new_datetimerange = value - datetime.timedelta(seconds=10 * 60)
+        new_datetimerange = value - timedelta(seconds=10 * 60)
         assert new_datetimerange == expected
 
     @pytest.mark.parametrize(
@@ -363,7 +363,7 @@ class Test_DateTimeRange_sub(object):
 
     def test_null(self, datetimerange_null):
         with pytest.raises(TypeError):
-            datetimerange_null - datetime.timedelta(seconds=10 * 60)
+            datetimerange_null - timedelta(seconds=10 * 60)
 
 
 class Test_DateTimeRange_isub(object):
@@ -371,7 +371,7 @@ class Test_DateTimeRange_isub(object):
         value = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
         expected = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
 
-        value -= datetime.timedelta(seconds=10 * 60)
+        value -= timedelta(seconds=10 * 60)
         assert value == expected
 
     @pytest.mark.parametrize(
@@ -384,7 +384,7 @@ class Test_DateTimeRange_isub(object):
 
     def test_null(self, datetimerange_null):
         with pytest.raises(TypeError):
-            datetimerange_null -= datetime.timedelta(seconds=10 * 60)
+            datetimerange_null -= timedelta(seconds=10 * 60)
 
 
 class Test_DateTimeRange_contains(object):
@@ -428,7 +428,7 @@ class Test_DateTimeRange_contains(object):
 
 class Test_DateTimeRange_timedelta(object):
     def test_normal(self, datetimerange_normal):
-        assert datetimerange_normal.timedelta == datetime.timedelta(seconds=10 * 60)
+        assert datetimerange_normal.timedelta == timedelta(seconds=10 * 60)
 
     @pytest.mark.parametrize(
         ["start", "end", "expected"],
@@ -436,12 +436,12 @@ class Test_DateTimeRange_timedelta(object):
             [
                 "2015-03-08T00:00:00-0400",
                 "2015-03-08T12:00:00-0400",
-                datetime.timedelta(0, 39600),  # 11 hours
+                timedelta(0, 39600),  # 11 hours
             ],
             [
                 "2015-11-01T00:00:00-0400",
                 "2015-11-01T12:00:00-0400",
-                datetime.timedelta(0, 46800),  # 13 hours
+                timedelta(0, 46800),  # 13 hours
             ],
         ],
     )
@@ -450,7 +450,7 @@ class Test_DateTimeRange_timedelta(object):
         assert dtr.timedelta == expected
 
     def test_inversion(self, datetimerange_inversion):
-        assert datetimerange_inversion.timedelta == datetime.timedelta(-1, 85800)
+        assert datetimerange_inversion.timedelta == timedelta(-1, 85800)
 
     def test_null(self, datetimerange_null):
         with pytest.raises(TypeError):
@@ -524,36 +524,30 @@ class Test_DateTimeRange_range(object):
         ["value", "step", "expected"],
         [
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 1, 0)
-                ),
-                datetime.timedelta(seconds=20),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 22, 0, 1, 0)),
+                timedelta(seconds=20),
                 [
-                    datetime.datetime(2015, 3, 22, 0, 0, 0),
-                    datetime.datetime(2015, 3, 22, 0, 0, 20),
-                    datetime.datetime(2015, 3, 22, 0, 0, 40),
-                    datetime.datetime(2015, 3, 22, 0, 1, 00),
+                    datetime(2015, 3, 22, 0, 0, 0),
+                    datetime(2015, 3, 22, 0, 0, 20),
+                    datetime(2015, 3, 22, 0, 0, 40),
+                    datetime(2015, 3, 22, 0, 1, 00),
                 ],
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 23, 0, 0, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 23, 0, 0, 0)),
                 relativedelta(hours=+6),
                 [
-                    datetime.datetime(2015, 3, 22, 0, 0, 0),
-                    datetime.datetime(2015, 3, 22, 6, 0, 0),
-                    datetime.datetime(2015, 3, 22, 12, 0, 0),
-                    datetime.datetime(2015, 3, 22, 18, 0, 0),
-                    datetime.datetime(2015, 3, 23, 0, 0, 0),
+                    datetime(2015, 3, 22, 0, 0, 0),
+                    datetime(2015, 3, 22, 6, 0, 0),
+                    datetime(2015, 3, 22, 12, 0, 0),
+                    datetime(2015, 3, 22, 18, 0, 0),
+                    datetime(2015, 3, 23, 0, 0, 0),
                 ],
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 23, 0, 0, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 23, 0, 0, 0)),
                 relativedelta(months=+6),
-                [datetime.datetime(2015, 3, 22, 0, 0, 0)],
+                [datetime(2015, 3, 22, 0, 0, 0)],
             ],
             [
                 DateTimeRange("2015-01-01T00:00:00+0900", "2016-01-01T00:00:00+0900"),
@@ -566,16 +560,14 @@ class Test_DateTimeRange_range(object):
                 ],
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 23, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 0, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 23, 0, 0, 0), datetime(2015, 3, 22, 0, 0, 0)),
                 relativedelta(hours=-6),
                 [
-                    datetime.datetime(2015, 3, 23, 0, 0, 0),
-                    datetime.datetime(2015, 3, 22, 18, 0, 0),
-                    datetime.datetime(2015, 3, 22, 12, 0, 0),
-                    datetime.datetime(2015, 3, 22, 6, 0, 0),
-                    datetime.datetime(2015, 3, 22, 0, 0, 0),
+                    datetime(2015, 3, 23, 0, 0, 0),
+                    datetime(2015, 3, 22, 18, 0, 0),
+                    datetime(2015, 3, 22, 12, 0, 0),
+                    datetime(2015, 3, 22, 6, 0, 0),
+                    datetime(2015, 3, 22, 0, 0, 0),
                 ],
             ],
         ],
@@ -588,44 +580,32 @@ class Test_DateTimeRange_range(object):
         ["value", "step", "expected"],
         [
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 1, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 22, 0, 1, 0)),
                 relativedelta(seconds=-60),
                 ValueError,
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 1, 0), datetime.datetime(2015, 3, 22, 0, 0, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 1, 0), datetime(2015, 3, 22, 0, 0, 0)),
                 relativedelta(seconds=+60),
                 ValueError,
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 1, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 22, 0, 1, 0)),
                 None,
                 AttributeError,
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 1, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 22, 0, 1, 0)),
                 1,
                 AttributeError,
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 1, 0)
-                ),
-                datetime.timedelta(seconds=0),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 22, 0, 1, 0)),
+                timedelta(seconds=0),
                 ValueError,
             ],
             [
-                DateTimeRange(
-                    datetime.datetime(2015, 3, 22, 0, 0, 0), datetime.datetime(2015, 3, 22, 0, 1, 0)
-                ),
+                DateTimeRange(datetime(2015, 3, 22, 0, 0, 0), datetime(2015, 3, 22, 0, 1, 0)),
                 relativedelta(months=+0),
                 ValueError,
             ],
@@ -790,12 +770,12 @@ class Test_DateTimeRange_set_start_datetime(object):
         [
             [START_DATETIME_TEXT, None, TEST_START_DATETIME],
             [TEST_START_DATETIME, None, TEST_START_DATETIME],
-            [1485685623, pytz.utc, pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))],
-            ["1485685623", pytz.utc, pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))],
+            [1485685623, pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
+            ["1485685623", pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
             [
                 1485685623,
                 pytz.timezone("Asia/Tokyo"),
-                pytz.timezone("Asia/Tokyo").localize(datetime.datetime(2017, 1, 29, 19, 27, 3)),
+                pytz.timezone("Asia/Tokyo").localize(datetime(2017, 1, 29, 19, 27, 3)),
             ],
             [None, None, None],
         ],
@@ -820,12 +800,12 @@ class Test_DateTimeRange_set_end_datetime(object):
         [
             [START_DATETIME_TEXT, None, TEST_START_DATETIME],
             [TEST_START_DATETIME, None, TEST_START_DATETIME],
-            [1485685623, pytz.utc, pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))],
-            ["1485685623", pytz.utc, pytz.utc.localize(datetime.datetime(2017, 1, 29, 10, 27, 3))],
+            [1485685623, pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
+            ["1485685623", pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
             [
                 1485685623,
                 pytz.timezone("Asia/Tokyo"),
-                pytz.timezone("Asia/Tokyo").localize(datetime.datetime(2017, 1, 29, 19, 27, 3)),
+                pytz.timezone("Asia/Tokyo").localize(datetime(2017, 1, 29, 19, 27, 3)),
             ],
             [None, None, None],
         ],
