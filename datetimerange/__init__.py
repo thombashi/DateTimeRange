@@ -26,9 +26,7 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                time_range
+                DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
 
         :Output:
             .. parsed-literal::
@@ -117,18 +115,19 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                print "2015-03-22T10:05:00+0900" in time_range
-                print "2015-03-22T10:15:00+0900" in time_range
-                time_range_smaller = DateTimeRange(
-                    "2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
-                print time_range_smaller in time_range
+
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                print("2015-03-22T10:05:00+0900" in time_range)
+                print("2015-03-22T10:15:00+0900" in time_range)
+
+                time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
+                print(time_range_smaller in time_range)
         :Output:
             .. parsed-literal::
 
                 True
                 False
+                True
 
         .. seealso::
             :py:meth:`.validate_time_inversion`
@@ -156,8 +155,7 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.start_datetime
         :Output:
             .. parsed-literal::
@@ -177,8 +175,7 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.end_datetime
         :Output:
             .. parsed-literal::
@@ -199,8 +196,7 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.timedelta
         :Output:
             .. parsed-literal::
@@ -221,11 +217,12 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
+
                 time_range = DateTimeRange()
-                print time_range.is_set()
-                time_range.set_time_range(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                print time_range.is_set()
+                print(time_range.is_set())
+
+                time_range.set_time_range("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                print(time_range.is_set())
         :Output:
             .. parsed-literal::
 
@@ -250,8 +247,7 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:10:00+0900", "2015-03-22T10:00:00+0900")
+                time_range = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:00:00+0900")
                 try:
                     time_range.validate_time_inversion()
                 except ValueError:
@@ -285,13 +281,11 @@ class DateTimeRange(object):
 
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
-                print time_range.is_valid_timerange()
-                time_range.set_time_range(
-                    "2015-03-22T10:20:00+0900", "2015-03-22T10:10:00+0900")
-                print time_range.is_valid_timerange()
-                time_range.set_time_range(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                print time_range.is_valid_timerange()
+                print(time_range.is_valid_timerange())
+                time_range.set_time_range("2015-03-22T10:20:00+0900", "2015-03-22T10:10:00+0900")
+                print(time_range.is_valid_timerange())
+                time_range.set_time_range("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                print(time_range.is_valid_timerange())
         :Output:
             .. parsed-literal::
 
@@ -321,10 +315,8 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                x = DateTimeRange(
-                    "2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
                 time_range.is_intersection(x)
         :Output:
             .. parsed-literal::
@@ -346,11 +338,10 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                print time_range.get_start_time_str()
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                print(time_range.get_start_time_str())
                 time_range.start_time_format = "%Y/%m/%d %H:%M:%S"
-                print time_range.get_start_time_str()
+                print(time_range.get_start_time_str())
         :Output:
             .. parsed-literal::
 
@@ -375,11 +366,10 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                print time_range.get_end_time_str()
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                print(time_range.get_end_time_str())
                 time_range.end_time_format = "%Y/%m/%d %H:%M:%S"
-                print time_range.get_end_time_str()
+                print(time_range.get_end_time_str())
         :Output:
             .. parsed-literal::
 
@@ -401,8 +391,7 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.get_timedelta_second()
         :Output:
             .. parsed-literal::
@@ -425,9 +414,9 @@ class DateTimeRange(object):
 
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
-                print time_range
+                print(time_range)
                 time_range.set_start_datetime("2015-03-22T10:00:00+0900")
-                print time_range
+                print(time_range)
         :Output:
             .. parsed-literal::
 
@@ -458,9 +447,9 @@ class DateTimeRange(object):
 
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
-                print time_range
+                print(time_range)
                 time_range.set_end_datetime("2015-03-22T10:10:00+0900")
-                print time_range
+                print(time_range)
         :Output:
             .. parsed-literal::
 
@@ -489,10 +478,9 @@ class DateTimeRange(object):
 
                 from datetimerange import DateTimeRange
                 time_range = DateTimeRange()
-                print time_range
-                time_range.set_time_range(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                print time_range
+                print(time_range)
+                time_range.set_time_range("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                print(time_range)
         :Output:
             .. parsed-literal::
 
@@ -572,10 +560,9 @@ class DateTimeRange(object):
                 import datetime
                 from datetimerange import DateTimeRange
 
-                time_range = DateTimeRange(
-                    "2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
+                time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
                 for value in time_range.range(datetime.timedelta(days=1)):
-                    print value
+                    print(value)
         :Output:
             .. parsed-literal::
 
@@ -618,12 +605,9 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                x = DateTimeRange(
-                    "2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
-                time_range.intersection(x)
-                time_range
+                dtr0 = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                dtr1 = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                dtr0.intersection(dtr1)
         :Output:
             .. parsed-literal::
 
@@ -659,12 +643,9 @@ class DateTimeRange(object):
             .. code:: python
 
                 from datetimerange import DateTimeRange
-                time_range = DateTimeRange(
-                    "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-                x = DateTimeRange(
-                    "2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
-                time_range.encompass(x)
-                time_range
+                dtr0 = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                dtr1 = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                dtr0.encompass(dtr1)
         :Output:
             .. parsed-literal::
 
@@ -694,9 +675,9 @@ class DateTimeRange(object):
                 time_range = DateTimeRange(
                     "2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
                 time_range.is_output_elapse = True
-                print time_range
+                print(time_range)
                 time_range.truncate(10)
-                print time_range
+                print(time_range)
         :Output:
             .. parsed-literal::
 
