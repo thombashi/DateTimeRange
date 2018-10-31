@@ -332,12 +332,7 @@ class DateTimeRange(object):
                 True
         """
 
-        import copy
-
-        dtr = copy.deepcopy(self)
-        dtr.intersection(x)
-
-        return dtr.is_set()
+        return self.intersection(x).is_set()
 
     def get_start_time_str(self):
         """
@@ -639,11 +634,18 @@ class DateTimeRange(object):
         x.validate_time_inversion()
 
         if any([x.start_datetime in self, self.start_datetime in x]):
-            self.set_start_datetime(max(self.start_datetime, x.start_datetime))
-            self.set_end_datetime(min(self.end_datetime, x.end_datetime))
+            start_datetime = max(self.start_datetime, x.start_datetime)
+            end_datetime = min(self.end_datetime, x.end_datetime)
         else:
-            self.set_start_datetime(None)
-            self.set_end_datetime(None)
+            start_datetime = None
+            end_datetime = None
+
+        return DateTimeRange(
+            start_datetime=start_datetime,
+            end_datetime=end_datetime,
+            start_time_format=self.start_time_format,
+            end_time_format=self.end_time_format,
+        )
 
     def encompass(self, x):
         """
@@ -672,8 +674,12 @@ class DateTimeRange(object):
         self.validate_time_inversion()
         x.validate_time_inversion()
 
-        self.set_start_datetime(min(self.start_datetime, x.start_datetime))
-        self.set_end_datetime(max(self.end_datetime, x.end_datetime))
+        return DateTimeRange(
+            start_datetime=min(self.start_datetime, x.start_datetime),
+            end_datetime=max(self.end_datetime, x.end_datetime),
+            start_time_format=self.start_time_format,
+            end_time_format=self.end_time_format,
+        )
 
     def truncate(self, percentage):
         """

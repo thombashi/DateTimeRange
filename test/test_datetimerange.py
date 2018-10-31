@@ -6,6 +6,7 @@
 
 from __future__ import unicode_literals
 
+from copy import deepcopy
 from datetime import date, datetime, timedelta
 
 import pytest
@@ -926,8 +927,10 @@ class Test_DateTimeRange_intersection(object):
         ],
     )
     def test_normal(self, lhs, rhs, expected):
-        lhs.intersection(rhs)
-        assert lhs == expected
+        lhs_org = deepcopy(lhs)
+
+        assert lhs.intersection(rhs) == expected
+        assert lhs == lhs_org
 
     @pytest.mark.parametrize(
         ["lhs", "rhs", "expected"],
@@ -992,8 +995,10 @@ class Test_DateTimeRange_encompass(object):
         ],
     )
     def test_normal(self, lhs, rhs, expected):
-        lhs.encompass(rhs)
-        assert lhs == expected
+        lhs_org = deepcopy(lhs)
+
+        assert lhs.encompass(rhs) == expected
+        assert lhs == lhs_org
 
     @pytest.mark.parametrize(
         ["lhs", "rhs", "expected"],
