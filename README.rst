@@ -85,12 +85,13 @@ Test whether a value within the time range
     .. code:: python
 
         from datetimerange import DateTimeRange
+
         time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
-        print "2015-03-22T10:05:00+0900" in time_range
-        print "2015-03-22T10:15:00+0900" in time_range
+        print("2015-03-22T10:05:00+0900" in time_range)
+        print("2015-03-22T10:15:00+0900" in time_range)
 
         time_range_smaller = DateTimeRange("2015-03-22T10:03:00+0900", "2015-03-22T10:07:00+0900")
-        print time_range_smaller in time_range
+        print(time_range_smaller in time_range)
 
 :Output:
     ::
@@ -123,7 +124,6 @@ Make an intersected time range
         time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
         x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
         time_range.intersection(x)
-        time_range
 
 :Output:
     ::
@@ -139,7 +139,6 @@ Make an encompassed time range
         time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
         x = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
         time_range.encompass(x)
-        time_range
 
 :Output:
     ::
@@ -152,11 +151,13 @@ Truncate time range
     .. code:: python
 
         from datetimerange import DateTimeRange
+
         time_range = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
         time_range.is_output_elapse = True
-        print "before truncate: ", time_range
+        print("before truncate: ", time_range)
+
         time_range.truncate(10)
-        print "after truncate:  ", time_range
+        print("after truncate:  ", time_range)
 
 :Output:
     ::
@@ -166,10 +167,10 @@ Truncate time range
 
 For more information
 ----------------------
-More examples are available at
+More examples are available at 
 https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
-Examples with IPython Notebook is also available at
+Examples with IPython Notebook is also available at 
 https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
 
 Installation
