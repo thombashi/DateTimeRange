@@ -75,11 +75,17 @@ class DateTimeRange(object):
         return self.separator.join(text_list) + suffix
 
     def __eq__(self, other):
+        if not isinstance(other, DateTimeRange):
+            return False
+
         return all(
             [self.start_datetime == other.start_datetime, self.end_datetime == other.end_datetime]
         )
 
     def __ne__(self, other):
+        if not isinstance(other, DateTimeRange):
+            return True
+
         return any(
             [self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime]
         )

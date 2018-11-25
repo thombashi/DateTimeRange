@@ -268,6 +268,8 @@ class Test_DateTimeRange_eq(object):
                 DateTimeRange("2015-03-22T11:00:00+0900", "2015-03-22T12:10:00+0900"),
                 False,
             ],
+            [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), None, False],
+            [None, DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), False],
         ],
     )
     def test_normal(self, lhs, rhs, expected):
@@ -304,6 +306,8 @@ class Test_DateTimeRange_neq(object):
                 DateTimeRange("2015-03-22T11:00:00+0900", "2015-03-22T12:10:00+0900"),
                 True,
             ],
+            [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), None, True],
+            [None, DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), True],
         ],
     )
     def test_normal(self, lhs, rhs, expected):
