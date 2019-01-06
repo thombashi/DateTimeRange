@@ -9,21 +9,27 @@ DateTimeRange is a Python library to handle routine work related to a time range
 
 .. image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
+    :alt: PyPI package version
 
 .. image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
-   :target: https://pypi.org/project/DateTimeRange
+    :target: https://pypi.org/project/DateTimeRange
+    :alt: Supported Python versions
 
-.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS
+.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS-CI
     :target: https://travis-ci.org/thombashi/DateTimeRange
+    :alt: Linux/macOS CI status
 
-.. image:: https://img.shields.io/appveyor/ci/thombashi/datetimerange/master.svg?label=Windows
-   :target: https://ci.appveyor.com/project/thombashi/datetimerange/branch/master
+.. image:: https://img.shields.io/appveyor/ci/thombashi/datetimerange/master.svg?label=Windows-CI
+    :target: https://ci.appveyor.com/project/thombashi/datetimerange/branch/master
+    :alt: Windows CI status
 
 .. image:: https://coveralls.io/repos/github/thombashi/DateTimeRange/badge.svg?branch=master
     :target: https://coveralls.io/github/thombashi/DateTimeRange?branch=master
+    :alt: Test coverage
 
 .. image:: https://img.shields.io/github/stars/thombashi/DateTimeRange.svg?style=social&label=Star
-   :target: https://github.com/thombashi/DateTimeRange
+    :target: https://github.com/thombashi/DateTimeRange
+    :alt: GitHub stars
 
 Examples
 ==========
