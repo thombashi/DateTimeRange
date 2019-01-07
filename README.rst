@@ -15,11 +15,11 @@ DateTimeRange is a Python library to handle routine work related to a time range
     :target: https://pypi.org/project/DateTimeRange
     :alt: Supported Python versions
 
-.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS-CI
+.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS%20CI
     :target: https://travis-ci.org/thombashi/DateTimeRange
     :alt: Linux/macOS CI status
 
-.. image:: https://img.shields.io/appveyor/ci/thombashi/datetimerange/master.svg?label=Windows-CI
+.. image:: https://img.shields.io/appveyor/ci/thombashi/datetimerange/master.svg?label=Windows%20CI
     :target: https://ci.appveyor.com/project/thombashi/datetimerange/branch/master
     :alt: Windows CI status
 
