@@ -5,7 +5,7 @@
 
 Summary
 =========
-DateTimeRange is a Python library to handle routine work related to a time range, such as test whether a time is within the time range, get time range intersection, truncating the time range, and so forth.
+`DateTimeRange <https://github.com/thombashi/DateTimeRange>`__ is a Python library to handle a time range. e.g. check whether a time is within the time range, get the intersection of time ranges, truncating a time range, iterate through a time range, and so forth.
 
 .. image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
@@ -176,8 +176,7 @@ For more information
 More examples are available at 
 https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
-Examples with IPython Notebook is also available at 
-https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb
+Examples with Jupyter Notebook is also available at `DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/examples/DateTimeRange.ipynb>`__
 
 Installation
 ============
