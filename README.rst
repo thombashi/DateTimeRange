@@ -1,4 +1,5 @@
 .. contents:: **DateTimeRange**
+   :backlinks: top
    :depth: 2
 
 Summary
