@@ -10,8 +10,8 @@ from __future__ import unicode_literals
 import os.path
 import sys
 
-import readmemaker
 from path import Path
+from readmemaker import ReadmeMaker
 
 
 PROJECT_NAME = "DateTimeRange"
@@ -38,19 +38,24 @@ def write_examples(maker):
 
     maker.inc_indent_level()
     maker.write_chapter("For more information")
-    maker.write_line_list(
+    maker.write_lines(
         [
             "More examples are available at ",
             "https://datetimerange.rtfd.io/en/latest/pages/examples/index.html",
             "",
             "Examples with Jupyter Notebook is also available at "
-            "`DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/ipynb/DateTimeRange.ipynb>`__"
+            "`DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/examples/DateTimeRange.ipynb>`__",
         ]
     )
 
 
 def main():
-    maker = readmemaker.ReadmeMaker(PROJECT_NAME, OUTPUT_DIR, is_make_toc=True)
+    maker = ReadmeMaker(
+        PROJECT_NAME,
+        OUTPUT_DIR,
+        is_make_toc=True,
+        project_url="https://github.com/thombashi/DateTimeRange",
+    )
 
     maker.write_chapter("Summary")
     maker.write_introduction_file("summary.txt")
@@ -62,7 +67,7 @@ def main():
 
     maker.set_indent_level(0)
     maker.write_chapter("Documentation")
-    maker.write_line_list(["https://datetimerange.rtfd.io/"])
+    maker.write_lines(["https://datetimerange.rtfd.io/"])
 
     return 0
 

@@ -1,6 +1,4 @@
-**DateTimeRange**
-
-.. contents:: Table of Contents
+.. contents:: **DateTimeRange**
    :depth: 2
 
 Summary
