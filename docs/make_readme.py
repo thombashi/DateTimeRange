@@ -54,7 +54,7 @@ def main():
         PROJECT_NAME,
         OUTPUT_DIR,
         is_make_toc=True,
-        project_url="https://github.com/thombashi/DateTimeRange",
+        project_url="https://github.com/thombashi/{}".format(PROJECT_NAME),
     )
 
     maker.write_chapter("Summary")
