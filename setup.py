@@ -70,9 +70,10 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=["test*"]),
     project_urls={
         "Documentation": "https://{:s}.rtfd.io/".format(MODULE_NAME.lower()),
+        "Source": REPOSITORY_URL,
         "Tracker": "{:s}/issues".format(REPOSITORY_URL),
     },
-    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*',
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*",
 
     install_requires=SETUPTOOLS_REQUIRES + install_requires,
     setup_requires=SETUPTOOLS_REQUIRES + PYTEST_RUNNER_REQUIRES,
