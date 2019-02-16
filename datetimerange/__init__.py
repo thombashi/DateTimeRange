@@ -65,14 +65,12 @@ class DateTimeRange(object):
         self.separator = " - "
 
     def __repr__(self):
-        text_list = [self.get_start_time_str(), self.get_end_time_str()]
-
         if self.is_output_elapse:
             suffix = " ({})".format(self.end_datetime - self.start_datetime)
         else:
             suffix = ""
 
-        return self.separator.join(text_list) + suffix
+        return self.separator.join((self.get_start_time_str(), self.get_end_time_str())) + suffix
 
     def __eq__(self, other):
         if not isinstance(other, DateTimeRange):
