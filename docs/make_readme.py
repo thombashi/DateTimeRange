@@ -23,7 +23,7 @@ def write_examples(maker):
     maker.write_chapter("Examples")
 
     example_root = Path(os.path.join("pages", "examples"))
-    example_file_list = [
+    example_files = [
         "Create_and_convert_to_string.rst",
         "Get_iterator.rst",
         "Test_whether_a_value_within_the_time_range.rst",
@@ -33,7 +33,7 @@ def write_examples(maker):
         "Truncate_time_range.rst",
     ]
 
-    for example_file in example_file_list:
+    for example_file in example_files:
         maker.write_file(example_root.joinpath(example_file))
 
     maker.inc_indent_level()
