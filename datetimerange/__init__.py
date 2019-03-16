@@ -56,7 +56,6 @@ class DateTimeRange(object):
         start_time_format="%Y-%m-%dT%H:%M:%S%z",
         end_time_format="%Y-%m-%dT%H:%M:%S%z",
     ):
-
         self.set_time_range(start_datetime, end_datetime)
 
         self.start_time_format = start_time_format
