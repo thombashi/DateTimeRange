@@ -6,12 +6,13 @@
 
 from __future__ import division, unicode_literals
 
-from .__version__ import __author__, __copyright__, __email__, __license__, __version__
 import datetime
 
 import dateutil.parser
 import dateutil.relativedelta as rdelta
 import typepy
+
+from .__version__ import __author__, __copyright__, __email__, __license__, __version__
 
 
 class DateTimeRange(object):
