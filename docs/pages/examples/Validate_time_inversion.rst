@@ -8,7 +8,7 @@ Validate time inversion
         try:
             time_range.validate_time_inversion()
         except ValueError:
-            print "time inversion"
+            print("time inversion")
 
 :Output:
     ::

@@ -8,7 +8,7 @@ Get iterator
 
         time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2015-01-04T00:00:00+0900")
         for value in time_range.range(datetime.timedelta(days=1)):
-            print value
+            print(value)
 
 :Output 1:
     ::
@@ -26,7 +26,7 @@ Get iterator
 
         time_range = DateTimeRange("2015-01-01T00:00:00+0900", "2016-01-01T00:00:00+0900")
         for value in time_range.range(relativedelta(months=+4)):
-            print value
+            print(value)
 
 :Output 2:
     ::
