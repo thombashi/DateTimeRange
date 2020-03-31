@@ -172,7 +172,7 @@ Truncate time range
 
 For more information
 ----------------------
-More examples are available at
+More examples are available at 
 https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
 Examples with Jupyter Notebook is also available at `DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/examples/DateTimeRange.ipynb>`__
@@ -187,7 +187,7 @@ Installation
 
 Dependencies
 ============
-Python 2.7 or 3.5+
+Python 3.5+
 
 - `python-dateutil <https://pypi.org/project/python-dateutil/>`__
 - `typepy <https://github.com/thombashi/typepy>`__
@@ -195,7 +195,6 @@ Python 2.7 or 3.5+
 Test dependencies
 -----------------
 - `pytest <https://docs.pytest.org/en/latest/>`__
-- `pytest-runner <https://github.com/pytest-dev/pytest-runner>`__
 - `tox <https://testrun.org/tox/latest/>`__
 
 Documentation
