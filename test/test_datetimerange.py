@@ -11,9 +11,10 @@ from datetime import date, datetime, timedelta
 
 import pytest
 import pytz
-from datetimerange import DateTimeRange
 from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta
+
+from datetimerange import DateTimeRange
 
 
 TIMEZONE = "+0900"

@@ -50,7 +50,6 @@ setuptools.setup(
     name=MODULE_NAME,
     version=pkg_info["__version__"],
     url=REPOSITORY_URL,
-
     author=pkg_info["__author__"],
     author_email=pkg_info["__email__"],
     description=summary,
@@ -66,7 +65,6 @@ setuptools.setup(
         "Tracker": "{:s}/issues".format(REPOSITORY_URL),
     },
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
-
     install_requires=SETUPTOOLS_REQUIRES + install_requires,
     tests_require=tests_requires,
     extras_require={"test": tests_requires},
@@ -87,4 +85,5 @@ setuptools.setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Text Processing",
     ],
-    cmdclass=get_release_command_class())
+    cmdclass=get_release_command_class(),
+)
