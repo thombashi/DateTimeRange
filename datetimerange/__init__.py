@@ -1,10 +1,6 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import division, unicode_literals
 
 import datetime
 
@@ -15,7 +11,7 @@ import typepy
 from .__version__ import __author__, __copyright__, __email__, __license__, __version__
 
 
-class DateTimeRange(object):
+class DateTimeRange:
     """
     The class that represents the time range.
 
@@ -255,7 +251,7 @@ class DateTimeRange(object):
                 try:
                     time_range.validate_time_inversion()
                 except ValueError:
-                    print "time inversion"
+                    print("time inversion")
         :Output:
             .. parsed-literal::
 

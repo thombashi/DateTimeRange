@@ -8,7 +8,7 @@ Installation
 
 Dependencies
 ============
-Python 2.7 or 3.5+
+Python 3.5+
 
 - `python-dateutil <https://pypi.org/project/python-dateutil/>`__
 - `typepy <https://github.com/thombashi/typepy>`__
