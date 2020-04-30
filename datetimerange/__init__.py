@@ -399,7 +399,7 @@ class DateTimeRange:
                 600.0
         """
 
-        return self.__get_timedelta_sec(self.timedelta)
+        return self.timedelta.total_seconds()
 
     def set_start_datetime(self, value, timezone=None):
         """
@@ -701,7 +701,3 @@ class DateTimeRange:
     def __validate_value(self, data_prop):
         if data_prop.typecode not in [typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
             raise ValueError("invalid datetime value: {}".format(data_prop))
-
-    @staticmethod
-    def __get_timedelta_sec(dt):
-        return int(dt.days * 60 ** 2 * 24 + float(dt.seconds) + dt.microseconds / (1000.0 ** 2))
