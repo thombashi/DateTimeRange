@@ -31,12 +31,16 @@ class DateTimeRange:
                 2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
 
     .. py:attribute:: start_time_format
+        :type: str
+        :value: "%Y-%m-%dT%H:%M:%S%z"
 
         Conversion format string for :py:attr:`.start_datetime`.
 
         .. seealso:: :py:meth:`.get_start_time_str`
 
     .. py:attribute:: end_time_format
+        :type: str
+        :value: "%Y-%m-%dT%H:%M:%S%z"
 
         Conversion format string for :py:attr:`.end_datetime`.
 
