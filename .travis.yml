@@ -44,7 +44,7 @@ install:
   - travis_retry bash -x .travis/install.sh
 
 script:
-  - tox -- --md-report-color text
+  - tox -- --md-report-color never --md-report-zeros empty
 
 notifications:
   slack:
