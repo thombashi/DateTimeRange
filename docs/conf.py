@@ -2,6 +2,7 @@ import os
 import sys
 
 import sphinx_rtd_theme
+
 from datetimerange import __author__, __copyright__, __name__, __version__
 
 
