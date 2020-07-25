@@ -19,6 +19,7 @@ Welcome to DateTimeRange's documentation!
    pages/reference/index
    pages/genindex
    pages/links
+   pages/sponsors
 
 
 Indices and tables
