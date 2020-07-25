@@ -66,6 +66,8 @@ def main():
     maker.write_chapter("Documentation")
     maker.write_lines(["https://datetimerange.rtfd.io/"])
 
+    maker.write_file(maker.doc_page_root_dir_path.joinpath("sponsors.rst"))
+
     return 0
 
 
