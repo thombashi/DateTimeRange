@@ -13,10 +13,10 @@ from .__version__ import __author__, __copyright__, __email__, __license__, __ve
 
 class DateTimeRange:
     """
-    The class that represents the time range.
+    A class that represents a range of datetime.
 
-    :param datetime.datetime/str start: |param_start_datetime|
-    :param datetime.datetime/str end: |param_end_datetime|
+    :param datetime.datetime/str start_datetime: |param_start_datetime|
+    :param datetime.datetime/str end_datetime: |param_end_datetime|
 
     :Examples:
         :Sample Code:
