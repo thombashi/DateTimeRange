@@ -8,7 +8,5 @@ Installation
 
 Dependencies
 ============
-Python 3.5+
-
-- `python-dateutil <https://pypi.org/project/python-dateutil/>`__
-- `typepy <https://github.com/thombashi/typepy>`__
+- Python 3.5+
+- `Python package dependencies <https://github.com/thombashi/DateTimeRange/network/dependencies>`__

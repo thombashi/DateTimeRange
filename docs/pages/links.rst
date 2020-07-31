@@ -3,6 +3,12 @@ Changelog
 https://github.com/thombashi/DateTimeRange/releases
 
 
+.. include:: sponsors.rst
+
+
+.. include:: genindex.rst
+
+
 Links
 =====
 - `GitHub repository <https://github.com/thombashi/DateTimeRange>`__
