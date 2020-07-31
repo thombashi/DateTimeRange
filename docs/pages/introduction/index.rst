@@ -8,3 +8,6 @@ Summary
 -------
 
 .. include:: summary.txt
+
+
+.. include:: installation.rst
