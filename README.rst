@@ -188,7 +188,7 @@ Installation
 Dependencies
 ============
 - Python 3.5+
-- `Python package dependencies <https://github.com/thombashi/DateTimeRange/network/dependencies>`__
+- `Python package dependencies (automatically installed) <https://github.com/thombashi/DateTimeRange/network/dependencies>`__
 
 Documentation
 ===============
