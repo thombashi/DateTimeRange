@@ -47,3 +47,13 @@ skip_glob = [
     '*/.pytype/*',
     '*/.tox/*',
 ]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "test",
+]
+
+md_report = true
+md_report_verbose = 1
+md_report_color = "auto"
+md_report_margin = 0
