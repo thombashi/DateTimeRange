@@ -1031,6 +1031,90 @@ class TestDateTimeRange_encompass:
         with pytest.raises(expected):
             lhs.encompass(rhs)
 
+class TestDateTimeRange_union:
+    @pytest.mark.parametrize(
+        ["lhs", "rhs", "expected"],
+        [
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                timedelta(minutes=10),
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:00 JST"),
+                DateTimeRange("2015-01-22T10:10:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(days=59, minutes=10, seconds=600),
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(days=59, seconds=1800),
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:05:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(days=59, seconds=1800),
+            ],
+            [
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:05:00 JST"),
+                timedelta(days=59, seconds=1800),
+            ],
+            [
+                DateTimeRange("2014-01-22T10:00:00 JST", "2016-03-22T10:20:00 JST"),
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:05:00 JST"),
+                timedelta(days=790, seconds=1200),
+            ],
+            [
+                DateTimeRange("2015-01-12T10:00:00 JST", "2015-02-22T10:10:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:10:00 JST"),
+                timedelta(days=69, seconds=600),
+            ],
+            [
+                DateTimeRange("2014-01-12T09:30:00 JST", "2014-02-22T10:00:00 JST"),
+                DateTimeRange("2015-01-10T10:00:00 JST", "2015-03-22T10:30:00 JST"),
+                timedelta(days=112, seconds=3600)
+            ]
+        ],
+    )
+
+    def test_normal(self, lhs, rhs, expected):
+        lhs_org = deepcopy(lhs)
+
+        assert lhs.union(rhs) == expected
+        assert lhs == lhs_org
+
+    @pytest.mark.parametrize(
+        ["lhs", "rhs", "expected"],
+        [
+            [DateTimeRange(None, None), DateTimeRange(None, None), TypeError],
+            [
+                DateTimeRange(None, TEST_END_DATETIME),
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                TypeError,
+            ],
+            [
+                DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME),
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                ValueError,
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                DateTimeRange(None, TEST_END_DATETIME),
+                TypeError,
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME),
+                ValueError,
+            ],
+        ],
+    )
+    def test_exception(self, lhs, rhs, expected):
+        with pytest.raises(expected):
+            lhs.intersection(rhs)
+
+
 
 class TestDateTimeRange_truncate:
     @pytest.mark.parametrize(

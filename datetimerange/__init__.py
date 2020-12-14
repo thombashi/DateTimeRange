@@ -702,6 +702,28 @@ class DateTimeRange:
         self.__start_datetime += discard_time
         self.__end_datetime -= discard_time
 
+    def union(self, x):
+        """
+        Returns the timedelta of the union of the input and current 
+        DateTimeRange.
+        
+        :param DateTimeRange x: List of DateTimeRanges.
+
+        :Sample Code:
+            .. code:: python
+
+                from datetimerange import DateTimeRange
+                dtr0 = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                dtr1 = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                union = dtr0.union(dtr1)
+                print(union)
+        """
+
+        if self.is_intersection(x):
+            return self.encompass(x).timedelta
+        else:
+            return self.timedelta + x.timedelta
+
     def __validate_value(self, data_prop):
         if data_prop.typecode not in [typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
             raise ValueError("invalid datetime value: {}".format(data_prop))
