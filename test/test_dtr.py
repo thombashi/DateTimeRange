@@ -730,6 +730,94 @@ class TestDateTimeRange_is_intersection:
             lhs.is_intersection(rhs)
 
 
+class TestDateTimeRange_subtract:
+    @pytest.mark.parametrize(
+        ["lhs", "rhs", "expected"],
+        [
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                [],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:00:00+0900"),
+                DateTimeRange("2015-01-22T09:30:00+0900", "2015-01-22T10:30:00+0900"),
+                [],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:30:00+0900"),
+                DateTimeRange("2015-01-22T10:40:00+0900", "2015-01-22T10:50:00+0900"),
+                [DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:30:00+0900")],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:30:00+0900"),
+                DateTimeRange("2015-01-22T09:55:00+0900", "2015-01-22T09:55:00+0900"),
+                [DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:30:00+0900")],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:30:00+0900"),
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:00:00+0900"),
+                [DateTimeRange("2015-01-22T10:00:00+0900", "2015-01-22T10:30:00+0900")],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:30:00+0900"),
+                DateTimeRange("2015-01-22T09:30:00+0900", "2015-01-22T10:00:00+0900"),
+                [DateTimeRange("2015-01-22T10:00:00+0900", "2015-01-22T10:30:00+0900")],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:30:00+0900", "2015-01-22T10:00:00+0900"),
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:00:00+0900"),
+                [DateTimeRange("2015-01-22T09:30:00+0900", "2015-01-22T09:50:00+0900")],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:30:00+0900", "2015-01-22T10:00:00+0900"),
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:10:00+0900"),
+                [DateTimeRange("2015-01-22T09:30:00+0900", "2015-01-22T09:50:00+0900")],
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T10:00:00+0900"),
+                DateTimeRange("2015-01-22T09:55:00+0900", "2015-01-22T09:56:00+0900"),
+                [
+                    DateTimeRange("2015-01-22T09:50:00+0900", "2015-01-22T09:55:00+0900"),
+                    DateTimeRange("2015-01-22T09:56:00+0900", "2015-01-22T10:00:00+0900"),
+                ],
+            ],
+        ],
+    )
+    def test_normal(self, lhs, rhs, expected):
+        assert lhs.subtract(rhs) == expected
+
+    @pytest.mark.parametrize(
+        ["lhs", "rhs", "expected"],
+        [
+            [DateTimeRange(None, None), DateTimeRange(None, None), TypeError],
+            [
+                DateTimeRange(None, TEST_END_DATETIME),
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                TypeError,
+            ],
+            [
+                DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME),
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                ValueError,
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                DateTimeRange(None, TEST_END_DATETIME),
+                TypeError,
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME),
+                ValueError,
+            ],
+        ],
+    )
+    def test_exception(self, lhs, rhs, expected):
+        with pytest.raises(expected):
+            lhs.subtract(rhs)
+
+
 class TestDateTimeRange_get_start_time_str:
     @pytest.mark.parametrize(
         ["time_format", "expected"],

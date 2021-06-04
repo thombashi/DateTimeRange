@@ -635,6 +635,88 @@ class DateTimeRange:
             end_time_format=self.end_time_format,
         )
 
+    def subtract(self, x):
+        """
+        Remove a time range from this one and return the result.
+
+        - The result will be [self.copy()] if the second range does not overlap the first
+        - The result will be [] if the second range wholly encompasses the first range
+        - The result will be [new_range] if the second range overlaps one end of the range
+        - The result will be [new_range1, new_range2] if the second range is an internal sub range of the first
+
+        :param DateTimeRange x:
+            Range to remove from this one.
+        :return: List(DateTimeRange)
+            List of new ranges when the second range is removed from this one
+        :Sample Code:
+            .. code:: python
+
+                from datetimerange import DateTimeRange
+                dtr0 = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                dtr1 = DateTimeRange("2015-03-22T10:05:00+0900", "2015-03-22T10:15:00+0900")
+                dtr0.subtract(dtr1)
+        :Output:
+          .. parsed-literal::
+
+                [2015-03-22T10:00:00+0900 - 2015-03-22T10:05:00+0900]
+        """
+        overlap = self.intersection(x)
+        # No intersection, return a copy of the original
+        if not overlap.is_set() or overlap.get_timedelta_second() <= 0:
+            return [
+                DateTimeRange(
+                    start_datetime=self.start_datetime,
+                    end_datetime=self.end_datetime,
+                    start_time_format=self.start_time_format,
+                    end_time_format=self.end_time_format,
+                )
+            ]
+
+        # Case 2, full overlap, subtraction results in empty set
+        if (
+            overlap.start_datetime == self.start_datetime
+            and overlap.end_datetime == self.end_datetime
+        ):
+            return []
+
+        # Case 3, overlap on start
+        if overlap.start_datetime == self.start_datetime:
+            return [
+                DateTimeRange(
+                    start_datetime=overlap.end_datetime,
+                    end_datetime=self.end_datetime,
+                    start_time_format=self.start_time_format,
+                    end_time_format=self.end_time_format,
+                )
+            ]
+
+        # Case 4, overlap on end
+        if overlap.end_datetime == self.end_datetime:
+            return [
+                DateTimeRange(
+                    start_datetime=self.start_datetime,
+                    end_datetime=overlap.start_datetime,
+                    start_time_format=self.start_time_format,
+                    end_time_format=self.end_time_format,
+                )
+            ]
+
+        # Case 5, underlap, two new ranges are needed.
+        return [
+            DateTimeRange(
+                start_datetime=self.start_datetime,
+                end_datetime=overlap.start_datetime,
+                start_time_format=self.start_time_format,
+                end_time_format=self.end_time_format,
+            ),
+            DateTimeRange(
+                start_datetime=overlap.end_datetime,
+                end_datetime=self.end_datetime,
+                start_time_format=self.start_time_format,
+                end_time_format=self.end_time_format,
+            ),
+        ]
+
     def encompass(self, x):
         """
         Newly set a time range that encompasses
