@@ -820,10 +820,6 @@ class DateTimeRange:
             ),
         ]
 
-    def __validate_value(self, data_prop):
-        if data_prop.typecode not in [typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
-            raise ValueError("invalid datetime value: {}".format(data_prop))
-
     def __normalize_datetime_value(self, value, timezone):
         if value is None:
             return None
