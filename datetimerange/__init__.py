@@ -639,10 +639,11 @@ class DateTimeRange:
         """
         Remove a time range from this one and return the result.
 
-        - The result will be [self.copy()] if the second range does not overlap the first
-        - The result will be [] if the second range wholly encompasses the first range
-        - The result will be [new_range] if the second range overlaps one end of the range
-        - The result will be [new_range1, new_range2] if the second range is an internal sub range of the first
+        - The result will be ``[self.copy()]`` if the second range does not overlap the first
+        - The result will be ``[]`` if the second range wholly encompasses the first range
+        - The result will be ``[new_range]`` if the second range overlaps one end of the range
+        - The result will be ``[new_range1, new_range2]`` if the second range is
+          an internal sub range of the first
 
         :param DateTimeRange x:
             Range to remove from this one.
