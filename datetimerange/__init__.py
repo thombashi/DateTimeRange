@@ -3,6 +3,7 @@
 """
 
 import datetime
+from typing import List, Union
 
 import dateutil.parser
 import dateutil.relativedelta as rdelta
@@ -55,6 +56,7 @@ class DateTimeRange:
         end_datetime=None,
         start_time_format="%Y-%m-%dT%H:%M:%S%z",
         end_time_format="%Y-%m-%dT%H:%M:%S%z",
+        # timezone
     ):
         self.set_time_range(start_datetime, end_datetime)
 
@@ -766,6 +768,58 @@ class DateTimeRange:
 
         self.__start_datetime += discard_time
         self.__end_datetime -= discard_time
+
+    def split(self, separator: Union[str, datetime.datetime]) -> List["DateTimeRange"]:
+        """
+        Split the DateTimerange in two DateTimerange at a specifit datetime.
+
+        :param Union[str, datetime.datetime] separator:
+            Date and time to split the DateTimeRange.
+            This value will be included for both of the ranges after split.
+
+        :Sample Code:
+            .. code:: python
+
+                from datetimerange import DateTimeRange
+                dtr = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+                dtr.split("2015-03-22T10:05:00+0900")
+        :Output:
+            .. parsed-literal::
+
+                [2015-03-22T10:00:00+0900 - 2015-03-22T10:05:00+0900,
+                2015-03-22T10:05:00+0900 - 2015-03-22T10:10:00+0900]
+        """
+
+        self.validate_time_inversion()
+
+        separatingseparation = self.__normalize_datetime_value(separator, timezone=None)
+
+        if (separatingseparation not in self) or (
+            separatingseparation in (self.start_datetime, self.end_datetime)
+        ):
+            return [
+                DateTimeRange(
+                    start_datetime=self.start_datetime,
+                    end_datetime=self.end_datetime,
+                    start_time_format=self.start_time_format,
+                    end_time_format=self.end_time_format,
+                )
+            ]
+
+        return [
+            DateTimeRange(
+                start_datetime=self.start_datetime,
+                end_datetime=separatingseparation,
+                start_time_format=self.start_time_format,
+                end_time_format=self.end_time_format,
+            ),
+            DateTimeRange(
+                start_datetime=separatingseparation,
+                end_datetime=self.end_datetime,
+                start_time_format=self.start_time_format,
+                end_time_format=self.end_time_format,
+            ),
+        ]
 
     def __validate_value(self, data_prop):
         if data_prop.typecode not in [typepy.Typecode.DATETIME, typepy.Typecode.NONE]:

@@ -1141,3 +1141,36 @@ class TestDateTimeRange_truncate:
     def test_null(self, datetimerange_null_start, value):
         with pytest.raises(TypeError):
             datetimerange_null_start.truncate(value)
+
+
+class TestDateTimeRange_split:
+    @pytest.mark.parametrize(
+        ["dtr", "separator", "expected"],
+        [
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                "2015-03-22 10:05:00" + TIMEZONE,
+                [
+                    DateTimeRange(TEST_START_DATETIME, "2015-03-22 10:05:00" + TIMEZONE),
+                    DateTimeRange("2015-03-22 10:05:00" + TIMEZONE, TEST_END_DATETIME),
+                ],
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                "2015-03-22 09:59:59" + TIMEZONE,
+                [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME)],
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                TEST_START_DATETIME,
+                [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME)],
+            ],
+            [
+                DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME),
+                END_DATETIME_TEXT,
+                [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME)],
+            ],
+        ],
+    )
+    def test_normal(self, dtr, separator, expected):
+        assert dtr.split(separator) == expected
