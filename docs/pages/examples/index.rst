@@ -46,5 +46,6 @@ time-string in the following examples.
 .. include:: Test_whether_a_value_within_the_time_range.rst
 .. include:: Test_whether_a_value_intersect_the_time_range.rst
 .. include:: Make_an_intersected_time_range.rst
+.. include:: Make_a_subtracted_time_range.rst
 .. include:: Make_an_encompassed_time_range.rst
 .. include:: Truncate_time_range.rst
