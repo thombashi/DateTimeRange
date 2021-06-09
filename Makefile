@@ -2,8 +2,7 @@ PACKAGE := DateTimeRange
 
 
 .PHONY: build
-build:
-	@make clean
+build: clean
 	@tox -e build
 	ls -lh dist/*
 
