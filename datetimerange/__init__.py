@@ -56,7 +56,6 @@ class DateTimeRange:
         end_datetime=None,
         start_time_format="%Y-%m-%dT%H:%M:%S%z",
         end_time_format="%Y-%m-%dT%H:%M:%S%z",
-        # timezone
     ):
         self.set_time_range(start_datetime, end_datetime)
 
