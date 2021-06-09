@@ -6,13 +6,9 @@
     :target: https://pypi.org/project/DateTimeRange
     :alt: Supported Python versions
 
-.. image:: https://img.shields.io/travis/thombashi/DateTimeRange/master.svg?label=Linux/macOS%20CI
-    :target: https://travis-ci.org/thombashi/DateTimeRange
-    :alt: Linux/macOS CI status
-
-.. image:: https://img.shields.io/appveyor/ci/thombashi/datetimerange/master.svg?label=Windows%20CI
-    :target: https://ci.appveyor.com/project/thombashi/datetimerange/branch/master
-    :alt: Windows CI status
+.. image:: https://github.com/thombashi/DateTimeRange/workflows/Tests/badge.svg
+    :target: https://github.com/thombashi/DateTimeRange/actions/workflows/tests.yml
+    :alt: Test result of Linux/macOS/Windows
 
 .. image:: https://coveralls.io/repos/github/thombashi/DateTimeRange/badge.svg?branch=master
     :target: https://coveralls.io/github/thombashi/DateTimeRange?branch=master
