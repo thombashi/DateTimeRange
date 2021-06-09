@@ -52,7 +52,7 @@ def main():
         PROJECT_NAME,
         OUTPUT_DIR,
         is_make_toc=True,
-        project_url="https://github.com/thombashi/{}".format(PROJECT_NAME),
+        project_url=f"https://github.com/thombashi/{PROJECT_NAME}",
     )
 
     maker.write_chapter("Summary")

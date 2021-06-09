@@ -67,7 +67,7 @@ class DateTimeRange:
 
     def __repr__(self):
         if self.is_output_elapse:
-            suffix = " ({})".format(self.end_datetime - self.start_datetime)
+            suffix = f" ({self.end_datetime - self.start_datetime})"
         else:
             suffix = ""
 
@@ -570,10 +570,10 @@ class DateTimeRange:
 
         if not is_inversion:
             if self.__compare_timedelta(step, seconds=0) < 0:
-                raise ValueError("invalid step: expect greater than 0, actual={}".format(step))
+                raise ValueError(f"invalid step: expect greater than 0, actual={step}")
         else:
             if self.__compare_timedelta(step, seconds=0) > 0:
-                raise ValueError("invalid step: expect less than 0, actual={}".format(step))
+                raise ValueError(f"invalid step: expect less than 0, actual={step}")
 
         current_datetime = self.start_datetime
         while current_datetime <= self.end_datetime:
