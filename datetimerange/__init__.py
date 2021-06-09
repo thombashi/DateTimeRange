@@ -428,16 +428,7 @@ class DateTimeRange:
                 2015-03-22T10:00:00+0900 - NaT
         """
 
-        if value is None:
-            self.__start_datetime = None
-            return
-
-        try:
-            self.__start_datetime = typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone
-            ).convert()
-        except typepy.TypeConversionError as e:
-            raise ValueError(e)
+        self.__start_datetime = self.__normalize_datetime_value(value, timezone)
 
     def set_end_datetime(self, value, timezone=None):
         """
@@ -461,16 +452,7 @@ class DateTimeRange:
                 NaT - 2015-03-22T10:10:00+0900
         """
 
-        if value is None:
-            self.__end_datetime = None
-            return
-
-        try:
-            self.__end_datetime = typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone
-            ).convert()
-        except typepy.TypeConversionError as e:
-            raise ValueError(e)
+        self.__end_datetime = self.__normalize_datetime_value(value, timezone)
 
     def set_time_range(self, start, end):
         """
@@ -788,3 +770,14 @@ class DateTimeRange:
     def __validate_value(self, data_prop):
         if data_prop.typecode not in [typepy.Typecode.DATETIME, typepy.Typecode.NONE]:
             raise ValueError("invalid datetime value: {}".format(data_prop))
+
+    def __normalize_datetime_value(self, value, timezone):
+        if value is None:
+            return None
+
+        try:
+            return typepy.type.DateTime(
+                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone
+            ).convert()
+        except typepy.TypeConversionError as e:
+            raise ValueError(e)
