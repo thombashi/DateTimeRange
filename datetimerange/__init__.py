@@ -3,7 +3,8 @@
 """
 
 import datetime
-from typing import List, Union
+import re
+from typing import List, Optional, Union
 
 import dateutil.parser
 import dateutil.relativedelta as rdelta
@@ -830,3 +831,40 @@ class DateTimeRange:
             ).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
+
+    @classmethod
+    def from_range_text(
+        cls,
+        range_text: str,
+        separator: str = "-",
+        start_time_format: Optional[str] = None,
+        end_time_format: Optional[str] = None,
+    ) -> "DateTimeRange":
+        """Create a ``DateTimeRange`` instance from a datetime range text.
+
+        :param str range_text:
+            Input text that includes datetime range.
+            e.g. ``2021-01-23T10:00:00+0400 - 2021-01-232T10:10:00+0400``
+
+        :param str separator:
+            Text that separating the ``range_text``.
+
+        :return: DateTimeRange
+            Created instance.
+        """
+
+        dattime_ranges = re.split(r"\s+{}\s+".format(re.escape(separator)), range_text.strip())
+        if len(dattime_ranges) != 2:
+            raise ValueError("range_text should include two datetime that separated by hyphen")
+
+        start, end = dattime_ranges
+        kwargs = {
+            "start_datetime": start,
+            "end_datetime": end,
+        }
+        if start_time_format:
+            kwargs["start_time_format"] = start_time_format
+        if end_time_format:
+            kwargs["end_time_format"] = end_time_format
+
+        return DateTimeRange(**kwargs)

@@ -1174,3 +1174,54 @@ class TestDateTimeRange_split:
     )
     def test_normal(self, dtr, separator, expected):
         assert dtr.split(separator) == expected
+
+
+class TestDateTimeRange_from_range_text:
+    @pytest.mark.parametrize(
+        ["value", "separator", "expected"],
+        [
+            [
+                "{} - {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                "-",
+                DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
+            ],
+            [
+                "{} to {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                "to",
+                DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
+            ],
+            [
+                "{}  -  {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                "-",
+                DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
+            ],
+        ],
+    )
+    def test_normal(self, value, separator, expected):
+        dtr = DateTimeRange.from_range_text(value, separator=separator)
+        assert dtr == expected
+        assert dtr.start_time_format == r"%Y-%m-%dT%H:%M:%S%z"
+        assert dtr.end_time_format == r"%Y-%m-%dT%H:%M:%S%z"
+
+    @pytest.mark.parametrize(
+        ["value", "time_format", "expected"],
+        [
+            [
+                "{} - {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                r"%Y-%m-%d",
+                DateTimeRange(
+                    START_DATETIME_TEXT,
+                    END_DATETIME_TEXT,
+                    start_time_format=r"%Y-%m-%d",
+                    end_time_format=r"%Y-%m-%d",
+                ),
+            ],
+        ],
+    )
+    def test_normal_time_format(self, value, time_format, expected):
+        dtr = DateTimeRange.from_range_text(
+            value, start_time_format=time_format, end_time_format=time_format
+        )
+        assert dtr == expected
+        assert dtr.start_time_format == time_format
+        assert dtr.end_time_format == time_format
