@@ -28,8 +28,8 @@ Summary
 
 Examples
 ==========
-Create and convert to string
-----------------------------
+Create a DateTimeRange instance from start and end datetime
+-----------------------------------------------------------------
 :Sample Code:
     .. code:: python
 
@@ -42,8 +42,22 @@ Create and convert to string
 
         '2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900'
 
-Get iterator
-------------
+Create a DateTimeRange instance from a range text
+-----------------------------------------------------------------
+:Sample Code:
+    .. code:: python
+
+        from datetimerange import DateTimeRange
+        time_range = DateTimeRange("2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900")
+        str(time_range)
+
+:Output:
+    ::
+
+        '2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900'
+
+Get an iterator
+------------------------
 :Sample Code 1:
     .. code:: python
 
