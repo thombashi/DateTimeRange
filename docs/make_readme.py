@@ -22,6 +22,7 @@ def write_examples(maker):
     example_root = Path(os.path.join("pages", "examples"))
     example_files = [
         "Create_and_convert_to_string.rst",
+        "Create_from_a_string.rst",
         "Get_iterator.rst",
         "Test_whether_a_value_within_the_time_range.rst",
         "Test_whether_a_value_intersect_the_time_range.rst",
