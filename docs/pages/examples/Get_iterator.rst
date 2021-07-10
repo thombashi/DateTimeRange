@@ -1,5 +1,5 @@
-Get iterator
-------------
+Get an iterator
+------------------------
 :Sample Code 1:
     .. code:: python
 
