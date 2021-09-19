@@ -22,6 +22,10 @@ Summary
     :target: https://coveralls.io/github/thombashi/DateTimeRange?branch=master
     :alt: Test coverage
 
+.. image:: https://github.com/thombashi/DateTimeRange/actions/workflows/codeql-analysis.yml/badge.svg
+    :target: https://github.com/thombashi/DateTimeRange/actions/workflows/codeql-analysis.yml
+    :alt: CodeQL
+
 .. image:: https://img.shields.io/github/stars/thombashi/DateTimeRange.svg?style=social&label=Star
     :target: https://github.com/thombashi/DateTimeRange
     :alt: GitHub stars
