@@ -4,32 +4,32 @@ PYTHON := python3
 
 .PHONY: build
 build: clean
-	@tox -e build
+	@$(PYTHON) -m tox -e build
 	ls -lh dist/*
 
 .PHONY: check
 check:
-	@tox -e lint
+	@$(PYTHON) -m tox -e lint
 
 .PHONY: clean
 clean:
-	@tox -e clean
+	@$(PYTHON) -m tox -e clean
 
 .PHONY: docs
 docs:
-	@tox -e docs
+	@$(PYTHON) -m tox -e docs
 
 .PHONY: fmt
 fmt:
-	@tox -e fmt
+	@$(PYTHON) -m tox -e fmt
 
 .PHONY: readme
 readme:
-	@tox -e readme
+	@$(PYTHON) -m tox -e readme
 
 .PHONY: release
 release:
-	@python setup.py release --sign
+	@$(PYTHON) setup.py release --sign
 	@make clean
 
 .PHONY: setup-ci
@@ -38,5 +38,5 @@ setup-ci:
 
 .PHONY: setup
 setup: setup-ci
-	@pip install --upgrade -e .[test] releasecmd tox
-	pip check
+	@$(PYTHON) -m pip install --upgrade -e .[test] releasecmd
+	@$(PYTHON) -m pip check
