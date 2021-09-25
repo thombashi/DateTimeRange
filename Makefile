@@ -1,4 +1,5 @@
 PACKAGE := DateTimeRange
+PYTHON := python3
 
 
 .PHONY: build
@@ -31,7 +32,11 @@ release:
 	@python setup.py release --sign
 	@make clean
 
+.PHONY: setup-ci
+setup-ci:
+	@$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade tox
+
 .PHONY: setup
-setup:
+setup: setup-ci
 	@pip install --upgrade -e .[test] releasecmd tox
 	pip check
