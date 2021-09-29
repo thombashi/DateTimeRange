@@ -52,7 +52,7 @@ Create a DateTimeRange instance from a range text
     .. code:: python
 
         from datetimerange import DateTimeRange
-        time_range = DateTimeRange("2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900")
+        time_range = DateTimeRange.from_range_text("2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900")
         str(time_range)
 
 :Output:
