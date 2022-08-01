@@ -836,7 +836,7 @@ class DateTimeRange:
     def from_range_text(
         cls,
         range_text: str,
-        separator: str = "-",
+        separator: str = " - ",
         start_time_format: Optional[str] = None,
         end_time_format: Optional[str] = None,
     ) -> "DateTimeRange":
@@ -853,7 +853,7 @@ class DateTimeRange:
             Created instance.
         """
 
-        dattime_ranges = re.split(r"\s+{}\s+".format(re.escape(separator)), range_text.strip())
+        dattime_ranges = re.split(r"{}".format(re.escape(separator)), range_text.strip())
         if len(dattime_ranges) != 2:
             raise ValueError("range_text should include two datetime that separated by hyphen")
 
