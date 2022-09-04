@@ -1,9 +1,18 @@
 Installation
 ============
 
+Installation: pip
+------------------------------
 ::
 
     pip install DateTimeRange
+
+
+Installation: conda
+------------------------------
+::
+
+    conda install -c conda-forge dataproperty
 
 
 Dependencies
