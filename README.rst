@@ -10,6 +10,10 @@ Summary
     :target: https://badge.fury.io/py/DateTimeRange
     :alt: PyPI package version
 
+.. image:: https://anaconda.org/conda-forge/datetimerange/badges/version.svg
+    :target: https://anaconda.org/conda-forge/datetimerange
+    :alt: conda-forge package version
+
 .. image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
     :target: https://pypi.org/project/DateTimeRange
     :alt: Supported Python versions
@@ -194,9 +198,18 @@ Examples with Jupyter Notebook is also available at `DateTimeRange.ipynb <https:
 Installation
 ============
 
+Installation: pip
+------------------------------
 ::
 
     pip install DateTimeRange
+
+
+Installation: conda
+------------------------------
+::
+
+    conda install -c conda-forge dataproperty
 
 
 Dependencies
