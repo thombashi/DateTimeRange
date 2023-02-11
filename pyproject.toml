@@ -18,7 +18,7 @@ exclude = '''
 )/
 | docs/conf.py
 '''
-target-version = ['py36', 'py37', 'py38', 'py39', 'py310']
+target-version = ['py37', 'py38', 'py39', 'py310']
 
 [tool.coverage.run]
 source = ['datetimerange']
@@ -54,7 +54,7 @@ skip_glob = [
 
 [tool.mypy]
 ignore_missing_imports = true
-python_version = 3.6
+python_version = 3.7
 
 pretty = true
 show_error_codes = true
