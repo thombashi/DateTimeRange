@@ -604,7 +604,9 @@ class TestDateTimeRange_range:
         ],
     )
     def test_normal(self, value, step, expected):
-        for value_item, expected_item in zip(value.range(step), expected):
+        results = list(value.range(step))
+        assert len(results) == len(expected)
+        for value_item, expected_item in zip(results, expected):
             assert value_item == expected_item
 
     @pytest.mark.parametrize(

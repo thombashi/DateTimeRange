@@ -569,17 +569,22 @@ class DateTimeRange:
         except ValueError:
             is_inversion = True
 
+        current_datetime = self.start_datetime
+
         if not is_inversion:
             if self.__compare_timedelta(step, seconds=0) < 0:
                 raise ValueError(f"invalid step: expect greater than 0, actual={step}")
+
+            while current_datetime <= self.end_datetime:
+                yield current_datetime
+                current_datetime = current_datetime + step
         else:
             if self.__compare_timedelta(step, seconds=0) > 0:
                 raise ValueError(f"invalid step: expect less than 0, actual={step}")
 
-        current_datetime = self.start_datetime
-        while current_datetime <= self.end_datetime:
-            yield current_datetime
-            current_datetime = current_datetime + step
+            while current_datetime >= self.end_datetime:
+                yield current_datetime
+                current_datetime = current_datetime + step
 
     def intersection(self, x):
         """
