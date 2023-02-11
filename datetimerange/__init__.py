@@ -853,7 +853,7 @@ class DateTimeRange:
     def from_range_text(
         cls,
         range_text: str,
-        separator: str = "-",
+        separator: str = r"\s+\-\s+",
         start_time_format: Optional[str] = None,
         end_time_format: Optional[str] = None,
     ) -> "DateTimeRange":
@@ -864,13 +864,13 @@ class DateTimeRange:
             e.g. ``2021-01-23T10:00:00+0400 - 2021-01-232T10:10:00+0400``
 
         :param str separator:
-            Text that separating the ``range_text``.
+            Regular expression that separating the ``range_text`` to start and end time.
 
         :return: DateTimeRange
             Created instance.
         """
 
-        dattime_ranges = re.split(rf"\s+{re.escape(separator)}\s+", range_text.strip())
+        dattime_ranges = re.split(separator, range_text.strip())
         if len(dattime_ranges) != 2:
             raise ValueError("range_text should include two datetime that separated by hyphen")
 

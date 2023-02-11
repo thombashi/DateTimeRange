@@ -1242,7 +1242,7 @@ class TestDateTimeRange_from_range_text:
         [
             [
                 f"{START_DATETIME_TEXT} - {END_DATETIME_TEXT}",
-                "-",
+                r"\s+\-\s+",
                 DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
             ],
             [
@@ -1252,7 +1252,7 @@ class TestDateTimeRange_from_range_text:
             ],
             [
                 f"{START_DATETIME_TEXT}  -  {END_DATETIME_TEXT}",
-                "-",
+                r"\s+\-\s+",
                 DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
             ],
         ],
