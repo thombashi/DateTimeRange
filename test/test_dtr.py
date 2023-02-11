@@ -1183,17 +1183,17 @@ class TestDateTimeRange_from_range_text:
         ["value", "separator", "expected"],
         [
             [
-                "{} - {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                f"{START_DATETIME_TEXT} - {END_DATETIME_TEXT}",
                 "-",
                 DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
             ],
             [
-                "{} to {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                f"{START_DATETIME_TEXT} to {END_DATETIME_TEXT}",
                 "to",
                 DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
             ],
             [
-                "{}  -  {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                f"{START_DATETIME_TEXT}  -  {END_DATETIME_TEXT}",
                 "-",
                 DateTimeRange(START_DATETIME_TEXT, END_DATETIME_TEXT),
             ],
@@ -1209,7 +1209,7 @@ class TestDateTimeRange_from_range_text:
         ["value", "time_format", "expected"],
         [
             [
-                "{} - {}".format(START_DATETIME_TEXT, END_DATETIME_TEXT),
+                f"{START_DATETIME_TEXT} - {END_DATETIME_TEXT}",
                 r"%Y-%m-%d",
                 DateTimeRange(
                     START_DATETIME_TEXT,

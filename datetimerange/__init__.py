@@ -858,7 +858,7 @@ class DateTimeRange:
             Created instance.
         """
 
-        dattime_ranges = re.split(r"\s+{}\s+".format(re.escape(separator)), range_text.strip())
+        dattime_ranges = re.split(rf"\s+{re.escape(separator)}\s+", range_text.strip())
         if len(dattime_ranges) != 2:
             raise ValueError("range_text should include two datetime that separated by hyphen")
 
