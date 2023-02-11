@@ -1,5 +1,5 @@
-Test whether a value intersect the time range
----------------------------------------------
+Test whether a value intersects the time range
+----------------------------------------------
 :Sample Code:
     .. code:: python
 

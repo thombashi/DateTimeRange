@@ -12,10 +12,10 @@ Installation: conda
 ------------------------------
 ::
 
-    conda install -c conda-forge dataproperty
+    conda install -c conda-forge datetimerange
 
 
 Dependencies
 ============
-- Python 3.6+
+- Python 3.7+
 - `Python package dependencies (automatically installed) <https://github.com/thombashi/DateTimeRange/network/dependencies>`__

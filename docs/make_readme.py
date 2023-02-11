@@ -41,7 +41,7 @@ def write_examples(maker):
             "More examples are available at ",
             "https://datetimerange.rtfd.io/en/latest/pages/examples/index.html",
             "",
-            "Examples with Jupyter Notebook is also available at "
+            "Examples with Jupyter Notebook are also available at "
             "`DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/"
             "tree/master/examples/DateTimeRange.ipynb>`__",
         ]
