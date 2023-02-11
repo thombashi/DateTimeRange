@@ -4,7 +4,7 @@
 
 Summary
 =========
-`DateTimeRange <https://github.com/thombashi/DateTimeRange>`__ is a Python library to handle a time range. e.g. check whether a time is within the time range, get the intersection of time ranges, truncating a time range, iterate through a time range, and so forth.
+`DateTimeRange <https://github.com/thombashi/DateTimeRange>`__ is a Python library to handle a time range. e.g. check whether a time is within the time range, get the intersection of time ranges, truncate a time range, iterate through a time range, and so forth.
 
 .. image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
@@ -123,8 +123,8 @@ Test whether a value within the time range
         False
         True
 
-Test whether a value intersect the time range
----------------------------------------------
+Test whether a value intersects the time range
+----------------------------------------------
 :Sample Code:
     .. code:: python
 
@@ -193,7 +193,7 @@ For more information
 More examples are available at 
 https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
-Examples with Jupyter Notebook is also available at `DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/examples/DateTimeRange.ipynb>`__
+Examples with Jupyter Notebook are also available at `DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/examples/DateTimeRange.ipynb>`__
 
 Installation
 ============
@@ -209,12 +209,12 @@ Installation: conda
 ------------------------------
 ::
 
-    conda install -c conda-forge dataproperty
+    conda install -c conda-forge datetimerange
 
 
 Dependencies
 ============
-- Python 3.6+
+- Python 3.7+
 - `Python package dependencies (automatically installed) <https://github.com/thombashi/DateTimeRange/network/dependencies>`__
 
 Documentation
