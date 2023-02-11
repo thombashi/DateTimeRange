@@ -709,8 +709,7 @@ class DateTimeRange:
 
     def encompass(self, x):
         """
-        Newly set a time range that encompasses
-        the input and the current time range.
+        Create a new time range that encompasses the input and the current time range.
 
         :param DateTimeRange x:
             Value to compute encompass with the current time range.
