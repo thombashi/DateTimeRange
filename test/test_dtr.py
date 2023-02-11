@@ -702,6 +702,35 @@ class TestDateTimeRange_is_intersection:
         assert lhs.is_intersection(rhs) == expected
 
     @pytest.mark.parametrize(
+        ["lhs", "rhs", "threshold", "expected"],
+        [
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(seconds=0),
+                True,
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(seconds=1),
+                False,
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:01 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(seconds=1),
+                True,
+            ],
+        ],
+    )
+    def test_normal_w_intersection_threshold(self, lhs, rhs, threshold, expected):
+        lhs_org = deepcopy(lhs)
+
+        assert lhs.is_intersection(rhs, threshold) == expected
+        assert lhs == lhs_org
+
+    @pytest.mark.parametrize(
         ["lhs", "rhs", "expected"],
         [
             [DateTimeRange(None, None), DateTimeRange(None, None), TypeError],
@@ -1021,6 +1050,35 @@ class TestDateTimeRange_intersection:
         lhs_org = deepcopy(lhs)
 
         assert lhs.intersection(rhs) == expected
+        assert lhs == lhs_org
+
+    @pytest.mark.parametrize(
+        ["lhs", "rhs", "threshold", "expected"],
+        [
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(seconds=0),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-01-22T10:00:00 JST"),
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:00 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(seconds=1),
+                DateTimeRange(None, None),
+            ],
+            [
+                DateTimeRange("2015-01-22T09:50:00 JST", "2015-01-22T10:00:01 JST"),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-03-22T10:20:00 JST"),
+                timedelta(seconds=1),
+                DateTimeRange("2015-01-22T10:00:00 JST", "2015-01-22T10:00:01 JST"),
+            ],
+        ],
+    )
+    def test_normal_w_intersection_threshold(self, lhs, rhs, threshold, expected):
+        lhs_org = deepcopy(lhs)
+
+        assert lhs.intersection(rhs, threshold) == expected
         assert lhs == lhs_org
 
     @pytest.mark.parametrize(

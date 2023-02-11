@@ -311,9 +311,13 @@ class DateTimeRange:
 
         return self.is_set()
 
-    def is_intersection(self, x):
+    def is_intersection(self, x, intersection_threshold=None):
         """
         :param DateTimeRange x: Value to compare
+        :param Optional[datetime.timedelta] intersection_threshold:
+            Minimum time constraint that an intersection must have.
+            Defaults to ``None`` (no constraint).
+
         :return: |True| if intersect with ``x``
         :rtype: bool
 
@@ -330,7 +334,7 @@ class DateTimeRange:
                 True
         """
 
-        return self.intersection(x).is_set()
+        return self.intersection(x, intersection_threshold).is_set()
 
     def get_start_time_str(self):
         """
@@ -586,13 +590,16 @@ class DateTimeRange:
                 yield current_datetime
                 current_datetime = current_datetime + step
 
-    def intersection(self, x):
+    def intersection(self, x, intersection_threshold=None):
         """
-        Newly set a time range that overlaps
-        the input and the current time range.
+        Create a new time range that overlaps the input and the current time range.
+        If no overlaps found, return a time range that set ``None`` for both start and end time.
 
         :param DateTimeRange x:
             Value to compute intersection with the current time range.
+        :param Optional[datetime.timedelta] intersection_threshold:
+            Minimum time constraint that an intersection must have.
+            Defaults to ``None`` (no constraint).
 
         :Sample Code:
             .. code:: python
@@ -616,6 +623,12 @@ class DateTimeRange:
         else:
             start_datetime = None
             end_datetime = None
+
+        if intersection_threshold is not None:
+            delta = end_datetime - start_datetime
+            if delta < intersection_threshold:
+                start_datetime = None
+                end_datetime = None
 
         return DateTimeRange(
             start_datetime=start_datetime,
