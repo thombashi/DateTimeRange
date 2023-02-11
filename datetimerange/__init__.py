@@ -870,13 +870,13 @@ class DateTimeRange:
             Created instance.
         """
 
-        dattime_ranges = re.split(separator, range_text.strip())
-        if len(dattime_ranges) != 2:
+        datetime_ranges = re.split(separator, range_text.strip())
+        if len(datetime_ranges) != 2:
             raise ValueError(
-                f"range_text should include two datetime that separated by hyphen: got={dattime_ranges}"
+                f"range_text should include two datetime that separated by hyphen: got={datetime_ranges}"
             )
 
-        start, end = dattime_ranges
+        start, end = datetime_ranges
         kwargs = {
             "start_datetime": start,
             "end_datetime": end,
