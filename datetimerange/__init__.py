@@ -872,7 +872,9 @@ class DateTimeRange:
 
         dattime_ranges = re.split(separator, range_text.strip())
         if len(dattime_ranges) != 2:
-            raise ValueError("range_text should include two datetime that separated by hyphen")
+            raise ValueError(
+                f"range_text should include two datetime that separated by hyphen: got={dattime_ranges}"
+            )
 
         start, end = dattime_ranges
         kwargs = {
