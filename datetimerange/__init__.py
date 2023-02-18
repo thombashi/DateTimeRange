@@ -4,7 +4,7 @@
 
 import datetime
 import re
-from typing import List, Optional, Union
+from typing import ClassVar, Iterator, List, Optional, Union
 
 import dateutil.parser
 import dateutil.relativedelta as rdelta
@@ -49,15 +49,15 @@ class DateTimeRange:
         .. seealso:: :py:meth:`.get_end_time_str`
     """
 
-    NOT_A_TIME_STR = "NaT"
+    NOT_A_TIME_STR: ClassVar[str] = "NaT"
 
     def __init__(
         self,
-        start_datetime=None,
-        end_datetime=None,
-        start_time_format="%Y-%m-%dT%H:%M:%S%z",
-        end_time_format="%Y-%m-%dT%H:%M:%S%z",
-    ):
+        start_datetime: Union[datetime.datetime, str, None] = None,
+        end_datetime: Union[datetime.datetime, str, None] = None,
+        start_time_format: str = "%Y-%m-%dT%H:%M:%S%z",
+        end_time_format: str = "%Y-%m-%dT%H:%M:%S%z",
+    ) -> None:
         self.set_time_range(start_datetime, end_datetime)
 
         self.start_time_format = start_time_format
@@ -74,7 +74,7 @@ class DateTimeRange:
 
         return self.separator.join((self.get_start_time_str(), self.get_end_time_str())) + suffix
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, DateTimeRange):
             return False
 
@@ -82,7 +82,7 @@ class DateTimeRange:
             [self.start_datetime == other.start_datetime, self.end_datetime == other.end_datetime]
         )
 
-    def __ne__(self, other):
+    def __ne__(self, other: object) -> bool:
         if not isinstance(other, DateTimeRange):
             return True
 
@@ -90,25 +90,25 @@ class DateTimeRange:
             [self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime]
         )
 
-    def __add__(self, other):
+    def __add__(self, other: datetime.timedelta) -> "DateTimeRange":
         return DateTimeRange(self.start_datetime + other, self.end_datetime + other)
 
-    def __iadd__(self, other):
+    def __iadd__(self, other: datetime.timedelta) -> "DateTimeRange":
         self.set_start_datetime(self.start_datetime + other)
         self.set_end_datetime(self.end_datetime + other)
 
         return self
 
-    def __sub__(self, other):
+    def __sub__(self, other: datetime.timedelta) -> "DateTimeRange":
         return DateTimeRange(self.start_datetime - other, self.end_datetime - other)
 
-    def __isub__(self, other):
+    def __isub__(self, other: datetime.timedelta) -> "DateTimeRange":
         self.set_start_datetime(self.start_datetime - other)
         self.set_end_datetime(self.end_datetime - other)
 
         return self
 
-    def __contains__(self, x):
+    def __contains__(self, x: Union[datetime.datetime, "DateTimeRange", str]) -> bool:
         """
         :param x:
             |datetime|/``DateTimeRange`` instance to compare.
@@ -144,15 +144,12 @@ class DateTimeRange:
         if isinstance(x, DateTimeRange):
             return x.start_datetime >= self.start_datetime and x.end_datetime <= self.end_datetime
 
-        try:
-            value = dateutil.parser.parse(x)
-        except (TypeError, AttributeError):
-            value = x
+        value = dateutil.parser.parse(x) if isinstance(x, str) else x
 
         return self.start_datetime <= value <= self.end_datetime
 
     @property
-    def start_datetime(self):
+    def start_datetime(self) -> datetime.datetime:
         """
         :return: Start time of the time range.
         :rtype: datetime.datetime
@@ -172,7 +169,7 @@ class DateTimeRange:
         return self.__start_datetime
 
     @property
-    def end_datetime(self):
+    def end_datetime(self) -> datetime.datetime:
         """
         :return: End time of the time range.
         :rtype: datetime.datetime
@@ -192,7 +189,7 @@ class DateTimeRange:
         return self.__end_datetime
 
     @property
-    def timedelta(self):
+    def timedelta(self) -> datetime.timedelta:
         """
         :return:
             (|attr_end_datetime| - |attr_start_datetime|) as |timedelta|
@@ -212,7 +209,7 @@ class DateTimeRange:
 
         return self.end_datetime - self.start_datetime
 
-    def is_set(self):
+    def is_set(self) -> bool:
         """
         :return:
             |True| if both |attr_start_datetime| and
@@ -238,7 +235,7 @@ class DateTimeRange:
 
         return all([self.start_datetime is not None, self.end_datetime is not None])
 
-    def validate_time_inversion(self):
+    def validate_time_inversion(self) -> None:
         """
         Check time inversion of the time range.
 
@@ -275,7 +272,7 @@ class DateTimeRange:
                 )
             )
 
-    def is_valid_timerange(self):
+    def is_valid_timerange(self) -> bool:
         """
         :return:
             |True| if the time range is
@@ -311,7 +308,9 @@ class DateTimeRange:
 
         return self.is_set()
 
-    def is_intersection(self, x, intersection_threshold=None):
+    def is_intersection(
+        self, x: "DateTimeRange", intersection_threshold: Optional[datetime.timedelta] = None
+    ) -> bool:
         """
         :param DateTimeRange x: Value to compare
         :param Optional[datetime.timedelta] intersection_threshold:
@@ -336,7 +335,7 @@ class DateTimeRange:
 
         return self.intersection(x, intersection_threshold).is_set()
 
-    def get_start_time_str(self):
+    def get_start_time_str(self) -> str:
         """
         :return:
             |attr_start_datetime| as |str| formatted with
@@ -364,7 +363,7 @@ class DateTimeRange:
         except AttributeError:
             return self.NOT_A_TIME_STR
 
-    def get_end_time_str(self):
+    def get_end_time_str(self) -> str:
         """
         :return:
             |attr_end_datetime| as a |str| formatted with
@@ -392,7 +391,7 @@ class DateTimeRange:
         except AttributeError:
             return self.NOT_A_TIME_STR
 
-    def get_timedelta_second(self):
+    def get_timedelta_second(self) -> float:
         """
         :return: (|attr_end_datetime| - |attr_start_datetime|) as seconds
         :rtype: float
@@ -411,7 +410,9 @@ class DateTimeRange:
 
         return self.timedelta.total_seconds()
 
-    def set_start_datetime(self, value, timezone=None):
+    def set_start_datetime(
+        self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None
+    ) -> None:
         """
         Set the start time of the time range.
 
@@ -436,7 +437,9 @@ class DateTimeRange:
 
         self.__start_datetime = self.__normalize_datetime_value(value, timezone)
 
-    def set_end_datetime(self, value, timezone=None):
+    def set_end_datetime(
+        self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None
+    ) -> None:
         """
         Set the end time of the time range.
 
@@ -460,7 +463,9 @@ class DateTimeRange:
 
         self.__end_datetime = self.__normalize_datetime_value(value, timezone)
 
-    def set_time_range(self, start, end):
+    def set_time_range(
+        self, start: Union[datetime.datetime, str, None], end: Union[datetime.datetime, str, None]
+    ) -> None:
         """
         :param datetime.datetime/str start: |param_start_datetime|
         :param datetime.datetime/str end: |param_end_datetime|
@@ -537,7 +542,9 @@ class DateTimeRange:
                 lhs.normalized(), rdelta.relativedelta(seconds=seconds)
             )
 
-    def range(self, step):
+    def range(
+        self, step: Union[datetime.timedelta, rdelta.relativedelta]
+    ) -> Iterator[datetime.datetime]:
         """
         Return an iterator object.
 
@@ -590,7 +597,9 @@ class DateTimeRange:
                 yield current_datetime
                 current_datetime = current_datetime + step
 
-    def intersection(self, x, intersection_threshold=None):
+    def intersection(
+        self, x: "DateTimeRange", intersection_threshold: Optional[datetime.timedelta] = None
+    ) -> "DateTimeRange":
         """
         Create a new time range that overlaps the input and the current time range.
         If no overlaps found, return a time range that set ``None`` for both start and end time.
@@ -625,6 +634,8 @@ class DateTimeRange:
             end_datetime = None
 
         if intersection_threshold is not None:
+            assert start_datetime is not None
+            assert end_datetime is not None
             delta = end_datetime - start_datetime
             if delta < intersection_threshold:
                 start_datetime = None
@@ -637,7 +648,7 @@ class DateTimeRange:
             end_time_format=self.end_time_format,
         )
 
-    def subtract(self, x):
+    def subtract(self, x: "DateTimeRange") -> List["DateTimeRange"]:
         """
         Remove a time range from this one and return the result.
 
@@ -720,7 +731,7 @@ class DateTimeRange:
             ),
         ]
 
-    def encompass(self, x):
+    def encompass(self, x: "DateTimeRange") -> "DateTimeRange":
         """
         Create a new time range that encompasses the input and the current time range.
 
@@ -750,7 +761,7 @@ class DateTimeRange:
             end_time_format=self.end_time_format,
         )
 
-    def truncate(self, percentage):
+    def truncate(self, percentage: float) -> None:
         """
         Truncate ``percentage`` / 2 [%] of whole time from first and last time.
 
