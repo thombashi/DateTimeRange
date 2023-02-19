@@ -331,6 +331,7 @@ class TestDateTimeRange_add:
         new_datetimerange = value + add_value
 
         assert new_datetimerange == expected
+        assert value != new_datetimerange
 
     @pytest.mark.parametrize(
         ["value", "expected"],
@@ -373,6 +374,7 @@ class TestDateTimeRange_sub:
 
         new_datetimerange = value - timedelta(seconds=10 * 60)
         assert new_datetimerange == expected
+        assert value != new_datetimerange
 
     @pytest.mark.parametrize(
         ["value", "expected"],
