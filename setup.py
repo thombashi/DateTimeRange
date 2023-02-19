@@ -56,6 +56,7 @@ setuptools.setup(
     packages=setuptools.find_packages(exclude=["test*"]),
     project_urls={
         "Documentation": f"https://{MODULE_NAME.lower():s}.rtfd.io/",
+        "Funding": "https://github.com/sponsors/thombashi",
         "Source": REPOSITORY_URL,
         "Tracker": f"{REPOSITORY_URL:s}/issues",
     },
