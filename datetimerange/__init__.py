@@ -24,6 +24,51 @@ def _to_norm_relativedelta(
     ).normalized()
 
 
+def _compare_relativedelta(lhs: rdelta.relativedelta, rhs: rdelta.relativedelta) -> int:
+    if lhs.years < rhs.years:
+        return -1
+    if lhs.years > rhs.years:
+        return 1
+
+    if lhs.months < rhs.months:
+        return -1
+    if lhs.months > rhs.months:
+        return 1
+
+    if lhs.days < rhs.days:
+        return -1
+    if lhs.days > rhs.days:
+        return 1
+
+    if lhs.hours < rhs.hours:
+        return -1
+    if lhs.hours > rhs.hours:
+        return 1
+
+    if lhs.minutes < rhs.minutes:
+        return -1
+    if lhs.minutes > rhs.minutes:
+        return 1
+
+    if lhs.seconds < rhs.seconds:
+        return -1
+    if lhs.seconds > rhs.seconds:
+        return 1
+
+    if lhs.microseconds < rhs.microseconds:
+        return -1
+    if lhs.microseconds > rhs.microseconds:
+        return 1
+
+    return 0
+
+
+def _compare_timedelta(lhs: Union[datetime.timedelta, rdelta.relativedelta], seconds: int) -> int:
+    return _compare_relativedelta(
+        _to_norm_relativedelta(lhs), rdelta.relativedelta(seconds=seconds)
+    )
+
+
 class DateTimeRange:
     """
     A class that represents a range of datetime.
@@ -543,52 +588,6 @@ class DateTimeRange:
         self.set_start_datetime(start)
         self.set_end_datetime(end)
 
-    @staticmethod
-    def __compare_relativedelta(lhs: rdelta.relativedelta, rhs: rdelta.relativedelta) -> int:
-        if lhs.years < rhs.years:
-            return -1
-        if lhs.years > rhs.years:
-            return 1
-
-        if lhs.months < rhs.months:
-            return -1
-        if lhs.months > rhs.months:
-            return 1
-
-        if lhs.days < rhs.days:
-            return -1
-        if lhs.days > rhs.days:
-            return 1
-
-        if lhs.hours < rhs.hours:
-            return -1
-        if lhs.hours > rhs.hours:
-            return 1
-
-        if lhs.minutes < rhs.minutes:
-            return -1
-        if lhs.minutes > rhs.minutes:
-            return 1
-
-        if lhs.seconds < rhs.seconds:
-            return -1
-        if lhs.seconds > rhs.seconds:
-            return 1
-
-        if lhs.microseconds < rhs.microseconds:
-            return -1
-        if lhs.microseconds > rhs.microseconds:
-            return 1
-
-        return 0
-
-    def __compare_timedelta(
-        self, lhs: Union[datetime.timedelta, rdelta.relativedelta], seconds: int
-    ) -> int:
-        return self.__compare_relativedelta(
-            _to_norm_relativedelta(lhs), rdelta.relativedelta(seconds=seconds)
-        )
-
     def range(
         self, step: Union[datetime.timedelta, rdelta.relativedelta]
     ) -> Iterator[datetime.datetime]:
@@ -618,7 +617,7 @@ class DateTimeRange:
                 2015-01-04 00:00:00+09:00
         """
 
-        if self.__compare_timedelta(step, 0) == 0:
+        if _compare_timedelta(step, 0) == 0:
             raise ValueError("step must be not zero")
 
         is_inversion = False
@@ -633,14 +632,14 @@ class DateTimeRange:
         current_datetime = self.start_datetime
 
         if not is_inversion:
-            if self.__compare_timedelta(step, seconds=0) < 0:
+            if _compare_timedelta(step, seconds=0) < 0:
                 raise ValueError(f"invalid step: expect greater than 0, actual={step}")
 
             while current_datetime <= self.end_datetime:
                 yield current_datetime
                 current_datetime = current_datetime + step
         else:
-            if self.__compare_timedelta(step, seconds=0) > 0:
+            if _compare_timedelta(step, seconds=0) > 0:
                 raise ValueError(f"invalid step: expect less than 0, actual={step}")
 
             while current_datetime >= self.end_datetime:
@@ -695,7 +694,7 @@ class DateTimeRange:
             delta = end_datetime - start_datetime
 
             if (
-                self.__compare_relativedelta(
+                _compare_relativedelta(
                     _to_norm_relativedelta(delta),
                     _to_norm_relativedelta(intersection_threshold),
                 )
