@@ -321,6 +321,11 @@ class TestDateTimeRange_add:
                 timedelta(seconds=-10 * 60),
                 DateTimeRange("2015-03-22T09:50:00", "2015-03-22T10:00:00"),
             ],
+            [
+                DateTimeRange("2015-03-22T10:00:00", "2015-03-22T10:10:00"),
+                relativedelta(hours=+6),
+                DateTimeRange("2015-03-22T16:00:00", "2015-03-22T16:10:00"),
+            ],
         ],
     )
     def test_normal(self, value, add_value, expected):
@@ -344,11 +349,15 @@ class TestDateTimeRange_add:
 
 class TestDateTimeRange_iadd:
     def test_normal(self):
-        value = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        value1 = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
+        value2 = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
         expected = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
 
-        value += timedelta(seconds=10 * 60)
-        assert value == expected
+        value1 += timedelta(seconds=10 * 60)
+        assert value1 == expected
+
+        value2 += relativedelta(seconds=10 * 60)
+        assert value2 == expected
 
     @pytest.mark.parametrize(
         ["value", "expected"],
@@ -376,6 +385,10 @@ class TestDateTimeRange_sub:
         assert new_datetimerange == expected
         assert value != new_datetimerange
 
+        new_datetimerange = value - relativedelta(seconds=10 * 60)
+        assert new_datetimerange == expected
+        assert value != new_datetimerange
+
     @pytest.mark.parametrize(
         ["value", "expected"],
         [
@@ -395,11 +408,15 @@ class TestDateTimeRange_sub:
 
 class TestDateTimeRange_isub:
     def test_normal(self):
-        value = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+        value1 = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
+        value2 = DateTimeRange("2015-03-22T10:10:00+0900", "2015-03-22T10:20:00+0900")
         expected = DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900")
 
-        value -= timedelta(seconds=10 * 60)
-        assert value == expected
+        value1 -= timedelta(seconds=10 * 60)
+        assert value1 == expected
+
+        value2 -= relativedelta(seconds=10 * 60)
+        assert value2 == expected
 
     @pytest.mark.parametrize(
         ["value", "expected"],
