@@ -47,7 +47,7 @@ setuptools.setup(
     author=pkg_info["__author__"],
     author_email=pkg_info["__email__"],
     description=summary,
-    package_data={"datetimerange": ["py.typed"]},
+    package_data={MODULE_NAME.lower(): ["py.typed"]},
     include_package_data=True,
     keywords=["datetimerange", "datetime", "time range"],
     license=pkg_info["__license__"],
