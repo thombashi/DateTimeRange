@@ -3,6 +3,23 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.job }}
+      cancel-in-progress: true
+    timeout-minutes: 20
+    container:
+      image: ghcr.io/thombashi/python-ci:3.10
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Lint
+        run: make check
+
   unit-test:
     runs-on: ${{ matrix.os }}
     strategy:
