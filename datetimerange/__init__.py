@@ -63,6 +63,18 @@ def _compare_timedelta(lhs: Union[datetime.timedelta, rdelta.relativedelta], sec
     return _compare_relativedelta(_to_norm_relativedelta(lhs), rdelta.relativedelta(seconds=seconds))
 
 
+def _normalize_datetime_value(
+    value: Union[datetime.datetime, str, None], timezone: Optional[str]
+) -> Optional[datetime.datetime]:
+    if value is None:
+        return None
+
+    try:
+        return typepy.type.DateTime(value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
+    except typepy.TypeConversionError as e:
+        raise ValueError(e)
+
+
 class DateTimeRange:
     """
     A class that represents a range of datetime.
@@ -521,7 +533,7 @@ class DateTimeRange:
                 2015-03-22T10:00:00+0900 - NaT
         """
 
-        self.__start_datetime = self.__normalize_datetime_value(value, timezone)
+        self.__start_datetime = _normalize_datetime_value(value, timezone)
 
     def set_end_datetime(self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None) -> None:
         """
@@ -545,7 +557,7 @@ class DateTimeRange:
                 NaT - 2015-03-22T10:10:00+0900
         """
 
-        self.__end_datetime = self.__normalize_datetime_value(value, timezone)
+        self.__end_datetime = _normalize_datetime_value(value, timezone)
 
     def set_time_range(
         self, start: Union[datetime.datetime, str, None], end: Union[datetime.datetime, str, None]
@@ -869,7 +881,7 @@ class DateTimeRange:
 
         self.validate_time_inversion()
 
-        separatingseparation = self.__normalize_datetime_value(separator, timezone=None)
+        separatingseparation = _normalize_datetime_value(separator, timezone=None)
         assert separatingseparation
 
         if (separatingseparation not in self) or (separatingseparation in (self.start_datetime, self.end_datetime)):
@@ -896,17 +908,6 @@ class DateTimeRange:
                 end_time_format=self.end_time_format,
             ),
         ]
-
-    def __normalize_datetime_value(
-        self, value: Union[datetime.datetime, str, None], timezone: Optional[str]
-    ) -> Optional[datetime.datetime]:
-        if value is None:
-            return None
-
-        try:
-            return typepy.type.DateTime(value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
-        except typepy.TypeConversionError as e:
-            raise ValueError(e)
 
     @classmethod
     def from_range_text(
