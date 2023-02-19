@@ -617,7 +617,8 @@ class DateTimeRange:
                 2015-01-04 00:00:00+09:00
         """
 
-        if _compare_timedelta(step, 0) == 0:
+        cmp_step_w_zero = _compare_timedelta(step, seconds=0)
+        if cmp_step_w_zero == 0:
             raise ValueError("step must be not zero")
 
         is_inversion = False
@@ -632,14 +633,14 @@ class DateTimeRange:
         current_datetime = self.start_datetime
 
         if not is_inversion:
-            if _compare_timedelta(step, seconds=0) < 0:
+            if cmp_step_w_zero < 0:
                 raise ValueError(f"invalid step: expect greater than 0, actual={step}")
 
             while current_datetime <= self.end_datetime:
                 yield current_datetime
                 current_datetime = current_datetime + step
         else:
-            if _compare_timedelta(step, seconds=0) > 0:
+            if cmp_step_w_zero > 0:
                 raise ValueError(f"invalid step: expect less than 0, actual={step}")
 
             while current_datetime >= self.end_datetime:
