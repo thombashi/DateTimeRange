@@ -13,15 +13,11 @@ import typepy
 from .__version__ import __author__, __copyright__, __email__, __license__, __version__
 
 
-def _to_norm_relativedelta(
-    td: Union[datetime.timedelta, rdelta.relativedelta]
-) -> rdelta.relativedelta:
+def _to_norm_relativedelta(td: Union[datetime.timedelta, rdelta.relativedelta]) -> rdelta.relativedelta:
     if isinstance(td, rdelta.relativedelta):
         return td.normalized()
 
-    return rdelta.relativedelta(
-        seconds=int(td.total_seconds()), microseconds=td.microseconds
-    ).normalized()
+    return rdelta.relativedelta(seconds=int(td.total_seconds()), microseconds=td.microseconds).normalized()
 
 
 def _compare_relativedelta(lhs: rdelta.relativedelta, rhs: rdelta.relativedelta) -> int:
@@ -64,9 +60,7 @@ def _compare_relativedelta(lhs: rdelta.relativedelta, rhs: rdelta.relativedelta)
 
 
 def _compare_timedelta(lhs: Union[datetime.timedelta, rdelta.relativedelta], seconds: int) -> int:
-    return _compare_relativedelta(
-        _to_norm_relativedelta(lhs), rdelta.relativedelta(seconds=seconds)
-    )
+    return _compare_relativedelta(_to_norm_relativedelta(lhs), rdelta.relativedelta(seconds=seconds))
 
 
 class DateTimeRange:
@@ -134,17 +128,13 @@ class DateTimeRange:
         if not isinstance(other, DateTimeRange):
             return False
 
-        return all(
-            [self.start_datetime == other.start_datetime, self.end_datetime == other.end_datetime]
-        )
+        return all([self.start_datetime == other.start_datetime, self.end_datetime == other.end_datetime])
 
     def __ne__(self, other: object) -> bool:
         if not isinstance(other, DateTimeRange):
             return True
 
-        return any(
-            [self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime]
-        )
+        return any([self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime])
 
     def __add__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
         start_datetime = self.start_datetime
@@ -359,9 +349,7 @@ class DateTimeRange:
 
         if self.start_datetime > self.end_datetime:
             raise ValueError(
-                "time inversion found: {:s} > {:s}".format(
-                    str(self.start_datetime), str(self.end_datetime)
-                )
+                "time inversion found: {:s} > {:s}".format(str(self.start_datetime), str(self.end_datetime))
             )
 
     def is_valid_timerange(self) -> bool:
@@ -510,9 +498,7 @@ class DateTimeRange:
 
         return self.timedelta.total_seconds()
 
-    def set_start_datetime(
-        self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None
-    ) -> None:
+    def set_start_datetime(self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None) -> None:
         """
         Set the start time of the time range.
 
@@ -537,9 +523,7 @@ class DateTimeRange:
 
         self.__start_datetime = self.__normalize_datetime_value(value, timezone)
 
-    def set_end_datetime(
-        self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None
-    ) -> None:
+    def set_end_datetime(self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None) -> None:
         """
         Set the end time of the time range.
 
@@ -588,9 +572,7 @@ class DateTimeRange:
         self.set_start_datetime(start)
         self.set_end_datetime(end)
 
-    def range(
-        self, step: Union[datetime.timedelta, rdelta.relativedelta]
-    ) -> Iterator[datetime.datetime]:
+    def range(self, step: Union[datetime.timedelta, rdelta.relativedelta]) -> Iterator[datetime.datetime]:
         """
         Return an iterator object.
 
@@ -750,10 +732,7 @@ class DateTimeRange:
             ]
 
         # Case 2, full overlap, subtraction results in empty set
-        if (
-            overlap.start_datetime == self.start_datetime
-            and overlap.end_datetime == self.end_datetime
-        ):
+        if overlap.start_datetime == self.start_datetime and overlap.end_datetime == self.end_datetime:
             return []
 
         # Case 3, overlap on start
@@ -893,9 +872,7 @@ class DateTimeRange:
         separatingseparation = self.__normalize_datetime_value(separator, timezone=None)
         assert separatingseparation
 
-        if (separatingseparation not in self) or (
-            separatingseparation in (self.start_datetime, self.end_datetime)
-        ):
+        if (separatingseparation not in self) or (separatingseparation in (self.start_datetime, self.end_datetime)):
             return [
                 DateTimeRange(
                     start_datetime=self.start_datetime,
@@ -927,9 +904,7 @@ class DateTimeRange:
             return None
 
         try:
-            return typepy.type.DateTime(
-                value, strict_level=typepy.StrictLevel.MIN, timezone=timezone
-            ).convert()
+            return typepy.type.DateTime(value, strict_level=typepy.StrictLevel.MIN, timezone=timezone).convert()
         except typepy.TypeConversionError as e:
             raise ValueError(e)
 
@@ -956,9 +931,7 @@ class DateTimeRange:
 
         datetime_ranges = re.split(separator, range_text.strip())
         if len(datetime_ranges) != 2:
-            raise ValueError(
-                f"range_text should include two datetime that separated by hyphen: got={datetime_ranges}"
-            )
+            raise ValueError(f"range_text should include two datetime that separated by hyphen: got={datetime_ranges}")
 
         start, end = datetime_ranges
         kwargs = {

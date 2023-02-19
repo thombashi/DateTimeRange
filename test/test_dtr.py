@@ -162,9 +162,7 @@ class TestDateTimeRange_repr:
             [None, ISO_TIME_FORMAT, None, ISO_TIME_FORMAT, " - ", False, "NaT - NaT"],
         ],
     )
-    def test_normal(
-        self, start, start_format, end, end_format, separator, is_output_elapse, expected
-    ):
+    def test_normal(self, start, start_format, end, end_format, separator, is_output_elapse, expected):
         dtr = DateTimeRange(start, end, start_format, end_format)
         dtr.separator = separator
         dtr.is_output_elapse = is_output_elapse
@@ -225,9 +223,7 @@ class TestDateTimeRange_repr:
             ],
         ],
     )
-    def test_exception(
-        self, start, start_format, end, end_format, separator, is_output_elapse, expected
-    ):
+    def test_exception(self, start, start_format, end, end_format, separator, is_output_elapse, expected):
         dtr = DateTimeRange(start, end, start_format, end_format)
         dtr.separator = separator
         dtr.is_output_elapse = is_output_elapse
@@ -356,7 +352,11 @@ class TestDateTimeRange_iadd:
 
     @pytest.mark.parametrize(
         ["value", "expected"],
-        [["2015-03-22T10:10:00+0900", TypeError], [1, TypeError], [None, TypeError]],
+        [
+            ["2015-03-22T10:10:00+0900", TypeError],
+            [1, TypeError],
+            [None, TypeError],
+        ],
     )
     def test_exception(self, datetimerange_normal, value, expected):
         with pytest.raises(TypeError):
@@ -378,7 +378,11 @@ class TestDateTimeRange_sub:
 
     @pytest.mark.parametrize(
         ["value", "expected"],
-        [["2015-03-22T10:10:00+0900", TypeError], [1, TypeError], [None, TypeError]],
+        [
+            ["2015-03-22T10:10:00+0900", TypeError],
+            [1, TypeError],
+            [None, TypeError],
+        ],
     )
     def test_exception(self, datetimerange_normal, value, expected):
         with pytest.raises(TypeError):
@@ -399,7 +403,11 @@ class TestDateTimeRange_isub:
 
     @pytest.mark.parametrize(
         ["value", "expected"],
-        [["2015-03-22T10:10:00+0900", TypeError], [1, TypeError], [None, TypeError]],
+        [
+            ["2015-03-22T10:10:00+0900", TypeError],
+            [1, TypeError],
+            [None, TypeError],
+        ],
     )
     def test_exception(self, datetimerange_normal, value, expected):
         with pytest.raises(TypeError):
@@ -939,7 +947,11 @@ class TestDateTimeRange_set_start_datetime:
         assert dtr.start_datetime == expected
 
     @pytest.mark.parametrize(
-        ["value", "expected"], [["invalid time string", ValueError], ["3.3.5", ValueError]]
+        ["value", "expected"],
+        [
+            ["invalid time string", ValueError],
+            ["3.3.5", ValueError],
+        ],
     )
     def test_null_start(self, datetimerange_null_start, value, expected):
         with pytest.raises(expected):
@@ -969,7 +981,11 @@ class TestDateTimeRange_set_end_datetime:
         assert dtr.end_datetime == expected
 
     @pytest.mark.parametrize(
-        ["value", "expected"], [["invalid time string", ValueError], ["3.3.5", ValueError]]
+        ["value", "expected"],
+        [
+            ["invalid time string", ValueError],
+            ["3.3.5", ValueError],
+        ],
     )
     def test_null_start(self, datetimerange_null_start, value, expected):
         with pytest.raises(expected):
@@ -1281,9 +1297,7 @@ class TestDateTimeRange_from_range_text:
         ],
     )
     def test_normal_time_format(self, value, time_format, expected):
-        dtr = DateTimeRange.from_range_text(
-            value, start_time_format=time_format, end_time_format=time_format
-        )
+        dtr = DateTimeRange.from_range_text(value, start_time_format=time_format, end_time_format=time_format)
         assert dtr == expected
         assert dtr.start_time_format == time_format
         assert dtr.end_time_format == time_format
