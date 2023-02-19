@@ -149,6 +149,9 @@ class DateTimeRange:
         return any([self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime])
 
     def __add__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
+        if self.start_datetime is None and self.end_datetime is None:
+            raise TypeError("range is not set")
+
         start_datetime = self.start_datetime
         if start_datetime:
             start_datetime += other
@@ -157,9 +160,12 @@ class DateTimeRange:
         if end_datetime:
             end_datetime += other
 
-        return DateTimeRange(start_datetime, self.end_datetime)
+        return DateTimeRange(start_datetime, end_datetime)
 
     def __iadd__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
+        if self.start_datetime is None and self.end_datetime is None:
+            raise TypeError("range is not set")
+
         if self.start_datetime:
             self.set_start_datetime(self.start_datetime + other)
 
@@ -169,6 +175,9 @@ class DateTimeRange:
         return self
 
     def __sub__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
+        if self.start_datetime is None and self.end_datetime is None:
+            raise TypeError("range is not set")
+
         start_datetime = self.start_datetime
         if start_datetime:
             start_datetime -= other
@@ -180,6 +189,9 @@ class DateTimeRange:
         return DateTimeRange(start_datetime, end_datetime)
 
     def __isub__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
+        if self.start_datetime is None and self.end_datetime is None:
+            raise TypeError("range is not set")
+
         if self.start_datetime:
             self.set_start_datetime(self.start_datetime - other)
 
@@ -294,9 +306,9 @@ class DateTimeRange:
         """
 
         if self.start_datetime is None:
-            raise RuntimeError("Must set start_datetime")
+            raise TypeError("Must set start_datetime")
         if self.end_datetime is None:
-            raise RuntimeError("Must set end_datetime")
+            raise TypeError("Must set end_datetime")
 
         return self.end_datetime - self.start_datetime
 
