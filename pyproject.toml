@@ -2,7 +2,7 @@
 requires = ["setuptools", "wheel"]
 
 [tool.black]
-line-length = 100
+line-length = 120
 exclude = '''
 /(
       \.eggs
@@ -43,7 +43,7 @@ known_third_party = [
     'pytest',
 ]
 include_trailing_comma = true
-line_length = 100
+line_length = 120
 lines_after_imports = 2
 multi_line_output = 3
 skip_glob = [
