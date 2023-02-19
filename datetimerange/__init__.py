@@ -91,20 +91,42 @@ class DateTimeRange:
         )
 
     def __add__(self, other: datetime.timedelta) -> "DateTimeRange":
-        return DateTimeRange(self.start_datetime + other, self.end_datetime + other)
+        start_datetime = self.start_datetime
+        if start_datetime:
+            start_datetime += other
+
+        end_datetime = self.end_datetime
+        if end_datetime:
+            end_datetime += other
+
+        return DateTimeRange(start_datetime, self.end_datetime)
 
     def __iadd__(self, other: datetime.timedelta) -> "DateTimeRange":
-        self.set_start_datetime(self.start_datetime + other)
-        self.set_end_datetime(self.end_datetime + other)
+        if self.start_datetime:
+            self.set_start_datetime(self.start_datetime + other)
+
+        if self.end_datetime:
+            self.set_end_datetime(self.end_datetime + other)
 
         return self
 
     def __sub__(self, other: datetime.timedelta) -> "DateTimeRange":
-        return DateTimeRange(self.start_datetime - other, self.end_datetime - other)
+        start_datetime = self.start_datetime
+        if start_datetime:
+            start_datetime -= other
+
+        end_datetime = self.end_datetime
+        if end_datetime:
+            end_datetime -= other
+
+        return DateTimeRange(start_datetime, end_datetime)
 
     def __isub__(self, other: datetime.timedelta) -> "DateTimeRange":
-        self.set_start_datetime(self.start_datetime - other)
-        self.set_end_datetime(self.end_datetime - other)
+        if self.start_datetime:
+            self.set_start_datetime(self.start_datetime - other)
+
+        if self.end_datetime:
+            self.set_end_datetime(self.end_datetime - other)
 
         return self
 
@@ -140,8 +162,14 @@ class DateTimeRange:
         """
 
         self.validate_time_inversion()
+        assert self.start_datetime
+        assert self.end_datetime
 
         if isinstance(x, DateTimeRange):
+            x.validate_time_inversion()
+            assert x.start_datetime
+            assert x.end_datetime
+
             return x.start_datetime >= self.start_datetime and x.end_datetime <= self.end_datetime
 
         value = dateutil.parser.parse(x) if isinstance(x, str) else x
@@ -149,10 +177,10 @@ class DateTimeRange:
         return self.start_datetime <= value <= self.end_datetime
 
     @property
-    def start_datetime(self) -> datetime.datetime:
+    def start_datetime(self) -> Optional[datetime.datetime]:
         """
         :return: Start time of the time range.
-        :rtype: datetime.datetime
+        :rtype: Optional[datetime.datetime]
 
         :Sample Code:
             .. code:: python
@@ -169,10 +197,10 @@ class DateTimeRange:
         return self.__start_datetime
 
     @property
-    def end_datetime(self) -> datetime.datetime:
+    def end_datetime(self) -> Optional[datetime.datetime]:
         """
         :return: End time of the time range.
-        :rtype: datetime.datetime
+        :rtype: Optional[datetime.datetime]
 
         :Sample Code:
             .. code:: python
@@ -206,6 +234,11 @@ class DateTimeRange:
 
                 datetime.timedelta(0, 600)
         """
+
+        if self.start_datetime is None:
+            raise RuntimeError("Must set start_datetime")
+        if self.end_datetime is None:
+            raise RuntimeError("Must set end_datetime")
 
         return self.end_datetime - self.start_datetime
 
@@ -264,6 +297,9 @@ class DateTimeRange:
         if not self.is_set():
             # for python2/3 compatibility
             raise TypeError
+
+        assert self.start_datetime
+        assert self.end_datetime
 
         if self.start_datetime > self.end_datetime:
             raise ValueError(
@@ -358,6 +394,9 @@ class DateTimeRange:
                 2015/03/22 10:00:00
         """
 
+        if self.start_datetime is None:
+            return self.NOT_A_TIME_STR
+
         try:
             return self.start_datetime.strftime(self.start_time_format)
         except AttributeError:
@@ -385,6 +424,9 @@ class DateTimeRange:
                 2015-03-22T10:10:00+0900
                 2015/03/22 10:10:00
         """
+
+        if self.end_datetime is None:
+            return self.NOT_A_TIME_STR
 
         try:
             return self.end_datetime.strftime(self.end_time_format)
@@ -580,6 +622,9 @@ class DateTimeRange:
         except ValueError:
             is_inversion = True
 
+        assert self.start_datetime
+        assert self.end_datetime
+
         current_datetime = self.start_datetime
 
         if not is_inversion:
@@ -625,6 +670,10 @@ class DateTimeRange:
 
         self.validate_time_inversion()
         x.validate_time_inversion()
+        assert self.start_datetime
+        assert self.end_datetime
+        assert x.start_datetime
+        assert x.end_datetime
 
         if any([x.start_datetime in self, self.start_datetime in x]):
             start_datetime = max(self.start_datetime, x.start_datetime)
@@ -753,6 +802,10 @@ class DateTimeRange:
 
         self.validate_time_inversion()
         x.validate_time_inversion()
+        assert self.start_datetime
+        assert self.end_datetime
+        assert x.start_datetime
+        assert x.end_datetime
 
         return DateTimeRange(
             start_datetime=min(self.start_datetime, x.start_datetime),
@@ -794,8 +847,11 @@ class DateTimeRange:
 
         discard_time = self.timedelta // int(100) * int(percentage / 2)
 
-        self.__start_datetime += discard_time
-        self.__end_datetime -= discard_time
+        if self.__start_datetime:
+            self.__start_datetime += discard_time
+
+        if self.__end_datetime:
+            self.__end_datetime -= discard_time
 
     def split(self, separator: Union[str, datetime.datetime]) -> List["DateTimeRange"]:
         """
@@ -821,6 +877,7 @@ class DateTimeRange:
         self.validate_time_inversion()
 
         separatingseparation = self.__normalize_datetime_value(separator, timezone=None)
+        assert separatingseparation
 
         if (separatingseparation not in self) or (
             separatingseparation in (self.start_datetime, self.end_datetime)
@@ -849,7 +906,9 @@ class DateTimeRange:
             ),
         ]
 
-    def __normalize_datetime_value(self, value, timezone):
+    def __normalize_datetime_value(
+        self, value: Union[datetime.datetime, str, None], timezone: Optional[str]
+    ) -> Optional[datetime.datetime]:
         if value is None:
             return None
 
