@@ -13,6 +13,17 @@ import typepy
 from .__version__ import __author__, __copyright__, __email__, __license__, __version__
 
 
+def _to_norm_relativedelta(
+    td: Union[datetime.timedelta, rdelta.relativedelta]
+) -> rdelta.relativedelta:
+    if isinstance(td, rdelta.relativedelta):
+        return td.normalized()
+
+    return rdelta.relativedelta(
+        seconds=int(td.total_seconds()), microseconds=td.microseconds
+    ).normalized()
+
+
 class DateTimeRange:
     """
     A class that represents a range of datetime.
@@ -66,8 +77,8 @@ class DateTimeRange:
         self.is_output_elapse = False
         self.separator = " - "
 
-    def __repr__(self):
-        if self.is_output_elapse:
+    def __repr__(self) -> str:
+        if self.is_output_elapse and self.end_datetime and self.start_datetime:
             suffix = f" ({self.end_datetime - self.start_datetime})"
         else:
             suffix = ""
@@ -90,7 +101,7 @@ class DateTimeRange:
             [self.start_datetime != other.start_datetime, self.end_datetime != other.end_datetime]
         )
 
-    def __add__(self, other: datetime.timedelta) -> "DateTimeRange":
+    def __add__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
         start_datetime = self.start_datetime
         if start_datetime:
             start_datetime += other
@@ -101,7 +112,7 @@ class DateTimeRange:
 
         return DateTimeRange(start_datetime, self.end_datetime)
 
-    def __iadd__(self, other: datetime.timedelta) -> "DateTimeRange":
+    def __iadd__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
         if self.start_datetime:
             self.set_start_datetime(self.start_datetime + other)
 
@@ -110,7 +121,7 @@ class DateTimeRange:
 
         return self
 
-    def __sub__(self, other: datetime.timedelta) -> "DateTimeRange":
+    def __sub__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
         start_datetime = self.start_datetime
         if start_datetime:
             start_datetime -= other
@@ -121,7 +132,7 @@ class DateTimeRange:
 
         return DateTimeRange(start_datetime, end_datetime)
 
-    def __isub__(self, other: datetime.timedelta) -> "DateTimeRange":
+    def __isub__(self, other: Union[datetime.timedelta, rdelta.relativedelta]) -> "DateTimeRange":
         if self.start_datetime:
             self.set_start_datetime(self.start_datetime - other)
 
@@ -345,11 +356,13 @@ class DateTimeRange:
         return self.is_set()
 
     def is_intersection(
-        self, x: "DateTimeRange", intersection_threshold: Optional[datetime.timedelta] = None
+        self,
+        x: "DateTimeRange",
+        intersection_threshold: Union[datetime.timedelta, rdelta.relativedelta, None] = None,
     ) -> bool:
         """
         :param DateTimeRange x: Value to compare
-        :param Optional[datetime.timedelta] intersection_threshold:
+        :param Union[datetime.timedelta, dateutil.relativedelta.relativedelta, None] intersection_threshold:
             Minimum time constraint that an intersection must have.
             Defaults to ``None`` (no constraint).
 
@@ -531,7 +544,7 @@ class DateTimeRange:
         self.set_end_datetime(end)
 
     @staticmethod
-    def __compare_relativedelta(lhs, rhs):
+    def __compare_relativedelta(lhs: rdelta.relativedelta, rhs: rdelta.relativedelta) -> int:
         if lhs.years < rhs.years:
             return -1
         if lhs.years > rhs.years:
@@ -569,20 +582,12 @@ class DateTimeRange:
 
         return 0
 
-    def __compare_timedelta(self, lhs, seconds):
-        try:
-            rhs = datetime.timedelta(seconds=seconds)
-
-            if lhs < rhs:
-                return -1
-            if lhs > rhs:
-                return 1
-
-            return 0
-        except TypeError:
-            return self.__compare_relativedelta(
-                lhs.normalized(), rdelta.relativedelta(seconds=seconds)
-            )
+    def __compare_timedelta(
+        self, lhs: Union[datetime.timedelta, rdelta.relativedelta], seconds: int
+    ) -> int:
+        return self.__compare_relativedelta(
+            _to_norm_relativedelta(lhs), rdelta.relativedelta(seconds=seconds)
+        )
 
     def range(
         self, step: Union[datetime.timedelta, rdelta.relativedelta]
@@ -643,7 +648,9 @@ class DateTimeRange:
                 current_datetime = current_datetime + step
 
     def intersection(
-        self, x: "DateTimeRange", intersection_threshold: Optional[datetime.timedelta] = None
+        self,
+        x: "DateTimeRange",
+        intersection_threshold: Union[datetime.timedelta, rdelta.relativedelta, None] = None,
     ) -> "DateTimeRange":
         """
         Create a new time range that overlaps the input and the current time range.
@@ -651,7 +658,7 @@ class DateTimeRange:
 
         :param DateTimeRange x:
             Value to compute intersection with the current time range.
-        :param Optional[datetime.timedelta] intersection_threshold:
+        :param Union[datetime.timedelta, dateutil.relativedelta.relativedelta, None] intersection_threshold:
             Minimum time constraint that an intersection must have.
             Defaults to ``None`` (no constraint).
 
@@ -686,7 +693,14 @@ class DateTimeRange:
             assert start_datetime is not None
             assert end_datetime is not None
             delta = end_datetime - start_datetime
-            if delta < intersection_threshold:
+
+            if (
+                self.__compare_relativedelta(
+                    _to_norm_relativedelta(delta),
+                    _to_norm_relativedelta(intersection_threshold),
+                )
+                < 0
+            ):
                 start_datetime = None
                 end_datetime = None
 
