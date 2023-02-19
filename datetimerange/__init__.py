@@ -799,7 +799,7 @@ class DateTimeRange:
 
     def split(self, separator: Union[str, datetime.datetime]) -> List["DateTimeRange"]:
         """
-        Split the DateTimerange in two DateTimerange at a specifit datetime.
+        Split the DateTimerange in two DateTimerange at a specific datetime.
 
         :param Union[str, datetime.datetime] separator:
             Date and time to split the DateTimeRange.
