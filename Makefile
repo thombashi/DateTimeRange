@@ -55,3 +55,7 @@ setup-ci:
 setup: setup-ci
 	@$(PYTHON) -m pip install --upgrade -e .[test] releasecmd
 	@$(PYTHON) -m pip check
+
+.PHONY: test
+test:
+	$(PYTHON) -m tox -e py
