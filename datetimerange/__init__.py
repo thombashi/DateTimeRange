@@ -67,7 +67,7 @@ def _compare_timedelta(lhs: Union[datetime.timedelta, rdelta.relativedelta], sec
 
 
 def _normalize_datetime_value(
-    value: Union[datetime.datetime, str, None], timezone: Optional[str]
+    value: Union[datetime.datetime, str, None], timezone: Optional[datetime.tzinfo]
 ) -> Optional[datetime.datetime]:
     if value is None:
         return None
@@ -525,7 +525,9 @@ class DateTimeRange:
 
         return self.timedelta.total_seconds()
 
-    def set_start_datetime(self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None) -> None:
+    def set_start_datetime(
+        self, value: Union[datetime.datetime, str, None], timezone: Optional[datetime.tzinfo] = None
+    ) -> None:
         """
         Set the start time of the time range.
 
@@ -550,7 +552,9 @@ class DateTimeRange:
 
         self.__start_datetime = _normalize_datetime_value(value, timezone)
 
-    def set_end_datetime(self, value: Union[datetime.datetime, str, None], timezone: Optional[str] = None) -> None:
+    def set_end_datetime(
+        self, value: Union[datetime.datetime, str, None], timezone: Optional[datetime.tzinfo] = None
+    ) -> None:
         """
         Set the end time of the time range.
 
