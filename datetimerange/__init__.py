@@ -122,8 +122,9 @@ class DateTimeRange:
         end_datetime: Union[datetime.datetime, str, None] = None,
         start_time_format: str = "%Y-%m-%dT%H:%M:%S%z",
         end_time_format: str = "%Y-%m-%dT%H:%M:%S%z",
+        timezone: Optional[datetime.tzinfo] = None,
     ) -> None:
-        self.set_time_range(start_datetime, end_datetime)
+        self.set_time_range(start_datetime, end_datetime, timezone)
 
         self.start_time_format = start_time_format
         self.end_time_format = end_time_format
@@ -579,7 +580,10 @@ class DateTimeRange:
         self.__end_datetime = _normalize_datetime_value(value, timezone)
 
     def set_time_range(
-        self, start: Union[datetime.datetime, str, None], end: Union[datetime.datetime, str, None]
+        self,
+        start: Union[datetime.datetime, str, None],
+        end: Union[datetime.datetime, str, None],
+        timezone: Optional[datetime.tzinfo] = None,
     ) -> None:
         """
         :param datetime.datetime/str start: |param_start_datetime|
@@ -600,8 +604,8 @@ class DateTimeRange:
                 2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900
         """
 
-        self.set_start_datetime(start)
-        self.set_end_datetime(end)
+        self.set_start_datetime(start, timezone)
+        self.set_end_datetime(end, timezone)
 
     def range(self, step: Union[datetime.timedelta, rdelta.relativedelta]) -> Iterator[datetime.datetime]:
         """
