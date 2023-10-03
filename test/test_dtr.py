@@ -78,6 +78,15 @@ class TestDateTimeRange_repr:
                 "2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900",
             ],
             [
+                TEST_START_DATETIME,
+                None,
+                TEST_END_DATETIME,
+                None,
+                " - ",
+                False,
+                "2015-03-22T10:00:00+0900 - 2015-03-22T10:10:00+0900",
+            ],
+            [
                 "2015-03-22T09:00:00+0900",
                 ISO_TIME_FORMAT,
                 "2015-03-22T10:10:00+0900",
@@ -194,24 +203,6 @@ class TestDateTimeRange_repr:
     @pytest.mark.parametrize(
         ["start", "start_format", "end", "end_format", "separator", "is_output_elapse", "expected"],
         [
-            [
-                TEST_START_DATETIME,
-                None,
-                TEST_END_DATETIME,
-                ISO_TIME_FORMAT,
-                " - ",
-                False,
-                TypeError,
-            ],
-            [
-                TEST_START_DATETIME,
-                ISO_TIME_FORMAT,
-                TEST_END_DATETIME,
-                None,
-                " - ",
-                False,
-                TypeError,
-            ],
             [
                 TEST_START_DATETIME,
                 ISO_TIME_FORMAT,
@@ -1026,6 +1017,24 @@ class TestDateTimeRange_set_time_range:
         dtr.set_time_range(start, end)
         assert dtr == expected
 
+    def test_normal_timezone(self):
+        dtr_utc_lhs = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.UTC)
+        dtr_utc_rhs = DateTimeRange()
+        dtr_utc_rhs.set_time_range(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.UTC)
+        assert dtr_utc_lhs == dtr_utc_rhs
+
+        dtr_tokyo_lhs = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.timezone("Asia/Tokyo"))
+        dtr_tokyo_rhs = DateTimeRange()
+        dtr_tokyo_rhs.set_time_range(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.timezone("Asia/Tokyo"))
+        assert dtr_tokyo_lhs == dtr_tokyo_rhs
+
+        assert dtr_utc_lhs == dtr_tokyo_lhs
+
+    def test_normal_replace_timezone(self):
+        dtr_lhs = DateTimeRange(START_DATETIME_TEXT, START_DATETIME_TEXT, timezone=pytz.UTC)
+        dtr_rhs = DateTimeRange(START_DATETIME_TEXT, START_DATETIME_TEXT, timezone=pytz.timezone("Asia/Tokyo"))
+        assert dtr_lhs != dtr_rhs
+
     @pytest.mark.parametrize(
         ["start", "end", "expected"],
         [
@@ -1297,6 +1306,10 @@ class TestDateTimeRange_from_range_text:
         assert dtr == expected
         assert dtr.start_time_format == r"%Y-%m-%dT%H:%M:%S%z"
         assert dtr.end_time_format == r"%Y-%m-%dT%H:%M:%S%z"
+
+    def test_normal_tz(self):
+        dtr = DateTimeRange.from_range_text(f"{START_DATETIME_TEXT} - {END_DATETIME_TEXT}", timezone=pytz.utc)
+        assert dtr.timezone == pytz.utc
 
     @pytest.mark.parametrize(
         ["value", "time_format", "expected"],
