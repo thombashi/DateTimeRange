@@ -378,6 +378,9 @@ class DateTimeRange:
         assert self.start_datetime
         assert self.end_datetime
 
+        if self.start_datetime.tzinfo != self.end_datetime.tzinfo:
+            raise ValueError(f"timezone mismatch: start={self.start_datetime.tzinfo}, end={self.end_datetime.tzinfo}")
+
         if self.start_datetime > self.end_datetime:
             raise ValueError(
                 "time inversion found: {:s} > {:s}".format(str(self.start_datetime), str(self.end_datetime))
