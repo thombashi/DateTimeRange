@@ -30,6 +30,45 @@ Summary
     :target: https://github.com/thombashi/DateTimeRange/actions/workflows/github-code-scanning/codeql
     :alt: CodeQL
 
+Installation
+============
+
+Installation: pip
+------------------------------
+::
+
+    pip install DateTimeRange
+
+
+Installation: conda
+------------------------------
+::
+
+    conda install -c conda-forge datetimerange
+
+
+Dependencies
+============
+- Python 3.7+
+- `Python package dependencies (automatically installed) <https://github.com/thombashi/DateTimeRange/network/dependencies>`__
+
+Features
+============
+Features of ``DateTimeRange`` class include:
+
+- Supported operations:
+    - Equation
+    - Addition
+    - Subtraction
+    - Intersection
+    - Union
+    - Contains
+    - Truncate
+    - Split
+    - Iteration
+- Timezone support
+- Daylight saving time support
+
 Examples
 ==========
 Create a DateTimeRange instance from start and end datetime
@@ -190,28 +229,6 @@ More examples are available at
 https://datetimerange.rtfd.io/en/latest/pages/examples/index.html
 
 Examples with Jupyter Notebook are also available at `DateTimeRange.ipynb <https://nbviewer.jupyter.org/github/thombashi/DateTimeRange/tree/master/examples/DateTimeRange.ipynb>`__
-
-Installation
-============
-
-Installation: pip
-------------------------------
-::
-
-    pip install DateTimeRange
-
-
-Installation: conda
-------------------------------
-::
-
-    conda install -c conda-forge datetimerange
-
-
-Dependencies
-============
-- Python 3.7+
-- `Python package dependencies (automatically installed) <https://github.com/thombashi/DateTimeRange/network/dependencies>`__
 
 Documentation
 ===============
