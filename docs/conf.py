@@ -399,4 +399,7 @@ rst_prolog = builtin + module + """
     **(2)** datetime string: e.g. ``"2017-01-22T04:56:00+0900"``.
     **(3)** timestamp (|str|/|int|): e.g. ``1485685623``.
 
+.. |param_timezone| replace::
+    Timezone of the time range.
+    If not specified, the timezone will be set to the local timezone.
 """

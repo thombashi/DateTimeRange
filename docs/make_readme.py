@@ -59,10 +59,10 @@ def main():
     maker.write_chapter("Summary")
     maker.write_introduction_file("summary.txt")
     maker.write_introduction_file("badges.txt")
+    maker.write_introduction_file("installation.rst")
+    maker.write_introduction_file("features.rst")
 
     write_examples(maker)
-
-    maker.write_introduction_file("installation.rst")
 
     maker.set_indent_level(0)
     maker.write_chapter("Documentation")

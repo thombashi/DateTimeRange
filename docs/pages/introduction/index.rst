@@ -11,3 +11,5 @@ Summary
 
 
 .. include:: installation.rst
+
+.. include:: features.rst
