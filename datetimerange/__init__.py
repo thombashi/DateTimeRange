@@ -85,8 +85,14 @@ class DateTimeRange:
     """
     A class that represents a range of datetime.
 
-    :param datetime.datetime/str start_datetime: |param_start_datetime|
-    :param datetime.datetime/str end_datetime: |param_end_datetime|
+    :param Union[datetime.datetime, str, None] start_datetime: |param_start_datetime|
+    :param Union[datetime.datetime, str, None] end_datetime: |param_end_datetime|
+    :param Optional[str] start_time_format: 
+        Conversion format string for :py:attr:`.start_datetime`.
+    :param Optional[str] end_time_format: 
+        Conversion format string for :py:attr:`.end_datetime`.
+    :param Optional[datetime.tzinfo] timezone:
+        Timezone of the time range.
 
     :Examples:
         :Sample Code:
@@ -538,8 +544,8 @@ class DateTimeRange:
         """
         Set the start time of the time range.
 
-        :param value: |param_start_datetime|
-        :type value: |datetime|/|str|
+        :param Union[datetime.datetime, str, None] value: |param_start_datetime|
+        :param Optional[datetime.tzinfo] timezone: |param_timezone|
         :raises ValueError: If the value is invalid as a |datetime| value.
 
         :Sample Code:
@@ -565,7 +571,8 @@ class DateTimeRange:
         """
         Set the end time of the time range.
 
-        :param datetime.datetime/str value: |param_end_datetime|
+        :param Union[datetime.datetime, str, None] value: |param_end_datetime|
+        :param Optional[datetime.tzinfo] timezone: |param_timezone|
         :raises ValueError: If the value is invalid as a |datetime| value.
 
         :Sample Code:
@@ -592,8 +599,9 @@ class DateTimeRange:
         timezone: Optional[datetime.tzinfo] = None,
     ) -> None:
         """
-        :param datetime.datetime/str start: |param_start_datetime|
-        :param datetime.datetime/str end: |param_end_datetime|
+        :param Union[datetime.datetime, str, None] start: |param_start_datetime|
+        :param Union[datetime.datetime, str, None] end: |param_end_datetime|
+        :param Optional[datetime.tzinfo] timezone: |param_timezone|
 
         :Sample Code:
             .. code:: python
