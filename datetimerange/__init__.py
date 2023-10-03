@@ -945,6 +945,7 @@ class DateTimeRange:
         separator: str = r"\s+\-\s+",
         start_time_format: Optional[str] = None,
         end_time_format: Optional[str] = None,
+        timezone: Optional[datetime.tzinfo] = None,
     ) -> "DateTimeRange":
         """Create a ``DateTimeRange`` instance from a datetime range text.
 
@@ -963,14 +964,10 @@ class DateTimeRange:
         if len(datetime_ranges) != 2:
             raise ValueError(f"range_text should include two datetime that separated by hyphen: got={datetime_ranges}")
 
-        start, end = datetime_ranges
-        kwargs = {
-            "start_datetime": start,
-            "end_datetime": end,
-        }
-        if start_time_format:
-            kwargs["start_time_format"] = start_time_format
-        if end_time_format:
-            kwargs["end_time_format"] = end_time_format
-
-        return DateTimeRange(**kwargs)
+        return DateTimeRange(
+            start_datetime=datetime_ranges[0],
+            end_datetime=datetime_ranges[1],
+            start_time_format=start_time_format,
+            end_time_format=end_time_format,
+            timezone=timezone,
+        )
