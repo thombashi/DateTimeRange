@@ -16,6 +16,9 @@ from .__version__ import __author__, __copyright__, __email__, __license__, __ve
 __all__ = ("DateTimeRange",)
 
 
+DEFAULT_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"
+
+
 def _to_norm_relativedelta(td: Union[datetime.timedelta, rdelta.relativedelta]) -> rdelta.relativedelta:
     if isinstance(td, rdelta.relativedelta):
         return td.normalized()
@@ -120,14 +123,14 @@ class DateTimeRange:
         self,
         start_datetime: Union[datetime.datetime, str, None] = None,
         end_datetime: Union[datetime.datetime, str, None] = None,
-        start_time_format: str = "%Y-%m-%dT%H:%M:%S%z",
-        end_time_format: str = "%Y-%m-%dT%H:%M:%S%z",
+        start_time_format: Optional[str] = None,
+        end_time_format: Optional[str] = None,
         timezone: Optional[datetime.tzinfo] = None,
     ) -> None:
         self.set_time_range(start_datetime, end_datetime, timezone)
 
-        self.start_time_format = start_time_format
-        self.end_time_format = end_time_format
+        self.start_time_format = start_time_format or DEFAULT_TIME_FORMAT
+        self.end_time_format = end_time_format or DEFAULT_TIME_FORMAT
 
         self.is_output_elapse = False
         self.separator = " - "
