@@ -87,9 +87,9 @@ class DateTimeRange:
 
     :param Union[datetime.datetime, str, None] start_datetime: |param_start_datetime|
     :param Union[datetime.datetime, str, None] end_datetime: |param_end_datetime|
-    :param Optional[str] start_time_format: 
+    :param Optional[str] start_time_format:
         Conversion format string for :py:attr:`.start_datetime`.
-    :param Optional[str] end_time_format: 
+    :param Optional[str] end_time_format:
         Conversion format string for :py:attr:`.end_datetime`.
     :param Optional[datetime.tzinfo] timezone:
         Timezone of the time range.
