@@ -300,6 +300,21 @@ class DateTimeRange:
         return self.__end_datetime
 
     @property
+    def timezone(self) -> Optional[datetime.tzinfo]:
+        """
+        :return: Timezone of the time range.
+        :rtype: Optional[datetime.tzinfo]
+        """
+
+        if self.start_datetime and self.start_datetime.tzinfo:
+            return self.start_datetime.tzinfo
+
+        if self.end_datetime and self.end_datetime.tzinfo:
+            return self.end_datetime.tzinfo
+
+        return None
+
+    @property
     def timedelta(self) -> datetime.timedelta:
         """
         :return:
