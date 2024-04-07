@@ -30,38 +30,42 @@ def setup_module(module):
 
 @pytest.fixture
 def datetimerange_normal():
-    value = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME)
-    value.start_time_format = ISO_TIME_FORMAT
-    value.end_time_format = ISO_TIME_FORMAT
-
-    return value
+    return DateTimeRange(
+        TEST_START_DATETIME,
+        TEST_END_DATETIME,
+        start_time_format=ISO_TIME_FORMAT,
+        end_time_format=ISO_TIME_FORMAT,
+    )
 
 
 @pytest.fixture
 def datetimerange_inversion():
-    value = DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME)
-    value.start_time_format = ISO_TIME_FORMAT
-    value.end_time_format = ISO_TIME_FORMAT
-
-    return value
+    return DateTimeRange(
+        TEST_END_DATETIME,
+        TEST_START_DATETIME,
+        start_time_format=ISO_TIME_FORMAT,
+        end_time_format=ISO_TIME_FORMAT,
+    )
 
 
 @pytest.fixture
 def datetimerange_null():
-    value = DateTimeRange(None, None)
-    value.time_format = None
-    value.end_time_format = None
-
-    return value
+    return DateTimeRange(
+        None,
+        None,
+        start_time_format=None,
+        end_time_format=None,
+    )
 
 
 @pytest.fixture
 def datetimerange_null_start():
-    value = DateTimeRange(None, TEST_END_DATETIME)
-    value.time_format = None
-    value.end_time_format = ISO_TIME_FORMAT
-
-    return value
+    return DateTimeRange(
+        None,
+        TEST_END_DATETIME,
+        start_time_format=None,
+        end_time_format=ISO_TIME_FORMAT,
+    )
 
 
 class TestDateTimeRange_repr:
@@ -327,7 +331,11 @@ class TestDateTimeRange_add:
 
     @pytest.mark.parametrize(
         ["value", "expected"],
-        [["2015-03-22T10:10:00+0900", TypeError], [1, TypeError], [None, TypeError]],
+        [
+            ["2015-03-22T10:10:00+0900", TypeError],
+            [1, TypeError],
+            [None, TypeError],
+        ],
     )
     def test_exception(self, datetimerange_normal, value, expected):
         with pytest.raises(TypeError):
@@ -610,7 +618,7 @@ class TestDateTimeRange_range:
                 ],
             ],
             [
-                DateTimeRange(date(2015, 3, 23), date(2015, 3, 26)),
+                DateTimeRange(datetime(2015, 3, 23), datetime(2015, 3, 26)),
                 relativedelta(days=+1),
                 [
                     datetime(2015, 3, 23, 0, 0, 0),
