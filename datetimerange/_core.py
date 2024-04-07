@@ -174,11 +174,13 @@ class DateTimeRange:
         if self.start_datetime is None and self.end_datetime is None:
             raise TypeError("range is not set")
 
+        timezone = self.timezone
+
         if self.start_datetime:
-            self.set_start_datetime(self.start_datetime + other)
+            self.set_start_datetime(self.start_datetime + other, timezone)
 
         if self.end_datetime:
-            self.set_end_datetime(self.end_datetime + other)
+            self.set_end_datetime(self.end_datetime + other, timezone)
 
         return self
 
@@ -200,11 +202,13 @@ class DateTimeRange:
         if self.start_datetime is None and self.end_datetime is None:
             raise TypeError("range is not set")
 
+        timezone = self.timezone
+
         if self.start_datetime:
-            self.set_start_datetime(self.start_datetime - other)
+            self.set_start_datetime(self.start_datetime - other, timezone)
 
         if self.end_datetime:
-            self.set_end_datetime(self.end_datetime - other)
+            self.set_end_datetime(self.end_datetime - other, timezone)
 
         return self
 
