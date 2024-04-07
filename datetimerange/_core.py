@@ -731,8 +731,14 @@ class DateTimeRange:
             end_datetime = None
 
         if intersection_threshold is not None:
-            assert start_datetime is not None
-            assert end_datetime is not None
+            if start_datetime is None or end_datetime is None:
+                return DateTimeRange(
+                    start_datetime=None,
+                    end_datetime=None,
+                    start_time_format=self.start_time_format,
+                    end_time_format=self.end_time_format,
+                )
+
             delta = end_datetime - start_datetime
 
             if (

@@ -740,6 +740,13 @@ class TestDateTimeRange_is_intersection:
                 timedelta(seconds=1),
                 True,
             ],
+            [
+                # https://github.com/thombashi/DateTimeRange/issues/48
+                DateTimeRange("2015-03-22T10:00:00+0900", "2015-03-22T10:10:00+0900"),
+                DateTimeRange("2015-03-23T10:05:00+0900", "2015-03-23T10:15:00+0900"),
+                timedelta(seconds=1),
+                False,
+            ],
         ],
     )
     def test_normal_w_intersection_threshold(self, lhs, rhs, threshold, expected):
