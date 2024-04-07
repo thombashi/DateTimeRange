@@ -6,27 +6,29 @@ Summary
 =========
 `DateTimeRange <https://github.com/thombashi/DateTimeRange>`__ is a Python library to handle a time range. e.g. check whether a time is within the time range, get the intersection of time ranges, truncate a time range, iterate through a time range, and so forth.
 
-.. image:: https://badge.fury.io/py/DateTimeRange.svg
+|PyPI pkg ver| |conda pkg ver| |Supported Python versions| |CI status| |Test coverage| |CodeQL|
+
+.. |PyPI pkg ver| image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
     :alt: PyPI package version
 
-.. image:: https://anaconda.org/conda-forge/datetimerange/badges/version.svg
+.. |conda pkg ver| image:: https://anaconda.org/conda-forge/datetimerange/badges/version.svg
     :target: https://anaconda.org/conda-forge/datetimerange
     :alt: conda-forge package version
 
-.. image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
+.. |Supported Python versions| image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
     :target: https://pypi.org/project/DateTimeRange
     :alt: Supported Python versions
 
-.. image:: https://github.com/thombashi/DateTimeRange/workflows/Tests/badge.svg
-    :target: https://github.com/thombashi/DateTimeRange/actions/workflows/tests.yml
-    :alt: Test result of Linux/macOS/Windows
+.. |CI status| image:: https://github.com/thombashi/DateTimeRange/actions/workflows/ci.yml/badge.svg
+    :target: https://github.com/thombashi/DateTimeRange/actions/workflows/ci.yml
+    :alt: CI status of Linux/macOS/Windows
 
-.. image:: https://coveralls.io/repos/github/thombashi/DateTimeRange/badge.svg?branch=master
+.. |Test coverage| image:: https://coveralls.io/repos/github/thombashi/DateTimeRange/badge.svg?branch=master
     :target: https://coveralls.io/github/thombashi/DateTimeRange?branch=master
     :alt: Test coverage
 
-.. image:: https://github.com/thombashi/DateTimeRange/actions/workflows/github-code-scanning/codeql/badge.svg
+.. |CodeQL| image:: https://github.com/thombashi/DateTimeRange/actions/workflows/github-code-scanning/codeql/badge.svg
     :target: https://github.com/thombashi/DateTimeRange/actions/workflows/github-code-scanning/codeql
     :alt: CodeQL
 
