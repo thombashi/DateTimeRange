@@ -44,7 +44,7 @@ readme:
 
 .PHONY: release
 release:
-	cd $(PKG_BUILD_DIR) && $(PYTHON) setup.py release --sign --verbose
+	cd $(PKG_BUILD_DIR) && $(PYTHON) setup.py release --sign --skip-uploading --verbose
 	$(MAKE) clean
 
 .PHONY: setup-ci
