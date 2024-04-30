@@ -6,7 +6,7 @@ Summary
 =========
 `DateTimeRange <https://github.com/thombashi/DateTimeRange>`__ is a Python library to handle a time range. e.g. check whether a time is within the time range, get the intersection of time ranges, truncate a time range, iterate through a time range, and so forth.
 
-|PyPI pkg ver| |conda pkg ver| |Supported Python versions| |CI status| |Test coverage| |CodeQL|
+|PyPI pkg ver| |conda pkg ver| |Supported Python ver| |CI status| |Test coverage| |CodeQL|
 
 .. |PyPI pkg ver| image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
@@ -16,7 +16,7 @@ Summary
     :target: https://anaconda.org/conda-forge/datetimerange
     :alt: conda-forge package version
 
-.. |Supported Python versions| image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
+.. |Supported Python ver| image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
     :target: https://pypi.org/project/DateTimeRange
     :alt: Supported Python versions
 
@@ -238,15 +238,23 @@ https://datetimerange.rtfd.io/
 
 Sponsors
 ====================================
-.. image:: https://avatars.githubusercontent.com/u/3658062?s=48&v=4
-   :target: https://github.com/b4tman
-   :alt: Dmitry Belyaev (b4tman)
-.. image:: https://avatars.githubusercontent.com/u/44389260?s=48&u=6da7176e51ae2654bcfd22564772ef8a3bb22318&v=4
+|chasbecker| |shiguredo| |b4tman| |Arturi0| |github|
+
+.. |chasbecker| image:: https://avatars.githubusercontent.com/u/44389260?s=48&u=6da7176e51ae2654bcfd22564772ef8a3bb22318&v=4
    :target: https://github.com/chasbecker
-   :alt: Charles Becker (chasbecker)
-.. image:: https://avatars.githubusercontent.com/u/46711571?s=48&u=57687c0e02d5d6e8eeaf9177f7b7af4c9f275eb5&v=4
+   :alt: ex-sponsor: Charles Becker (chasbecker)
+.. |shiguredo| image:: https://avatars.githubusercontent.com/u/2549434?s=48&v=4
+   :target: https://github.com/shiguredo
+   :alt: ex-sponsor: 時雨堂 (shiguredo)
+.. |b4tman| image:: https://avatars.githubusercontent.com/u/3658062?s=48&v=4
+   :target: https://github.com/b4tman
+   :alt: onetime: Dmitry Belyaev (b4tman)
+.. |Arturi0| image:: https://avatars.githubusercontent.com/u/46711571?s=48&u=57687c0e02d5d6e8eeaf9177f7b7af4c9f275eb5&v=4
    :target: https://github.com/Arturi0
-   :alt: Arturi0
+   :alt: onetime: Arturi0
+.. |github| image:: https://avatars.githubusercontent.com/u/9919?s=48&v=4
+   :target: https://github.com/github
+   :alt: onetime: GitHub (github)
 
 `Become a sponsor <https://github.com/sponsors/thombashi>`__
 
