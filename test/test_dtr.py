@@ -583,6 +583,14 @@ class TestDateTimeRange_validate_time_inversion:
         with pytest.raises(TypeError):
             value.validate_time_inversion()
 
+    def test_allow_timezone_mismatch(self):
+        dtr = DateTimeRange("2022-10-29 00:00:00+02:00", "2022-10-31 00:00:00+01:00")
+
+        assert not dtr.is_time_inversion(allow_timezone_mismatch=True)
+
+        with pytest.raises(ValueError):
+            dtr.validate_time_inversion(allow_timezone_mismatch=False)
+
 
 class TestDateTimeRange_is_valid_timerange:
     @pytest.mark.parametrize(
