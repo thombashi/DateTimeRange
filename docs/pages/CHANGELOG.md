@@ -1,3 +1,19 @@
+<a name="v2.3.0"></a>
+# [v2.3.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.3.0) - 30 Apr 2024
+
+### New Features
+* Add `is_time_inversion` method to `DateTimeRange` class
+* Add `allow_timezone_mismatch` argument to `validate_time_inversion` method: [#49](https://github.com/thombashi/DateTimeRange/issues/49) (Thanks to [@darkweaver87](https://github.com/darkweaver87))
+
+### Bug Fixes
+* Fix the `range` method for when the timezone is mismatched between `start_datetime` and `end_datetime`: [#49](https://github.com/thombashi/DateTimeRange/issues/49) (Thanks to [@darkweaver87](https://github.com/darkweaver87))
+
+---
+**Full Changelog**: https://github.com/thombashi/DateTimeRange/compare/v2.2.1...v2.3.0
+
+[Changes][v2.3.0]
+
+
 <a name="v2.2.1"></a>
 # [v2.2.1](https://github.com/thombashi/DateTimeRange/releases/tag/v2.2.1) - 07 Apr 2024
 
@@ -225,6 +241,7 @@
 [Changes][v0.1.0]
 
 
+[v2.3.0]: https://github.com/thombashi/DateTimeRange/compare/v2.2.1...v2.3.0
 [v2.2.1]: https://github.com/thombashi/DateTimeRange/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/thombashi/DateTimeRange/compare/v2.1.1...v2.2.0
 [v2.1.1]: https://github.com/thombashi/DateTimeRange/compare/v2.1.0...v2.1.1
