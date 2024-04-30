@@ -367,14 +367,14 @@ class DateTimeRange:
 
     def validate_time_inversion(self) -> None:
         """
-        Check time inversion of the time range.
+        Check the time inversion of the time range.
 
         :raises ValueError:
             If |attr_start_datetime| is
             bigger than |attr_end_datetime|.
         :raises TypeError:
             Any one of |attr_start_datetime| and |attr_end_datetime|,
-            or both is inappropriate datetime value.
+            or both are inappropriate datetime values.
 
         :Sample Code:
             .. code:: python
@@ -699,7 +699,7 @@ class DateTimeRange:
     ) -> "DateTimeRange":
         """
         Create a new time range that overlaps the input and the current time range.
-        If no overlaps found, return a time range that set ``None`` for both start and end time.
+        If no overlaps are found, return a time range that sets ``None`` for both start and end time.
 
         :param DateTimeRange x:
             Value to compute intersection with the current time range.
@@ -847,7 +847,7 @@ class DateTimeRange:
         Create a new time range that encompasses the input and the current time range.
 
         :param DateTimeRange x:
-            Value to compute encompass with the current time range.
+            Value to compute encompasses the current time range.
 
         :Sample Code:
             .. code:: python
@@ -878,7 +878,7 @@ class DateTimeRange:
 
     def truncate(self, percentage: float) -> None:
         """
-        Truncate ``percentage`` / 2 [%] of whole time from first and last time.
+        Truncate ``percentage`` / 2 [%] of the whole time from the first and last time.
 
         :param float percentage: Percentage of truncate.
 
@@ -921,7 +921,7 @@ class DateTimeRange:
 
         :param Union[str, datetime.datetime] separator:
             Date and time to split the DateTimeRange.
-            This value will be included for both of the ranges after split.
+            This value will be included for both of the ranges after the split.
 
         :Sample Code:
             .. code:: python
@@ -982,7 +982,7 @@ class DateTimeRange:
             e.g. ``2021-01-23T10:00:00+0400 - 2021-01-232T10:10:00+0400``
 
         :param str separator:
-            Regular expression that separating the ``range_text`` to start and end time.
+            Regular expression that separates the ``range_text`` to start and end time.
 
         :return: DateTimeRange
             Created instance.
