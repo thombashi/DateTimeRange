@@ -53,7 +53,7 @@ readme:
 
 .PHONY: release
 release:
-	cd $(PKG_BUILD_DIR) && $(PYTHON) setup.py release --sign --skip-uploading --verbose
+	$(PYTHON) -m tox -e release
 	$(MAKE) clean
 
 .PHONY: setup-ci
@@ -61,10 +61,10 @@ setup-ci:
 	$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade pip
 	$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade tox
 
-.PHONY: setup
-setup: setup-ci
-	@$(PYTHON) -m pip install --upgrade -e .[test] releasecmd
-	@$(PYTHON) -m pip check
+.PHONY: setup-dev
+setup-dev: setup-ci
+	$(PYTHON) -m pip install --upgrade -e .[test]
+	$(PYTHON) -m pip check
 
 .PHONY: test
 test:
