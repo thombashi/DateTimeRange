@@ -1,11 +1,15 @@
 AUTHOR := thombashi
 PACKAGE := DateTimeRange
 
-PYTHON := python3
-
+BIN_DIR := $(shell pwd)/bin
 BUILD_WORK_DIR := _work
 PKG_BUILD_DIR := $(BUILD_WORK_DIR)/$(PACKAGE)
 
+PYTHON := python3
+BIN_CHANGELOG_FROM_RELEASE := $(BIN_DIR)/changelog-from-release
+
+$(BIN_CHANGELOG_FROM_RELEASE):
+	GOBIN=$(BIN_DIR) go install github.com/rhysd/changelog-from-release/v3@latest
 
 .PHONY: build-remote
 build-remote: clean
@@ -21,14 +25,19 @@ build: clean
 	@$(PYTHON) -m tox -e build
 	ls -lh dist/*
 
+.PHONY: changelog
+changelog: $(BIN_CHANGELOG_FROM_RELEASE)
+	$(BIN_CHANGELOG_FROM_RELEASE) > CHANGELOG.md
+	$(PYTHON) -m tox -e changelog
+
 .PHONY: check
 check:
 	@$(PYTHON) -m tox -e lint
 
 .PHONY: clean
 clean:
-	@rm -rf $(BUILD_WORK_DIR)
-	@$(PYTHON) -m tox -e clean
+	rm -rf $(BIN_DIR) $(BUILD_WORK_DIR)
+	$(PYTHON) -m tox -e clean
 
 .PHONY: docs
 docs:
