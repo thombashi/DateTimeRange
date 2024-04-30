@@ -523,6 +523,39 @@ class TestDateTimeRange_is_set:
         assert value.is_set() == expected
 
 
+class TestDateTimeRange_is_time_inversion:
+    @pytest.mark.parametrize(
+        ["value", "expected"],
+        [
+            [DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME), False],
+            [DateTimeRange(TEST_START_DATETIME, TEST_START_DATETIME), False],
+            [DateTimeRange(TEST_END_DATETIME, TEST_START_DATETIME), True],
+        ],
+    )
+    def test_normal(self, value, expected):
+        assert value.is_time_inversion() == expected
+
+    def test_allow_timezone_mismatch(self):
+        dtr = DateTimeRange("2022-10-29 00:00:00+02:00", "2022-10-31 00:00:00+01:00")
+
+        assert not dtr.is_time_inversion(allow_timezone_mismatch=True)
+
+        with pytest.raises(ValueError):
+            dtr.is_time_inversion(allow_timezone_mismatch=False)
+
+    @pytest.mark.parametrize(
+        ["value"],
+        [
+            [DateTimeRange(None, None)],
+            [DateTimeRange(None, TEST_END_DATETIME)],
+            [DateTimeRange(TEST_START_DATETIME, None)],
+        ],
+    )
+    def test_exception(self, value):
+        with pytest.raises(ValueError):
+            value.is_time_inversion()
+
+
 class TestDateTimeRange_validate_time_inversion:
     @pytest.mark.parametrize(
         ["value"],
