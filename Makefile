@@ -28,7 +28,7 @@ build: clean
 .PHONY: changelog
 changelog: $(BIN_CHANGELOG_FROM_RELEASE)
 	$(BIN_CHANGELOG_FROM_RELEASE) > CHANGELOG.md
-	$(PYTHON) -m tox -e changelog
+	cp -a CHANGELOG.md docs/pages/CHANGELOG.md
 
 .PHONY: check
 check:

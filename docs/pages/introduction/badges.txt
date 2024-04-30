@@ -1,4 +1,4 @@
-|PyPI pkg ver| |conda pkg ver| |Supported Python versions| |CI status| |Test coverage| |CodeQL|
+|PyPI pkg ver| |conda pkg ver| |Supported Python ver| |CI status| |Test coverage| |CodeQL|
 
 .. |PyPI pkg ver| image:: https://badge.fury.io/py/DateTimeRange.svg
     :target: https://badge.fury.io/py/DateTimeRange
@@ -8,7 +8,7 @@
     :target: https://anaconda.org/conda-forge/datetimerange
     :alt: conda-forge package version
 
-.. |Supported Python versions| image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
+.. |Supported Python ver| image:: https://img.shields.io/pypi/pyversions/DateTimeRange.svg
     :target: https://pypi.org/project/DateTimeRange
     :alt: Supported Python versions
 

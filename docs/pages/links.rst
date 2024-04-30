@@ -1,8 +1,3 @@
-Changelog
-==========
-https://github.com/thombashi/DateTimeRange/releases
-
-
 .. include:: sponsors.rst
 
 
