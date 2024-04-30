@@ -696,31 +696,31 @@ class DateTimeRange:
         if cmp_step_w_zero == 0:
             raise ValueError("step must be not zero")
 
-        is_inversion = False
-        try:
-            self.validate_time_inversion()
-        except ValueError:
-            is_inversion = True
+        if not self.is_set():
+            raise ValueError("range is not set")
 
         assert self.start_datetime
         assert self.end_datetime
 
-        current_datetime = self.start_datetime
+        current_datetime = _normalize_datetime_value(self.start_datetime, self.timezone)
+        assert current_datetime
 
-        if not is_inversion:
+        if not self.is_time_inversion():
             if cmp_step_w_zero < 0:
                 raise ValueError(f"invalid step: expect greater than 0, actual={step}")
 
             while current_datetime <= self.end_datetime:
                 yield current_datetime
-                current_datetime = current_datetime + step
+                current_datetime = _normalize_datetime_value(current_datetime + step, self.timezone)
+                assert current_datetime
         else:
             if cmp_step_w_zero > 0:
                 raise ValueError(f"invalid step: expect less than 0, actual={step}")
 
             while current_datetime >= self.end_datetime:
                 yield current_datetime
-                current_datetime = current_datetime + step
+                current_datetime = _normalize_datetime_value(current_datetime + step, self.timezone)
+                assert current_datetime
 
     def intersection(
         self,

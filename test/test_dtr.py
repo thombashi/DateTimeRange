@@ -11,6 +11,7 @@ from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta
 
 from datetimerange import DateTimeRange
+from datetimerange._core import _normalize_datetime_value
 
 
 TIMEZONE = "+0900"
@@ -672,6 +673,19 @@ class TestDateTimeRange_range:
     )
     def test_normal(self, value, step, expected):
         results = list(value.range(step))
+        assert len(results) == len(expected)
+        for value_item, expected_item in zip(results, expected):
+            assert value_item == expected_item
+
+    def test_normal_dst(self):
+        dtr = DateTimeRange("2022-10-29 00:00:00+02:00", "2022-10-31 00:00:00+01:00")
+        results = list(dtr.range(timedelta(days=1)))
+        timezone = pytz.timezone("Africa/Tripoli")
+        expected = [
+            _normalize_datetime_value(datetime(2022, 10, 29, 0, 0, 0), timezone=timezone),
+            _normalize_datetime_value(datetime(2022, 10, 30, 0, 0, 0), timezone=timezone),
+            _normalize_datetime_value(datetime(2022, 10, 31, 0, 0, 0), timezone=timezone),
+        ]
         assert len(results) == len(expected)
         for value_item, expected_item in zip(results, expected):
             assert value_item == expected_item
