@@ -4,7 +4,8 @@
 
 import datetime
 import re
-from typing import ClassVar, Iterator, List, Optional, Union
+from collections.abc import Iterator
+from typing import ClassVar, Optional, Union
 
 import dateutil.parser
 import dateutil.relativedelta as rdelta
@@ -432,9 +433,7 @@ class DateTimeRange:
         start_utc = self.start_datetime.astimezone(datetime.timezone.utc)
         end_utc = self.end_datetime.astimezone(datetime.timezone.utc)
         if start_utc > end_utc:
-            raise ValueError(
-                "time inversion found: {:s} > {:s}".format(str(self.start_datetime), str(self.end_datetime))
-            )
+            raise ValueError(f"time inversion found: {str(self.start_datetime):s} > {str(self.end_datetime):s}")
 
     def is_valid_timerange(self) -> bool:
         """
@@ -792,7 +791,7 @@ class DateTimeRange:
             end_time_format=self.end_time_format,
         )
 
-    def subtract(self, x: "DateTimeRange") -> List["DateTimeRange"]:
+    def subtract(self, x: "DateTimeRange") -> list["DateTimeRange"]:
         """
         Remove a time range from this one and return the result.
 
@@ -945,7 +944,7 @@ class DateTimeRange:
         if self.__end_datetime:
             self.__end_datetime -= discard_time
 
-    def split(self, separator: Union[str, datetime.datetime]) -> List["DateTimeRange"]:
+    def split(self, separator: Union[str, datetime.datetime]) -> list["DateTimeRange"]:
         """
         Split the DateTimerange in two DateTimerange at a specific datetime.
 
