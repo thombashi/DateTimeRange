@@ -135,7 +135,7 @@ jobs:
           PYTEST_DISCORD_WEBHOOK: ${{ secrets.PYTEST_DISCORD_WEBHOOK }}
 
       - name: Upload coverage report
-        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.8'
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
         run: |
           python -m pip install --upgrade --disable-pip-version-check coveralls tomli
           coveralls --service=github
