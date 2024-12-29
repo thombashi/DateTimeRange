@@ -1,5 +1,21 @@
-<a name="v2.3.0"></a>
-# [v2.3.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.3.0) - 30 Apr 2024
+<a id="v2.3.1"></a>
+# [v2.3.1](https://github.com/thombashi/DateTimeRange/releases/tag/v2.3.1) - 2024-12-29
+
+## What's Changed
+* Drop support for Python 3.7/3.8
+* Add support for Python 3.13
+* Remove deprecated `tests_require` from `setup.py`
+* Update copyright years
+* Bump sigstore/gh-action-sigstore-python from 2.1.1 to 3.0.0 in the actions-dependencies group by [@dependabot](https://github.com/dependabot) in [#50](https://github.com/thombashi/DateTimeRange/pull/50)
+
+
+**Full Changelog**: https://github.com/thombashi/DateTimeRange/compare/v2.3.0...v2.3.1
+
+[Changes][v2.3.1]
+
+
+<a id="v2.3.0"></a>
+# [v2.3.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.3.0) - 2024-04-30
 
 ### New Features
 * Add `is_time_inversion` method to `DateTimeRange` class
@@ -14,26 +30,26 @@
 [Changes][v2.3.0]
 
 
-<a name="v2.2.1"></a>
-# [v2.2.1](https://github.com/thombashi/DateTimeRange/releases/tag/v2.2.1) - 07 Apr 2024
+<a id="v2.2.1"></a>
+# [v2.2.1](https://github.com/thombashi/DateTimeRange/releases/tag/v2.2.1) - 2024-04-07
 
 ## What's Changed
-* Bump actions/setup-python from 4 to 5 by [@dependabot](https://github.com/dependabot) in https://github.com/thombashi/DateTimeRange/pull/47
+* Bump actions/setup-python from 4 to 5 by [@dependabot](https://github.com/dependabot) in [#47](https://github.com/thombashi/DateTimeRange/pull/47)
 * Fix an error that `DateTimeRange.intersection` method failed when the ranges are not overlapped and the `intersection_threshold` is not `None`: [#48](https://github.com/thombashi/DateTimeRange/issues/48) (Thanks to [@wernersa](https://github.com/wernersa))
 * Keep the timezone when perform `__iadd__` or `__isub__` operations
 * Add a build and publish workflow
 * Add Sigstore signatures to release assets
 
 ## New Contributors
-* [@dependabot](https://github.com/dependabot) made their first contribution in https://github.com/thombashi/DateTimeRange/pull/47
+* [@dependabot](https://github.com/dependabot) made their first contribution in [#47](https://github.com/thombashi/DateTimeRange/pull/47)
 
 **Full Changelog**: https://github.com/thombashi/DateTimeRange/compare/v2.2.0...v2.2.1
 
 [Changes][v2.2.1]
 
 
-<a name="v2.2.0"></a>
-# [v2.2.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.2.0) - 03 Oct 2023
+<a id="v2.2.0"></a>
+# [v2.2.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.2.0) - 2023-10-03
 
 - Add `timezone` as an optional argument to `set_time_range` method, `from_range_text` method and the `DateTimeRange` class constructor
 - Add `timezone` property to `DateTimeRange` class
@@ -47,8 +63,8 @@
 [Changes][v2.2.0]
 
 
-<a name="v2.1.1"></a>
-# [v2.1.1](https://github.com/thombashi/DateTimeRange/releases/tag/v2.1.1) - 01 Oct 2023
+<a id="v2.1.1"></a>
+# [v2.1.1](https://github.com/thombashi/DateTimeRange/releases/tag/v2.1.1) - 2023-10-01
 
 - Add `__all__` to `__init__.py`
 - Add `docs` extras
@@ -62,24 +78,24 @@
 [Changes][v2.1.1]
 
 
-<a name="v2.1.0"></a>
-# [v2.1.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.1.0) - 19 Feb 2023
+<a id="v2.1.0"></a>
+# [v2.1.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.1.0) - 2023-02-19
 
 ## What's Changed
-* Add type annotations by [@hauntsaninja](https://github.com/hauntsaninja) in https://github.com/thombashi/DateTimeRange/pull/45
+* Add type annotations by [@hauntsaninja](https://github.com/hauntsaninja) in [#45](https://github.com/thombashi/DateTimeRange/pull/45)
 * Changes to make `datetime.timedelta` and `dateutil.relativedelta.relativedelta` transparently usable for arguments.
 
 
 ## New Contributors
-* [@hauntsaninja](https://github.com/hauntsaninja) made their first contribution in https://github.com/thombashi/DateTimeRange/pull/45
+* [@hauntsaninja](https://github.com/hauntsaninja) made their first contribution in [#45](https://github.com/thombashi/DateTimeRange/pull/45)
 
 **Full Changelog**: https://github.com/thombashi/DateTimeRange/compare/v2.0.0...v2.1.0
 
 [Changes][v2.1.0]
 
 
-<a name="v2.0.0"></a>
-# [v2.0.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.0.0) - 11 Feb 2023
+<a id="v2.0.0"></a>
+# [v2.0.0](https://github.com/thombashi/DateTimeRange/releases/tag/v2.0.0) - 2023-02-11
 
 - Add `intersection_threshold` argument to `intersection`/`is_intersection` methods: [#43](https://github.com/thombashi/DateTimeRange/issues/43) (Thanks to [@usman5251](https://github.com/usman5251))
 - Modify to accept regular expression for separator argument of `from_range_text` method: [#41](https://github.com/thombashi/DateTimeRange/issues/41) (Thanks to [@pantierra](https://github.com/pantierra))
@@ -92,8 +108,8 @@
 [Changes][v2.0.0]
 
 
-<a name="v1.2.0"></a>
-# [v1.2.0](https://github.com/thombashi/DateTimeRange/releases/tag/v1.2.0) - 10 Jul 2021
+<a id="v1.2.0"></a>
+# [v1.2.0](https://github.com/thombashi/DateTimeRange/releases/tag/v1.2.0) - 2021-07-10
 
 - Add `DateTimeRange.from_range_text` class method: [#38](https://github.com/thombashi/DateTimeRange/issues/38) (Thanks to [@noamsgl](https://github.com/noamsgl))
 
@@ -101,8 +117,8 @@
 [Changes][v1.2.0]
 
 
-<a name="v1.1.0"></a>
-# [v1.1.0](https://github.com/thombashi/DateTimeRange/releases/tag/v1.1.0) - 09 Jun 2021
+<a id="v1.1.0"></a>
+# [v1.1.0](https://github.com/thombashi/DateTimeRange/releases/tag/v1.1.0) - 2021-06-09
 
 - Add `subtract` method to `DateTimeRange` class: [#36](https://github.com/thombashi/DateTimeRange/issues/36) (Thanks to [@bramski](https://github.com/bramski))
 - Add `split` method to `DateTimeRange` class
@@ -112,8 +128,8 @@
 [Changes][v1.1.0]
 
 
-<a name="v0.5.0"></a>
-# [v0.5.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.5.0) - 31 Oct 2018
+<a id="v0.5.0"></a>
+# [v0.5.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.5.0) - 2018-10-31
 
 - Change to return a new instance instead of changing the instance value itself when using `intersection`/`encompass` methods [#31](https://github.com/thombashi/DateTimeRange/issues/31) (Thanks to [@camelia-c](https://github.com/camelia-c))
 
@@ -121,16 +137,16 @@
 [Changes][v0.5.0]
 
 
-<a name="v0.4.0"></a>
-# [v0.4.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.4.0) - 30 Oct 2018
+<a id="v0.4.0"></a>
+# [v0.4.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.4.0) - 2018-10-30
 
 - Add support for `datetime.date` class
 
 [Changes][v0.4.0]
 
 
-<a name="v0.3.6"></a>
-# [v0.3.6](https://github.com/thombashi/DateTimeRange/releases/tag/v0.3.6) - 15 Sep 2018
+<a id="v0.3.6"></a>
+# [v0.3.6](https://github.com/thombashi/DateTimeRange/releases/tag/v0.3.6) - 2018-09-15
 
 - Add support for Python 3.7
 - Update the package metadata
@@ -138,8 +154,8 @@
 [Changes][v0.3.6]
 
 
-<a name="v0.2.6"></a>
-# [v0.2.6](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.6) - 17 Nov 2016
+<a id="v0.2.6"></a>
+# [v0.2.6](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.6) - 2016-11-17
 
 - Fix to apply dependent package update
 
@@ -147,8 +163,8 @@
 [Changes][v0.2.6]
 
 
-<a name="v0.2.5"></a>
-# [v0.2.5](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.5) - 11 Aug 2016
+<a id="v0.2.5"></a>
+# [v0.2.5](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.5) - 2016-08-11
 
 - Refactoring
 
@@ -156,8 +172,8 @@
 [Changes][v0.2.5]
 
 
-<a name="v0.2.4"></a>
-# [v0.2.4](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.4) - 09 Jul 2016
+<a id="v0.2.4"></a>
+# [v0.2.4](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.4) - 2016-07-09
 
 - Drop support for Python 2.6
 - Fix datetime detection error with version strings
@@ -166,16 +182,16 @@
 [Changes][v0.2.4]
 
 
-<a name="v0.2.3"></a>
-# [v0.2.3](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.3) - 03 Jul 2016
+<a id="v0.2.3"></a>
+# [v0.2.3](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.3) - 2016-07-03
 
 
 
 [Changes][v0.2.3]
 
 
-<a name="v0.2.2"></a>
-# [v0.2.2](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.2) - 19 Jun 2016
+<a id="v0.2.2"></a>
+# [v0.2.2](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.2) - 2016-06-19
 
 - Make pytest-runner a conditional requirement
 - Drop support for Python 2.5
@@ -184,8 +200,8 @@
 [Changes][v0.2.2]
 
 
-<a name="v0.2.1"></a>
-# [v0.2.1](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.1) - 15 Mar 2016
+<a id="v0.2.1"></a>
+# [v0.2.1](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.1) - 2016-03-15
 
 # Enhancement
 
@@ -195,8 +211,8 @@
 [Changes][v0.2.1]
 
 
-<a name="v0.2.0"></a>
-# [v0.2.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.0) - 10 Mar 2016
+<a id="v0.2.0"></a>
+# [v0.2.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.2.0) - 2016-03-10
 
 # Enhancement
 - Add range method to support iterator.
@@ -205,8 +221,8 @@
 [Changes][v0.2.0]
 
 
-<a name="v0.1.3"></a>
-# [v0.1.3](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.3) - 04 Mar 2016
+<a id="v0.1.3"></a>
+# [v0.1.3](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.3) - 2016-03-04
 
 # Fix
 - Fix [#8](https://github.com/thombashi/DateTimeRange/issues/8): correct daylight savings time processing. Thanks to [@tweyter](https://github.com/tweyter)
@@ -215,8 +231,8 @@
 [Changes][v0.1.3]
 
 
-<a name="v0.1.2"></a>
-# [v0.1.2](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.2) - 25 Feb 2016
+<a id="v0.1.2"></a>
+# [v0.1.2](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.2) - 2016-02-25
 
 ## Enhancement
 - add operator support: `!=`, `+`, `+=`, `-`, `-=`
@@ -225,22 +241,23 @@
 [Changes][v0.1.2]
 
 
-<a name="v0.1.1"></a>
-# [v0.1.1](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.1) - 20 Feb 2016
+<a id="v0.1.1"></a>
+# [v0.1.1](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.1) - 2016-02-20
 
 
 
 [Changes][v0.1.1]
 
 
-<a name="v0.1.0"></a>
-# [v0.1.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.0) - 19 Feb 2016
+<a id="v0.1.0"></a>
+# [v0.1.0](https://github.com/thombashi/DateTimeRange/releases/tag/v0.1.0) - 2016-02-19
 
 
 
 [Changes][v0.1.0]
 
 
+[v2.3.1]: https://github.com/thombashi/DateTimeRange/compare/v2.3.0...v2.3.1
 [v2.3.0]: https://github.com/thombashi/DateTimeRange/compare/v2.2.1...v2.3.0
 [v2.2.1]: https://github.com/thombashi/DateTimeRange/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/thombashi/DateTimeRange/compare/v2.1.1...v2.2.0
@@ -264,4 +281,4 @@
 [v0.1.1]: https://github.com/thombashi/DateTimeRange/compare/v0.1.0...v0.1.1
 [v0.1.0]: https://github.com/thombashi/DateTimeRange/tree/v0.1.0
 
-<!-- Generated by https://github.com/rhysd/changelog-from-release v3.7.2 -->
+<!-- Generated by https://github.com/rhysd/changelog-from-release v3.8.1 -->
