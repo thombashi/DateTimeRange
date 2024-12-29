@@ -26,7 +26,7 @@ build-remote: clean
 
 .PHONY: build
 build: clean
-	@$(PYTHON) -m tox -e build
+	$(PYTHON) -m tox -e build
 	ls -lh dist/*
 
 .PHONY: changelog
@@ -36,7 +36,7 @@ changelog: $(BIN_CHANGELOG_FROM_RELEASE)
 
 .PHONY: check
 check:
-	@$(PYTHON) -m tox -e lint
+	$(PYTHON) -m tox -e lint
 
 .PHONY: clean
 clean:
@@ -49,11 +49,11 @@ docs:
 
 .PHONY: fmt
 fmt:
-	@$(PYTHON) -m tox -e fmt
+	$(PYTHON) -m tox -e fmt
 
 .PHONY: readme
 readme:
-	@$(PYTHON) -m tox -e readme
+	$(PYTHON) -m tox -e readme
 
 .PHONY: release
 release:
