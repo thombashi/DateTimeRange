@@ -528,7 +528,7 @@ class DateTimeRange:
 
         try:
             return self.start_datetime.strftime(self.start_time_format)
-        except AttributeError:
+        except (AttributeError, ValueError):
             return self.NOT_A_TIME_STR
 
     def get_end_time_str(self) -> str:
@@ -559,7 +559,7 @@ class DateTimeRange:
 
         try:
             return self.end_datetime.strftime(self.end_time_format)
-        except AttributeError:
+        except (AttributeError, ValueError):
             return self.NOT_A_TIME_STR
 
     def get_timedelta_second(self) -> float:
