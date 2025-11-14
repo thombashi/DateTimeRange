@@ -75,8 +75,10 @@ testpaths = [
 
 md_report = true
 md_report_color = "auto"
-md_report_margin = 0
 md_report_verbose = 1
+md_report_exclude_outcomes = [
+  "passed",
+]
 
 [tool.pyright]
 exclude = [
