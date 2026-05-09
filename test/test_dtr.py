@@ -3,10 +3,11 @@
 """
 
 from copy import deepcopy
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
+import pandas as pd
 import pytest
-import pytz
 from dateutil.parser import parse
 from dateutil.relativedelta import relativedelta
 
@@ -680,7 +681,9 @@ class TestDateTimeRange_range:
     def test_normal_dst(self):
         dtr = DateTimeRange("2022-10-29 00:00:00+02:00", "2022-10-31 00:00:00+01:00")
         results = list(dtr.range(timedelta(days=1)))
-        timezone = pytz.timezone("Africa/Tripoli")
+        from zoneinfo import ZoneInfo
+
+        timezone = ZoneInfo("Africa/Tripoli")
         expected = [
             _normalize_datetime_value(datetime(2022, 10, 29, 0, 0, 0), timezone=timezone),
             _normalize_datetime_value(datetime(2022, 10, 30, 0, 0, 0), timezone=timezone),
@@ -949,8 +952,15 @@ class TestDateTimeRange_get_start_time_str:
         datetimerange_normal.start_time_format = time_format
         assert datetimerange_normal.get_start_time_str() == expected
 
-    def test_abnormal_1(self, datetimerange_null):
-        assert datetimerange_null.get_start_time_str() == DateTimeRange.NOT_A_TIME_STR
+    @pytest.mark.parametrize(
+        ["value", "expected"],
+        [
+            [DateTimeRange(None, None), DateTimeRange.NOT_A_TIME_STR],
+            [DateTimeRange(pd.NaT, pd.NaT), DateTimeRange.NOT_A_TIME_STR],
+        ],
+    )
+    def test_abnormal_nat(self, value, expected):
+        assert value.get_start_time_str() == expected
 
     def test_abnormal_2(self, datetimerange_normal):
         datetimerange_normal.start_time_format = "aaa"
@@ -1008,12 +1018,12 @@ class TestDateTimeRange_set_start_datetime:
         [
             [START_DATETIME_TEXT, None, TEST_START_DATETIME],
             [TEST_START_DATETIME, None, TEST_START_DATETIME],
-            [1485685623, pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
-            ["1485685623", pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
+            [1485685623, timezone.utc, datetime(2017, 1, 29, 10, 27, 3, tzinfo=timezone.utc)],
+            ["1485685623", timezone.utc, datetime(2017, 1, 29, 10, 27, 3, tzinfo=timezone.utc)],
             [
                 1485685623,
-                pytz.timezone("Asia/Tokyo"),
-                pytz.timezone("Asia/Tokyo").localize(datetime(2017, 1, 29, 19, 27, 3)),
+                ZoneInfo("Asia/Tokyo"),
+                datetime(2017, 1, 29, 19, 27, 3, tzinfo=ZoneInfo("Asia/Tokyo")),
             ],
             [None, None, None],
         ],
@@ -1042,12 +1052,12 @@ class TestDateTimeRange_set_end_datetime:
         [
             [START_DATETIME_TEXT, None, TEST_START_DATETIME],
             [TEST_START_DATETIME, None, TEST_START_DATETIME],
-            [1485685623, pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
-            ["1485685623", pytz.utc, pytz.utc.localize(datetime(2017, 1, 29, 10, 27, 3))],
+            [1485685623, timezone.utc, datetime(2017, 1, 29, 10, 27, 3, tzinfo=timezone.utc)],
+            ["1485685623", timezone.utc, datetime(2017, 1, 29, 10, 27, 3, tzinfo=timezone.utc)],
             [
                 1485685623,
-                pytz.timezone("Asia/Tokyo"),
-                pytz.timezone("Asia/Tokyo").localize(datetime(2017, 1, 29, 19, 27, 3)),
+                ZoneInfo("Asia/Tokyo"),
+                datetime(2017, 1, 29, 19, 27, 3, tzinfo=ZoneInfo("Asia/Tokyo")),
             ],
             [None, None, None],
         ],
@@ -1088,21 +1098,21 @@ class TestDateTimeRange_set_time_range:
         assert dtr == expected
 
     def test_normal_timezone(self):
-        dtr_utc_lhs = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.UTC)
+        dtr_utc_lhs = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME, timezone=timezone.utc)
         dtr_utc_rhs = DateTimeRange()
-        dtr_utc_rhs.set_time_range(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.UTC)
+        dtr_utc_rhs.set_time_range(TEST_START_DATETIME, TEST_END_DATETIME, timezone=timezone.utc)
         assert dtr_utc_lhs == dtr_utc_rhs
 
-        dtr_tokyo_lhs = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.timezone("Asia/Tokyo"))
+        dtr_tokyo_lhs = DateTimeRange(TEST_START_DATETIME, TEST_END_DATETIME, timezone=ZoneInfo("Asia/Tokyo"))
         dtr_tokyo_rhs = DateTimeRange()
-        dtr_tokyo_rhs.set_time_range(TEST_START_DATETIME, TEST_END_DATETIME, timezone=pytz.timezone("Asia/Tokyo"))
+        dtr_tokyo_rhs.set_time_range(TEST_START_DATETIME, TEST_END_DATETIME, timezone=ZoneInfo("Asia/Tokyo"))
         assert dtr_tokyo_lhs == dtr_tokyo_rhs
 
         assert dtr_utc_lhs == dtr_tokyo_lhs
 
     def test_normal_replace_timezone(self):
-        dtr_lhs = DateTimeRange(START_DATETIME_TEXT, START_DATETIME_TEXT, timezone=pytz.UTC)
-        dtr_rhs = DateTimeRange(START_DATETIME_TEXT, START_DATETIME_TEXT, timezone=pytz.timezone("Asia/Tokyo"))
+        dtr_lhs = DateTimeRange(START_DATETIME_TEXT, START_DATETIME_TEXT, timezone=timezone.utc)
+        dtr_rhs = DateTimeRange(START_DATETIME_TEXT, START_DATETIME_TEXT, timezone=ZoneInfo("Asia/Tokyo"))
         assert dtr_lhs != dtr_rhs
 
     @pytest.mark.parametrize(
@@ -1378,8 +1388,8 @@ class TestDateTimeRange_from_range_text:
         assert dtr.end_time_format == r"%Y-%m-%dT%H:%M:%S%z"
 
     def test_normal_tz(self):
-        dtr = DateTimeRange.from_range_text(f"{START_DATETIME_TEXT} - {END_DATETIME_TEXT}", timezone=pytz.utc)
-        assert dtr.timezone == pytz.utc
+        dtr = DateTimeRange.from_range_text(f"{START_DATETIME_TEXT} - {END_DATETIME_TEXT}", timezone=timezone.utc)
+        assert dtr.timezone == timezone.utc
 
     @pytest.mark.parametrize(
         ["value", "time_format", "expected"],
