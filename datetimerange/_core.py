@@ -338,7 +338,17 @@ class DateTimeRange:
         if self.end_datetime is None:
             raise TypeError("Must set end_datetime")
 
-        return self.end_datetime - self.start_datetime
+        end = self.end_datetime
+        start = self.start_datetime
+
+        if end.tzinfo is not None and start.tzinfo is not None:
+            # Convert to UTC before subtraction to correctly handle DST transitions.
+            # Python's datetime subtraction ignores UTC offsets when both datetimes share the same tzinfo object (e.g. ZoneInfo),
+            # causing incorrect results across DST boundaries.
+            _utc = datetime.timezone.utc
+            return end.astimezone(_utc) - start.astimezone(_utc)
+
+        return end - start
 
     def is_set(self) -> bool:
         """
