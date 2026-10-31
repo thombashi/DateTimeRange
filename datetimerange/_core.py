@@ -370,6 +370,8 @@ class DateTimeRange:
         """
         Check the time inversion of the time range.
 
+        If both endpoints are naive, compare their wall times without assuming a local timezone.
+
         :param bool allow_timezone_mismatch:
             If |True|, ignore the timezone mismatch of the start and end time.
 
@@ -386,6 +388,9 @@ class DateTimeRange:
         if not allow_timezone_mismatch and self.start_datetime.tzinfo != self.end_datetime.tzinfo:
             raise ValueError(f"timezone mismatch: start={self.start_datetime.tzinfo}, end={self.end_datetime.tzinfo}")
 
+        if self.start_datetime.tzinfo is None and self.end_datetime.tzinfo is None:
+            return self.start_datetime > self.end_datetime
+
         start_utc = self.start_datetime.astimezone(datetime.timezone.utc)
         end_utc = self.end_datetime.astimezone(datetime.timezone.utc)
 
@@ -394,6 +399,8 @@ class DateTimeRange:
     def validate_time_inversion(self, allow_timezone_mismatch: bool = True) -> None:
         """
         Check the time inversion of the time range.
+
+        If both endpoints are naive, compare their wall times without assuming a local timezone.
 
         :param bool allow_timezone_mismatch:
             If |True|, ignore the timezone mismatch of the start and end time.
@@ -424,15 +431,7 @@ class DateTimeRange:
             # for python2/3 compatibility
             raise TypeError
 
-        assert self.start_datetime
-        assert self.end_datetime
-
-        if not allow_timezone_mismatch and self.start_datetime.tzinfo != self.end_datetime.tzinfo:
-            raise ValueError(f"timezone mismatch: start={self.start_datetime.tzinfo}, end={self.end_datetime.tzinfo}")
-
-        start_utc = self.start_datetime.astimezone(datetime.timezone.utc)
-        end_utc = self.end_datetime.astimezone(datetime.timezone.utc)
-        if start_utc > end_utc:
+        if self.is_time_inversion(allow_timezone_mismatch):
             raise ValueError(f"time inversion found: {str(self.start_datetime):s} > {str(self.end_datetime):s}")
 
     def is_valid_timerange(self) -> bool:
